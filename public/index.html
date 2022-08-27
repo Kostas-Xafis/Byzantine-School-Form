@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Φόρμα Βυζαντινής Μουσικής</title>
+		<script defer src="index.js"></script>
+		<link rel="stylesheet" href="./main.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins" />
+	</head>
+	<body>
+		<div id="addRegisterForm" class="formContainer">
+			<p class="title mdHeader">Φόρμα Εγγραφής</p>
+			<form class="forms">
+				<div class="formInputContainer">
+					<input type="text" id="LastName" name="LastName" required />
+					<label for="LastName">Επώνυμο:</label>
+					<div class="svgContainer">
+						<i class="fa-solid fa-user"></i>
+					</div>
+				</div>
+				<div class="formInputContainer">
+					<input type="text" id="name" name="name" required />
+					<label for="name">Όνομα:</label>
+					<div class="svgContainer">
+						<i class="fa-solid fa-user"></i>
+					</div>
+				</div>
+				<div class="formInputContainer">
+					<input type="text" id="father_name" name="father_name" required />
+					<label for="father_name">Πατρώνυμο:</label>
+					<div class="svgContainer">
+						<i class="fa-solid fa-user"></i>
+					</div>
+				</div>
+				<div class="formInputContainer">
+					<input type="number" id="birth_year" name="birth_year" min="1922" step="2022" inputmode="numeric" required />
+					<label for="birth_year">Έτος Γέννησης:</label>
+					<div class="svgContainer">
+						<i class="fa-solid fa-calendar-days"></i>
+					</div>
+				</div>
+				<div class="formInputContainer">
+					<input type="text" id="address" name="address" required />
+					<label for="address">Διεύθυνση Κατοικίας:</label>
+					<div class="svgContainer">
+						<i class="fa-solid fa-location-dot"></i>
+					</div>
+				</div>
+				<div class="formInputContainer">
+					<input type="tel" id="telephone" name="telephone" required />
+					<label for="telephone">Σταθερό Τηλέφωνο:</label>
+					<div class="svgContainer">
+						<i class="fa-solid fa-phone-intercom"></i>
+					</div>
+				</div>
+				<div class="formInputContainer">
+					<input type="tel" id="phonenumber" name="phonenumber" required />
+					<label for="phonenumber">Κινητό:</label>
+					<div class="svgContainer">
+						<i class="fa-solid fa-phone"></i>
+					</div>
+				</div>
+				<div class="formInputContainer">
+					<input type="email" id="email" name="email" required />
+					<label for="email">Email:</label>
+					<div class="svgContainer">
+						<i class="fa-solid fa-at"></i>
+					</div>
+				</div>
+				<div class="formInputContainer">
+					<input type="text" id="reg_year" name="reg_year" value="2022-2023" readonly />
+					<label for="reg_year">Έτος Εγγραφής:</label>
+					<div class="svgContainer">
+						<i class="fa-solid fa-calendar-days"></i>
+					</div>
+				</div>
+				<div class="formInputContainer">
+					<select name="class_year" id="class_year" required>
+						<option name="class_year" value=""></option>
+						<option name="class_year" value="Α' Τάξη">Α' Τάξη</option>
+						<option name="class_year" value="Β' Τάξη">Β' Τάξη</option>
+						<option name="class_year" value="Γ' Τάξη">Γ' Τάξη</option>
+						<option name="class_year" value="Δ' Τάξη">Δ' Τάξη</option>
+						<option name="class_year" value="Α' Τάξη Διπλώματος">Α' Τάξη Διπλώματος</option>
+						<option name="class_year" value="Β' Τάξη Διπλώματος">Β' Τάξη Διπλώματος</option>
+					</select>
+					<label for="class_year">Τάξη φοίτησης:</label>
+					<div class="svgContainer">
+						<i class="fa-solid fa-user-graduate"></i>
+					</div>
+				</div>
+				<div class="formInputContainer">
+					<select name="teacher" id="teacher" required>
+						<option name="teacher" value=""></option>
+                        <option name="teacher" value="π. Αναστάσιος Τραϊφόρος">π. Αναστάσιος Τραϊφόρος</option>
+                        <option name="teacher" value="π. Γεώργιος Φέλλιος">π. Γεώργιος Φέλλιος</option>
+                        <option name="teacher" value="π. Δημήτριος Καρυτινός">π. Δημήτριος Καρυτινός</option>
+                        <option name="teacher" value="π. Θεόδωρος Παπαγιάννης">π. Θεόδωρος Παπαγιάννης</option>
+                        <option name="teacher" value="π. Κωνσταντίνος Βασιλάκης">π. Κωνσταντίνος Βασιλάκης</option>
+                        <option name="teacher" value="π. Νικόλαος Κολοβός">π. Νικόλαος Κολοβός</option>
+                        <option name="teacher" value="π. Σωτήριος Αλεβιζάκης">π. Σωτήριος Αλεβιζάκης</option>
+                        <option name="teacher" value="π. Χρίστος Κυριακόπουλος">π. Χρίστος Κυριακόπουλος</option>
+                        <option name="teacher" value="π. Χρυσοβαλάντης Θεοδώρου">π. Χρυσοβαλάντης Θεοδώρου</option>
+                        <option name="teacher" value="Αθανάσιος Αδαμάκης">Αθανάσιος Αδαμάκης</option>
+                        <option name="teacher" value="Αναστάσιος Νίκας">Αναστάσιος Νίκας</option>
+                        <option name="teacher" value="Ανδρέας Βαλιανάτος">Ανδρέας Βαλιανάτος</option>
+                        <option name="teacher" value="Βασίλειος Παπαγεωργίου">Βασίλειος Παπαγεωργίου</option>
+                        <option name="teacher" value="Βενέδικτος Γαρουφαλής">Βενέδικτος Γαρουφαλής</option>
+                        <option name="teacher" value="Γεώργιος Χάρης">Γεώργιος Χάρης</option>
+                        <option name="teacher" value="Γρηγόριος Καλαφάτης">Γρηγόριος Καλαφάτης</option>
+                        <option name="teacher" value="Δημήτριος Μυλωνάς">Δημήτριος Μυλωνάς</option>
+                        <option name="teacher" value="Ιωάννης Πούλης">Ιωάννης Πούλης</option>
+                        <option name="teacher" value="Ιωάννης Τραϊφόρος">Ιωάννης Τραϊφόρος</option>
+                        <option name="teacher" value="Κωνσταντίνος Κατσικογιώργος">Κωνσταντίνος Κατσικογιώργος</option>
+                        <option name="teacher" value="Κωνσταντίνος Κολοβός">Κωνσταντίνος Κολοβός</option>
+                        <option name="teacher" value="Ναταλία Ζαχαράκη">Ναταλία Ζαχαράκη</option>
+                        <option name="teacher" value="Νικήτας Αθανασόπουλος">Νικήτας Αθανασόπουλος</option>
+                        <option name="teacher" value="Παναγιώτης Μητρόπουλος">Παναγιώτης Μητρόπουλος</option>
+                        <option name="teacher" value="Παύλος Χάρης">Παύλος Χάρης</option>
+                        <option name="teacher" value="Πηνελόπη Τζεμπετζή">Πηνελόπη Τζεμπετζή</option>
+                        <option name="teacher" value="Σπυρίδων Παπαγεωργίου">Σπυρίδων Παπαγεωργίου</option>
+                        <option name="teacher" value="Στέφανος Συμεωνίδης">Στέφανος Συμεωνίδης</option>
+                        <option name="teacher" value="Σωκράτης Χάρης">Σωκράτης Χάρης</option>
+                        <option name="teacher" value="Χρήστος Πανάγου">Χρήστος Πανάγου</option>
+                        <option name="teacher" value="Χρήστος Σαράντης">Χρήστος Σαράντης</option>
+                        <option name="teacher" value=" ">Άλλος καθηγητής που δεν αναφέρεται παραπάνω</option>
+					</select>
+					<label for="teacher">Τάξη φοίτησης:</label>
+					<div class="svgContainer">
+						<i class="fa-solid fa-user"></i>
+					</div>
+				</div>                
+				<div class="submitContainer">
+					<button type="submit" id="addRegisterSubmit" class="formSubmit">Submit</button>
+					<div class="svgContainer">
+						<i class="fa-solid fa-check"></i>
+					</div>
+					<div class="errorMsg">Registration Failure</div>
+					<div class="successMsg">Successful Registration</div>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

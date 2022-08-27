@@ -1,0 +1,485 @@
+@import url("//use.fontawesome.com/releases/v6.1.2/css/all.css");
+
+/* 
+============ Globals ============
+*/
+
+:root {
+	--dk-txt-col: hsl(0, 0%, 15%);
+	--dk-txt-col-t2: hsla(0, 0%, 15%, 20%);
+	--dk-txt-col-t3: hsla(0, 0%, 15%, 30%);
+	--dk-txt-col-t8: hsla(0, 0%, 15%, 80%);
+	--success-green: hsl(144, 100%, 43%);
+	--error-red: hsl(0, 100%, 69%);
+	--info-blue: hsl(196, 77%, 50%);
+}
+
+* {
+	font-family: "Poppins", sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+button {
+	all: unset;
+	cursor: pointer;
+}
+input,
+select {
+	width: 20ch !important;
+	outline: none !important;
+}
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	display: none;
+}
+
+body {
+	height: 100vh;
+	display: grid;
+	grid-template-rows: 100%;
+}
+
+p {
+	color: var(--dk-txt-col);
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	padding-right: 10px;
+	margin-right: 10px;
+}
+::-webkit-scrollbar-button {
+	display: none;
+}
+::-webkit-scrollbar-thumb {
+	background: var(--dk-txt-col-t8);
+	border-radius: 15px;
+}
+::-webkit-scrollbar-track {
+	border-radius: 15px;
+	background: var(--dk-txt-col-t3);
+}
+
+/* 
+============ Title ============
+*/
+
+.title {
+	text-shadow: -1px 1px 1px var(--dk-txt-col-t3);
+}
+
+.mdHeader {
+	font-size: 1.6rem;
+	align-self: center;
+}
+
+#titleContainer {
+	display: grid;
+}
+
+#welcomeTitle {
+	place-self: center;
+	font-size: 1.8rem;
+}
+
+/* 
+============ Add Book Form ============
+*/
+
+.formContainer {
+	display: grid;
+	grid-template-rows: 15% 50%;
+	grid-template-columns: min(100%, 1024px);
+	padding-left: 2rem;
+}
+
+.forms {
+	display: grid;
+	grid-auto-flow: row;
+	grid-template-columns: 1fr 1fr;
+	grid-auto-rows: 50%;
+	place-items: center;
+	gap: 0 2rem;
+}
+
+.formInputContainer {
+	--fs: 1.1rem;
+	position: relative;
+	display: grid;
+	grid-template-rows: 20% max-content;
+	width: max-content;
+	height: 100%;
+}
+
+.formInputContainer > label {
+	--fs: 1.3rem;
+	position: relative;
+	grid-row: 1;
+	font-size: var(--fs);
+	width: max-content;
+}
+
+.formInputContainer > label::after {
+	content: "";
+	position: absolute;
+	top: calc(var(--fs) + 4px); /*label height + offset*/
+	left: 1px;
+	right: 0px;
+	height: 5px;
+	width: 100%;
+
+	background-color: var(--dk-txt-col-t8);
+
+	transform-origin: left;
+	transform: scale(0, 0.4);
+	/*For some reason when the height is less than 4px, the transition has a weird woble up and down 🙄 so 5px * 0.4 scale = 2px*/
+	transition: transform 200ms ease-out;
+}
+
+.formInputContainer > input,
+.formInputContainer > select {
+	grid-row: 2;
+
+	padding: 0.3rem 0;
+	padding-left: calc(var(--fs) * 2);
+
+	border-radius: 10px;
+	border: 1px solid var(--dk-txt-col-t8);
+	box-shadow: inset 1px 1px 1px 0px var(--dk-txt-col-t3), inset -1px -1px 1px 0px var(--dk-txt-col-t3);
+	font-size: var(--fs);
+}
+.formInputContainer > select {
+	/* width: 100%; */
+	background: white;
+}
+
+.svgContainer {
+	position: absolute;
+
+	top: calc(20% + 0.3rem + (var(--fs) / 2)); /*Label height + padding height + half txt font-size to center it*/
+	width: var(--fs);
+
+	display: grid;
+	place-items: center;
+	padding: 0 calc(var(--fs) / 2);
+
+	color: var(--dk-txt-col-t8);
+	font-size: calc(var(--fs) - 0.3rem);
+}
+
+.formInputContainer > input:focus {
+	box-shadow: 1px 1px 0px 1px var(--dk-txt-col-t3);
+}
+
+.formInputContainer > input:focus + label::after,
+.formInputContainer > select:focus + label::after {
+	transform: scale(1, 0.4);
+}
+
+#price + label {
+	--error-display: none;
+	position: relative;
+}
+#price + label::before {
+	content: "Price must be positive and have at up to 2 decimal digits";
+	position: absolute;
+	top: 175%; /*label height + input height which is 3/4 the height of label*/
+	left: 0px;
+	font-size: 1.1rem;
+	width: 25ch;
+	color: var(--error-red);
+	display: var(--error-display);
+}
+
+/* 
+============ Submit book ============
+*/
+
+.submitContainer {
+	--fs: 1.2rem;
+	position: relative;
+	display: grid;
+	height: 100%;
+	grid-template-rows: 20% 15%;
+	place-items: center;
+}
+
+.formSubmit {
+	position: relative;
+	grid-row: 2;
+	padding: 0.3rem 1rem;
+	border: 3px solid var(--success-green);
+	border-radius: 10px;
+
+	font-size: var(--fs);
+	font-weight: bold;
+	background-color: transparent;
+	overflow: hidden;
+
+	transition: background-color 200ms ease-out, color 200ms ease-out;
+}
+
+#addRegisterSubmit:hover,
+#addRegisterSubmit:focus {
+	background-color: var(--success-green);
+	color: white;
+}
+
+.errorMsg,
+.successMsg {
+	position: absolute;
+	top: calc(20% - 2rem);
+	left: 0px; /*Submit container padding*/
+	width: max-content;
+	opacity: 0;
+}
+.errorMsg {
+	color: var(--error-red);
+}
+.successMsg {
+	color: var(--success-green);
+}
+
+@keyframes SubmitError {
+	0% {
+		transform: translateX(0);
+	}
+	10%,
+	30%,
+	70%,
+	90% {
+		transform: translateX(1px);
+	}
+	20%,
+	40%,
+	60%,
+	80% {
+		transform: translateX(-2px);
+	}
+	50% {
+		transform: translateX(2px);
+	}
+	100% {
+		transform: translateX(0px);
+	}
+}
+
+#addRegisterSubmit:is(.errorSubmit) {
+	/*Just to make specificity higher for colors...*/
+	background-color: var(--error-red);
+	border-color: var(--error-red);
+	color: white;
+	animation: SubmitError 1000ms cubic-bezier(0.65, 0, 0.35, 1);
+	animation-iteration-count: 1;
+}
+
+@keyframes msgSlidein {
+	0% {
+		opacity: 0;
+		transform: translateX(50%);
+	}
+	45% {
+		opacity: 1;
+		transform: translateX(0%);
+	}
+	55% {
+		opacity: 1;
+		transform: translateX(0%);
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(50%);
+	}
+}
+
+.errorSubmit ~ .errorMsg {
+	animation: msgSlidein 3000ms forwards;
+}
+
+#addRegisterSubmit:is(.successSubmit) {
+	background-color: var(--success-green);
+	color: transparent;
+}
+
+@keyframes successVertScroll {
+	0% {
+		transform: translateX(-35%);
+	}
+	33.33% {
+		transform: translateX(0%);
+	}
+	66.66% {
+		transform: translateX(0%);
+	}
+	100% {
+		transform: translateX(35%);
+	}
+}
+.formSubmit ~ .svgContainer {
+	--ifs: calc(var(--fs) + 0.5rem);
+	cursor: pointer;
+	opacity: 0;
+
+	top: calc(27.5% - var(--ifs) / 2);
+	left: calc(50% - var(--ifs) / 2);
+
+	padding: 0;
+	z-index: -2;
+
+	color: white;
+	font-size: var(--ifs);
+}
+
+.successSubmit ~ .svgContainer {
+	opacity: 1;
+	z-index: 0;
+}
+
+.successSubmit::after {
+	content: "";
+	position: absolute;
+
+	inset: 0px;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+
+	background: linear-gradient(
+		to right,
+		var(--success-green),
+		var(--success-green) 35%,
+		transparent 35%,
+		transparent 65%,
+		var(--success-green) 65%,
+		var(--success-green)
+	);
+
+	animation: successVertScroll 3000ms cubic-bezier(0.65, 0, 0.35, 1);
+	animation-iteration-count: 1;
+}
+
+.successSubmit ~ .successMsg {
+	animation: msgSlidein 3000ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+/* 
+============ Search ============
+*/
+#bookSearch {
+	grid-template-columns: max-content 1fr;
+}
+
+#searchForm {
+	grid-row: 2/3;
+}
+
+#searchSubmit {
+	border-color: var(--info-blue);
+}
+
+#searchSubmit:hover,
+#searchSubmit:focus {
+	background-color: var(--info-blue);
+	color: white;
+}
+
+#booksContainer {
+	position: relative;
+	grid-column: 2/3;
+	grid-row: 1/3;
+
+	display: grid;
+	grid-template-columns: repeat(3, minmax(max-content, 20%));
+	grid-auto-rows: 100%;
+	gap: 1rem 0;
+	justify-content: space-evenly;
+
+	overflow-y: auto;
+	margin: 2rem;
+	padding: 1rem 0;
+	background-color: transparent;
+	border-radius: 10px;
+	border: 2px solid var(--dk-txt-col-t8);
+	box-shadow: inset 1px 1px 0px 1px var(--dk-txt-col-t2), inset -1px -1px 0px 1px var(--dk-txt-col-t2);
+}
+
+#noSearchResult {
+	position: absolute;
+	inset: 1rem;
+
+	display: grid;
+	place-items: center;
+
+	opacity: 0;
+	border-radius: 10px;
+	background-color: var(--dk-txt-col-t2);
+	font-size: 1.4rem;
+	transition: opacity 300ms ease-out;
+}
+
+#noSearchResult:is(.showNoResult) {
+	opacity: 1;
+}
+
+@keyframes fade {
+	0% {
+		opacity: 0;
+		transform: translateY(2rem);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0rem);
+	}
+}
+
+.book {
+	display: grid;
+	grid-auto-flow: row;
+	padding: 0.5rem 1rem;
+	justify-content: space-evenly;
+	align-items: center;
+
+	border-radius: 5px;
+	border: 2px solid var(--dk-txt-col-t8);
+	box-shadow: 1px 1px 1px 1px var(--dk-txt-col-t3);
+
+	opacity: 0;
+	transform: translateY(2rem);
+}
+
+.bookFadeIn {
+	animation: fade 600ms forwards ease-out var(--delay);
+}
+.bookFadeOut {
+	animation: fade 300ms forwards reverse ease-out calc(var(--delay) / 2);
+}
+
+.bookAttr {
+	--ifs: 0.6rem;
+	display: grid;
+	grid-template-columns: var(--ifs) 6ch 16ch;
+	gap: 0.5rem;
+	place-items: center;
+
+	font-size: 1rem;
+}
+
+.bookAttr > i {
+	color: var(--dk-txt-col-t8);
+	font-size: var(--ifs);
+}
+
+.bookAttr > p:nth-of-type(1) {
+	gap: 0;
+	width: 100%;
+	text-align: left;
+}
+
+.bookAttr > p:nth-of-type(2) {
+	width: 100%;
+	text-align: center;
+}
