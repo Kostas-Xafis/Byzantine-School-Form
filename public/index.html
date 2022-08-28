@@ -12,6 +12,7 @@
 	<body>
 		<div id="addRegisterForm" class="formContainer">
 			<p class="title mdHeader">Φόρμα Εγγραφής</p>
+			<p class="infoText">Η αίτηση συμπληρώνεται από το σπουδαστή-τρια, εφόσον είναι ενήλικας, διαφορετικά από τον κηδεμόνα του/της.</p>
 			<form class="forms">
 				<div class="formInputContainer">
 					<input type="text" id="last_name" name="LastName" required />
@@ -27,9 +28,10 @@
 						<i class="fa-solid fa-user"></i>
 					</div>
 				</div>
-				<div class="formInputContainer">
+				<div class="formInputContainer infoContainer">
 					<input type="text" id="id" name="id" required />
 					<label for="id">Αριθμός Μητρώου:</label>
+					<p class="infoText">Eάν δε τον γνωρίζετε, συμβουλευτείτε τη Γραμματεία της Σχολής στο τηλέφωνο 6983380631. Οι πρωτοετείς σπουδαστές θα συμπληρώσουν 3 μηδενικά ως αριθμό μητρώου</p>
 					<div class="svgContainer">
 						<i class="fa-solid fa-id-card"></i>
 					</div>
@@ -49,7 +51,7 @@
 					</div>
 				</div>
 				<div class="formInputContainer">
-					<input type="text" id="address" name="address" required />
+					<input type="text" id="address" name="address" placeholder="Χλόης 1, 14452, Μεταμόρφωση" required />
 					<label for="address">Διεύθυνση Κατοικίας:</label>
 					<div class="svgContainer">
 						<i class="fa-solid fa-location-dot"></i>
@@ -83,7 +85,7 @@
 						<i class="fa-solid fa-calendar-days"></i>
 					</div>
 				</div>
-				<div class="formInputContainer">
+				<div class="formInputContainer infoContainer">
 					<select name="class_year" id="class_year" required>
 						<option name="class_year" value=""></option>
 						<option name="class_year" value="Α' Τάξη">Α' Τάξη</option>
@@ -94,6 +96,7 @@
 						<option name="class_year" value="Β' Τάξη Διπλώματος">Β' Τάξη Διπλώματος</option>
 					</select>
 					<label for="class_year">Τάξη φοίτησης:</label>
+					<p class="infoText">Eάν δε τη γνωρίζετε, συμβουλευτείτε τη Γραμματεία της Σχολής στο τηλέφωνο 6983380631.</p>
 					<div class="svgContainer">
 						<i class="fa-solid fa-user-graduate"></i>
 					</div>
