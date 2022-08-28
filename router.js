@@ -1,6 +1,11 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const router = require("express").Router();
 const xlsx = require("xlsx");
 const createpdf = require("./pdf.js");
+const hashedPwd = require("process").env.HASH;
+const sendRegistrations = require("./sendFiles.js");
+const { scryptSync } = require("crypto");
 
 const postQueue = [];
 const sleep = async ms => new Promise(res => setTimeout(res, ms));
@@ -10,10 +15,17 @@ router.post("/post_registration", (req, res) => {
 	postQueue.push({ id: ++counter, data: Object.assign({}, req.body), cb: code => res.status(code).send() }); // make copy of the post body
 });
 
+router.post("/get_registrations", (req, res) => {
+	const [pwdHash, salt] = hashedPwd.split(":");
+	const newHash = scryptSync(req.body.pwd, salt, 64).toString("hex");
+	if (newHash !== pwdHash) return res.status(400).send();
+	res.json(sendRegistrations());
+});
+
 (async function () {
 	let wb, sheet;
 	try {
-		wb = xlsx.readFile("newData.xlsx");
+		wb = xlsx.readFile("./registrations/Eγγραφές.xlsx");
 		sheet = wb.Sheets["Εγγραφές"];
 	} catch (error) {
 		wb = xlsx.utils.book_new();
@@ -29,7 +41,7 @@ router.post("/post_registration", (req, res) => {
 			xlsx.utils.sheet_add_json(sheet, [...xlsx.utils.sheet_to_json(sheet), data]);
 			const newWb = xlsx.utils.book_new();
 			xlsx.utils.book_append_sheet(newWb, sheet, "Εγγραφές");
-			xlsx.writeFile(newWb, "newData.xlsx");
+			xlsx.writeFile(newWb, "./registrations/Eγγραφές.xlsx");
 			createpdf(data, id);
 			cb(200); //Send ok response
 		} catch (err) {

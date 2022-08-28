@@ -6,21 +6,8 @@ document.querySelectorAll(".formSubmit").forEach(el => el.addEventListener("clic
 
 addRegister.addEventListener("submit", async e => {
 	e.preventDefault();
-	const {
-		id,
-		last_name,
-		name,
-		father_name,
-		birth_year,
-		address,
-		telephone,
-		phonenumber,
-		email,
-		reg_year,
-		class_year,
-		teacher,
-		addRegisterSubmit
-	} = e.target.elements;
+	const { id, last_name, name, father_name, birth_year, address, telephone, phonenumber, email, class_year, teacher, addRegisterSubmit } =
+		e.target.elements;
 	const data = {
 		ΑΜ: id.value,
 		Επώνυμο: last_name.value,
