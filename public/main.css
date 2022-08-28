@@ -205,7 +205,9 @@ p {
 .submitContainer {
 	--fs: 1.2rem;
 	position: relative;
+	place-self: start;
 	display: grid;
+	width: max-content;
 	height: 100%;
 	grid-template-rows: 20% 15%;
 	place-items: center;

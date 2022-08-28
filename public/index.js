@@ -31,7 +31,7 @@ addRegister.addEventListener("submit", async e => {
 		Σταθερό: telephone.value,
 		Κινητό: phonenumber.value,
 		Email: email.value,
-		Έτος_Εγγραφής: reg_year.value,
+		Έτος_Εγγραφής: "2022-2023",
 		Τάξη: class_year.value,
 		Καθηγητής: teacher.value
 	};
