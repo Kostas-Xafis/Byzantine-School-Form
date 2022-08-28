@@ -1,19 +1,40 @@
-const Router = require("express").Router();
+const router = require("express").Router();
 const xlsx = require("xlsx");
 
-//* Reading the raw data from file
-const a = [
-	{ bob: 10, alice: 20 },
-	{ bob: 20, alice: 30 }
-];
-const sheet = xlsx.utils.json_to_sheet(a);
-const wb = xlsx.utils.book_new();
-xlsx.utils.book_append_sheet(wb, sheet, "sheet1");
-xlsx.writeFile(wb, "newData.xlsx");
+const postQueue = [];
+const sleep = async ms => new Promise(res => setTimeout(res, ms));
 
-Router.post("/post_registration", (req, res) => {
-	console.log(req.body);
-	return res.status(200).send();
+router.post("/post_registration", (req, res) => {
+	postQueue.push({ data: Object.assign({}, req.body), cb: code => res.status(code).send() }); // make copy of the post body
 });
 
-module.exports = Router;
+(async function () {
+	let wb, sheet;
+	try {
+		wb = xlsx.readFile("newData.xlsx");
+		sheet = wb.Sheets["Εγγραφές"];
+	} catch (error) {
+		wb = xlsx.utils.book_new();
+		sheet = xlsx.utils.json_to_sheet([{}]);
+	}
+	while (true) {
+		try {
+			if (postQueue.length === 0) {
+				await sleep(500);
+				continue;
+			}
+			const { data, cb } = postQueue.shift();
+			xlsx.utils.sheet_add_json(sheet, [...xlsx.utils.sheet_to_json(sheet), data]);
+
+			const newWb = xlsx.utils.book_new();
+			xlsx.utils.book_append_sheet(newWb, sheet, "Εγγραφές");
+			xlsx.writeFile(newWb, "newData.xlsx");
+
+			cb(200); //Send response ok
+		} catch (err) {
+			cb(400);
+		}
+	}
+})();
+
+module.exports = router;
