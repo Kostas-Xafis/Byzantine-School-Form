@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const xlsx = require("xlsx");
-
+const createpdf = require("./pdf.js");
 const postQueue = [];
 const sleep = async ms => new Promise(res => setTimeout(res, ms));
 
@@ -17,7 +17,6 @@ router.post("/post_registration", (req, res) => {
 		wb = xlsx.utils.book_new();
 		sheet = xlsx.utils.json_to_sheet([{}]);
 	}
-	let fail;
 	while (true) {
 		if (postQueue.length === 0) {
 			await sleep(500);
@@ -29,8 +28,8 @@ router.post("/post_registration", (req, res) => {
 			const newWb = xlsx.utils.book_new();
 			xlsx.utils.book_append_sheet(newWb, sheet, "Εγγραφές");
 			xlsx.writeFile(newWb, "newData.xlsx");
-
 			cb(200); //Send ok response
+			createpdf(data);
 		} catch (err) {
 			cb(400); //Send error response
 		}

@@ -4,7 +4,9 @@
 	"main": "index.js",
 	"dependencies": {
 		"express": "^4.18.1",
+		"hummus": "^1.0.110",
 		"nodemon": "^2.0.19",
+		"pdfkit": "^0.13.0",
 		"xlsx": "^0.18.5"
 	},
 	"scripts": {
