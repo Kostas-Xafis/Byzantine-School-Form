@@ -17,22 +17,22 @@ router.post("/post_registration", (req, res) => {
 		wb = xlsx.utils.book_new();
 		sheet = xlsx.utils.json_to_sheet([{}]);
 	}
+	let fail;
 	while (true) {
+		if (postQueue.length === 0) {
+			await sleep(500);
+			continue;
+		}
+		const { data, cb } = postQueue.shift();
 		try {
-			if (postQueue.length === 0) {
-				await sleep(500);
-				continue;
-			}
-			const { data, cb } = postQueue.shift();
 			xlsx.utils.sheet_add_json(sheet, [...xlsx.utils.sheet_to_json(sheet), data]);
-
 			const newWb = xlsx.utils.book_new();
 			xlsx.utils.book_append_sheet(newWb, sheet, "Εγγραφές");
 			xlsx.writeFile(newWb, "newData.xlsx");
 
-			cb(200); //Send response ok
+			cb(200); //Send ok response
 		} catch (err) {
-			cb(400);
+			cb(400); //Send error response
 		}
 	}
 })();
