@@ -12,7 +12,6 @@ const portNum = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", express.static("public", { index: "index.html" })); //Serve the /public directory as static files with the main html being "frontend.html"
-console.log("Aaaaaaaaaa");
 (async function () {
 	try {
 		// const routes = await router();

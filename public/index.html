@@ -14,7 +14,7 @@
 			<p class="title mdHeader">Φόρμα Εγγραφής</p>
 			<form class="forms">
 				<div class="formInputContainer">
-					<input type="text" id="LastName" name="LastName" required />
+					<input type="text" id="last_name" name="LastName" required />
 					<label for="LastName">Επώνυμο:</label>
 					<div class="svgContainer">
 						<i class="fa-solid fa-user"></i>
@@ -35,7 +35,7 @@
 					</div>
 				</div>
 				<div class="formInputContainer">
-					<input type="number" id="birth_year" name="birth_year" min="1922" step="2022" inputmode="numeric" required />
+					<input type="number" id="birth_year" name="birth_year" min="1922" max="2022" inputmode="numeric" required />
 					<label for="birth_year">Έτος Γέννησης:</label>
 					<div class="svgContainer">
 						<i class="fa-solid fa-calendar-days"></i>
@@ -49,17 +49,17 @@
 					</div>
 				</div>
 				<div class="formInputContainer">
-					<input type="tel" id="telephone" name="telephone" required />
+					<input type="number" id="telephone" name="telephone" required />
 					<label for="telephone">Σταθερό Τηλέφωνο:</label>
 					<div class="svgContainer">
-						<i class="fa-solid fa-phone-intercom"></i>
+						<i class="fa-solid fa-phone"></i>						
 					</div>
 				</div>
 				<div class="formInputContainer">
-					<input type="tel" id="phonenumber" name="phonenumber" required />
+					<input type="number" id="phonenumber" name="phonenumber" required />
 					<label for="phonenumber">Κινητό:</label>
 					<div class="svgContainer">
-						<i class="fa-solid fa-phone"></i>
+						<i class="fa-solid fa-mobile-screen"></i>
 					</div>
 				</div>
 				<div class="formInputContainer">
@@ -70,7 +70,7 @@
 					</div>
 				</div>
 				<div class="formInputContainer">
-					<input type="text" id="reg_year" name="reg_year" value="2022-2023" readonly />
+					<input type="text" id="reg_year" name="reg_year" value="2022-2023" readonly required />
 					<label for="reg_year">Έτος Εγγραφής:</label>
 					<div class="svgContainer">
 						<i class="fa-solid fa-calendar-days"></i>

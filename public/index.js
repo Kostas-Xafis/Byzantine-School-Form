@@ -1,27 +1,37 @@
 const addRegister = document.getElementById("addRegisterForm");
-const faIcons = {
-	title: "fa-quote-left",
-	author: "fa-user",
-	price: "fa-euro-sign",
-	genre: "fa-masks-theater"
-};
-const bookAttrName = {
-	title: "Title:",
-	author: "Author:",
-	price: "Price:",
-	genre: "Genre:"
-};
-document.getElementById("genre").addEventListener("change", e => e.target.blur());
+
+document.getElementById("teacher").addEventListener("change", e => e.target.blur());
+document.getElementById("class_year").addEventListener("change", e => e.target.blur());
 document.querySelectorAll(".formSubmit").forEach(el => el.addEventListener("click", () => el.blur()));
 
 addRegister.addEventListener("submit", async e => {
 	e.preventDefault();
-	const { author, title, price, genre, addRegisterSubmit } = e.target.elements;
+	const {
+		last_name,
+		name,
+		father_name,
+		birth_year,
+		address,
+		telephone,
+		phonenumber,
+		email,
+		reg_year,
+		class_year,
+		teacher,
+		addRegisterSubmit
+	} = e.target.elements;
 	const data = {
-		author: author.value,
-		title: title.value,
-		price: Number(price.value),
-		genre: genre.value
+		last_name: last_name.value,
+		name: name.value,
+		father_name: father_name.value,
+		birth_year: birth_year.value,
+		address: address.value,
+		telephone: telephone.value,
+		phonenumber: phonenumber.value,
+		email: email.value,
+		reg_year: reg_year.value,
+		class_year: class_year.value,
+		teacher: teacher.value
 	};
 
 	try {
