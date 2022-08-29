@@ -198,6 +198,52 @@ p {
 	transform: scale(1, 0.4);
 }
 
+#tosContainer {
+	place-self: center;
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-rows: 20% 60%;
+	grid-template-columns: 1fr 1fr;
+}
+
+#tosContainer > label {
+	align-self: center;
+	grid-column: 1;
+	font-size: 1.3rem;
+}
+
+#checkbox {
+	place-self: center start;
+	grid-column: 2;
+	width: 1.5rem;
+	height: 1.5rem;
+	display: grid;
+	place-items: center;
+	border-radius: 15%;
+	border: 2px solid var(--dk-txt-col-t8);
+
+	transition: 200ms background linear;
+}
+
+.agree {
+	background: var(--dk-txt-col-t8);
+}
+
+#checkbox > i {
+	font-weight: 1.3rem;
+	color: white;
+}
+
+#tosContainer > p {
+	padding: 0.3rem;
+	grid-column: 1/3;
+	font-weight: bold;
+	font-size: 0.8rem;
+	overflow-y: scroll;
+	box-shadow: 1px 1px 5px 1px var(--dk-txt-col-t3) inset, -1px -1px 5px 1px var(--dk-txt-col-t3) inset;
+}
+
 /* 
 ============ Submit Form ============
 */

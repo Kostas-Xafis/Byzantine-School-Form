@@ -1,4 +1,5 @@
 const addRegister = document.getElementById("addRegisterForm");
+const checkbox = document.getElementById("checkbox");
 
 document.getElementById("teacher").addEventListener("change", e => e.target.blur());
 document.getElementById("class_year").addEventListener("change", e => e.target.blur());
@@ -44,4 +45,11 @@ addRegister.addEventListener("submit", async e => {
 	} catch (error) {
 		console.error("Connection error:", error);
 	}
+});
+
+let agree = false;
+checkbox.addEventListener("click", e => {
+	agree = !agree;
+	if (agree) checkbox.classList.add("agree");
+	else checkbox.classList.remove("agree");
 });

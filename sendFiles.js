@@ -1,10 +1,14 @@
 const AdmZip = require("adm-zip");
-
-const sendRegistrations = () => {
+const { getFiles } = require("./storeFile");
+const sendRegistrations = async db => {
 	const zip = new AdmZip();
-	zip.addLocalFolder("./registrations");
+	const fileBuffers = await getFiles(db);
+	for (let i = 0; i < fileBuffers.length - 1; i++) {
+		zip.addFile(`pdf${i + 1}.pdf`, fileBuffers[i]);
+	}
+
 	const data = zip.toBuffer().toJSON();
-	return data;
+	return { zip: data, excel: fileBuffers.pop() };
 };
 
 module.exports = sendRegistrations;
