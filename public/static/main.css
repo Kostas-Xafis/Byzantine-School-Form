@@ -1,5 +1,26 @@
 @import url("//use.fontawesome.com/releases/v6.1.2/css/all.css");
 
+@font-face {
+	font-weight: bold;
+	font-family: "THOMADAKI1";
+	src: url("./fonts/3-2-2003_THOMADAKIANNA2003.TTF");
+}
+
+@font-face {
+	font-family: "THOMADAKI2";
+	src: url("./fonts/2003_ANNA_BYZANT.TTF");
+}
+
+@font-face {
+	font-family: "THOMADAKI3";
+	src: url("./fonts/2003_ANNA_BYZANT_0.TTF");
+}
+
+@font-face {
+	font-family: "ANAKTORIA";
+	src: url("./fonts/ANAKTORIA.OTF");
+}
+
 /* 
 ============ Globals ============
 */
@@ -8,6 +29,8 @@
 	--dk-txt-col: hsl(0, 0%, 15%);
 	--dk-txt-col-t2: hsla(0, 0%, 15%, 20%);
 	--dk-txt-col-t3: hsla(0, 0%, 15%, 30%);
+	--dk-txt-col-t4: hsla(0, 0%, 15%, 40%);
+	--dk-txt-col-t5: hsla(0, 0%, 15%, 50%);
 	--dk-txt-col-t6: hsla(0, 0%, 15%, 60%);
 	--dk-txt-col-t8: hsla(0, 0%, 15%, 80%);
 	--success-green: hsl(144, 100%, 43%);
@@ -44,7 +67,8 @@ input::-webkit-inner-spin-button {
 body {
 	height: 100vh;
 	display: grid;
-	grid-template-rows: 100%;
+	grid-template-rows: 30% 100%;
+	column-gap: 2rem;
 }
 
 p {
@@ -68,10 +92,79 @@ p {
 	background: var(--dk-txt-col-t3);
 }
 
-/* 
-============ Title ============
+/*
+!============ School Title ============
 */
 
+#SchoolName {
+	padding-top: 2rem;
+	display: grid;
+	grid-template-columns: 25% 75%;
+	grid-template-rows: repeat(6, auto);
+}
+
+#logo {
+	place-self: center end;
+	grid-column: 1;
+	grid-row: 1 / end;
+	width: min(200px, 75%);
+	aspect-ratio: 1/1;
+}
+
+.NameRow {
+	grid-column: 2;
+	font-size: 1.1rem;
+	text-align: center;
+}
+
+.SchoolTitle {
+	position: relative;
+	font-family: "THOMADAKI1", "Poppins";
+	color: hsl(0, 91%, 27%);
+	background-color: transparent;
+}
+
+.SchoolCert {
+	font-weight: bold;
+	font-family: "ANAKTORIA", "Poppins";
+	color: hsl(0, 0%, 5%);
+}
+#NameRow1 {
+	--fs: 1.6rem;
+	font-size: 1.6rem;
+}
+#NameRow2,
+#NameRow3,
+#NameRow4 {
+	--fs: 1.4rem;
+	font-size: 1.4rem;
+}
+
+#NameRow1::before {
+	content: "ΣΧΟΛΗ ΒΥΖΑΝΤΙΝΗΣ ΚΑΙ ΠΑΡΑΔΟΣΙΑΚΗΣ ΜΟΥΣΙΚΗΣ";
+}
+#NameRow2::before {
+	content: "ΙΕΡΟΥ ΝΑΟΥ ΜΕΤΑΜΟΡΦΩΣΕΩΣ ΤΟΥ ΣΩΤΗΡΟΣ";
+}
+#NameRow3::before {
+	content: "ΔΗΜΟΥ ΜΕΤΑΜΟΡΦΩΣΗΣ";
+}
+
+.SchoolTitle::before {
+	position: absolute;
+	top: 0px;
+	left: 2px;
+	bottom: 2px;
+	right: 0px;
+	z-index: -1;
+	color: var(--dk-txt-col-t3);
+	font-size: var(--fs);
+	font-family: "THOMADAKI1", "Poppins";
+}
+
+/* 
+!============ Form Title ============
+*/
 .title {
 	text-shadow: -1px 1px 1px var(--dk-txt-col-t3);
 }
@@ -90,13 +183,17 @@ p {
 	font-size: 1.8rem;
 }
 
+#dataMention {
+	font-weight: bold;
+}
+
 /* 
-============ Add Book Form ============
+!============ Student Form ============
 */
 
 .formContainer {
 	display: grid;
-	grid-template-rows: 10% 10% 50%;
+	grid-template-rows: 15% 5% 10% 50%;
 	grid-template-columns: min(100%, 1024px);
 	padding-left: 2rem;
 }
@@ -107,7 +204,7 @@ p {
 	grid-template-columns: 1fr 1fr;
 	grid-auto-rows: 50%;
 	place-items: center;
-	gap: 0 2rem;
+	gap: 1rem 2rem;
 }
 
 .formInputContainer {
@@ -357,7 +454,7 @@ p {
 #classContainer {
 	position: relative;
 	display: grid;
-	grid-template-rows: 20% 1fr 1fr 1fr;
+	grid-template-rows: 20% 20% 1fr 1fr 1fr;
 	grid-template-columns: max-content;
 }
 
@@ -386,6 +483,10 @@ p {
 	font-size: 1.2rem;
 }
 
+.classSubContainer:nth-of-type(1) > p {
+	padding-left: 4px;
+}
+
 .classSubContainer > div {
 	justify-self: start;
 }
@@ -397,9 +498,10 @@ p {
 .submitContainer {
 	--fs: 1.2rem;
 	position: relative;
-	place-self: start;
+	place-self: center;
 	display: grid;
 	width: max-content;
+	padding-top: 10%;
 	height: 100%;
 	grid-template-rows: 20% 15%;
 	place-items: center;
@@ -523,7 +625,6 @@ p {
 
 	top: calc(27.5% - var(--ifs) / 2);
 	left: calc(50% - var(--ifs) / 2);
-
 	padding: 0;
 	z-index: -2;
 
@@ -565,4 +666,23 @@ p {
 
 #getRegistrationsForm {
 	grid-template-rows: 20% 50%;
+}
+
+#author {
+	display: grid;
+	width: 100%;
+	height: 100%;
+	grid-template-columns: 100%;
+	place-items: center;
+}
+
+#author > p {
+	font-weight: bold;
+	font-size: 1rem;
+	color: var(--dk-txt-col-t5);
+}
+
+#author > p > span {
+	color: hsl(144, 80%, 32%);
+	opacity: 70%;
 }

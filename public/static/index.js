@@ -84,7 +84,6 @@ classCheckboxes.forEach((checkbox, i) => {
 			countClasses -= 1 << i;
 			checkbox.classList.remove("agree");
 		}
-		console.log(countClasses);
 		const inputCheckbox = document.getElementById("class");
 		if (countClasses > 0) inputCheckbox.checked = true;
 		else inputCheckbox.checked = false;

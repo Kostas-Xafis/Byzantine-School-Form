@@ -4,14 +4,28 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Αίτηση Εγγραφής Βυζαντινής Μουσικής</title>
+		<title>Αίτηση Εγγραφής Βυζαντινής και Παραδοσιακής Μουσικής</title>
 		<script defer src="index.js"></script>
 		<link rel="stylesheet" href="./main.css" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins" />
+		<meta name="facebook:image" content="https://webtechnologies-349709.nw.r.appspot.com/logo.jpg">
+		<meta name="viber:image" content="https://webtechnologies-349709.nw.r.appspot.com/logo.jpg">
+		<link rel="icon" type="image/png" href="./favicon.jpg"/>
 	</head>
 	<body>
+		<div id="SchoolName">
+			<img id="logo" src="./logo.jpg" alt="Λογότυπο Σχολής Βυζαντινής και Παραδοσιακής Μουσικής">
+			<p class="NameRow SchoolTitle" id="NameRow1">ΣΧΟΛΗ ΒΥΖΑΝΤΙΝΗΣ ΚΑΙ ΠΑΡΑΔΟΣΙΑΚΗΣ ΜΟΥΣΙΚΗΣ</p>
+			<p class="NameRow SchoolTitle" id="NameRow2">ΙΕΡΟΥ ΝΑΟΥ ΜΕΤΑΜΟΡΦΩΣΕΩΣ ΤΟΥ ΣΩΤΗΡΟΣ</p>
+			<p class="NameRow SchoolTitle" id="NameRow3">ΔΗΜΟΥ ΜΕΤΑΜΟΡΦΩΣΗΣ</p>
+			<p class="NameRow SchoolCert" id="NameRow4">ΑΝΕΓΝΩΡΙΣΜΕΝΗ ΥΠΟ ΤΟΥ ΚΡΑΤΟΥΣ</p>
+			<p class="NameRow SchoolCert" id="NameRow5">ΑΡ. ΙΔΡΥΤ. ΠΡΑΞΕΩΣ: 344/20-4-2016/Δ. ΜΕΤ/ΣΗΣ</p>
+			<p class="NameRow SchoolCert" id="NameRow6">& ΑΡ. ΤΡΟΠ. ΠΡΑΞΕΩΣ: 433/20/06/2022/ Δ. ΜΕΤ/ΣΗΣ</p>
+			<p class="NameRow SchoolCert" id="NameRow7">ΦΕΚ: τ.Β΄/1427/20.05.2016 & τ.Β´/3730/14.07.2022</p>
+		</div>
 		<div id="addRegisterForm" class="formContainer">
-			<p class="title mdHeader">Αίτηση Εγγραφής Σχολής Βυζαντινής και Παραδοσιακής Μουσικής</p>
+			<p class="title mdHeader">Αίτηση Εγγραφής </p>
+			<p id="dataMention">Τα στοιχεία να καταχωρηθούν όπως αναγράφονται στην αστυνομική ταυτότητα.</p>
 			<p class="infoText">
 				Η αίτηση συμπληρώνεται από το σπουδαστή-τρια, εφόσον είναι ενήλικας, διαφορετικά από τον κηδεμόνα του/της.
 			</p>
@@ -35,7 +49,7 @@
 					<label for="id">Αριθμός Μητρώου:</label>
 					<p class="infoText">
 						Eάν δε τον γνωρίζετε, συμβουλευτείτε τη Γραμματεία της Σχολής στο τηλέφωνο 6983380631. Οι πρωτοετείς σπουδαστές θα
-						συμπληρώσουν 3 μηδενικά ως αριθμό μητρώου
+						συμπληρώσουν 3 μηδενικά ως αριθμό μητρώου.
 					</p>
 					<div class="svgContainer">
 						<i class="fa-solid fa-id-card"></i>
@@ -125,7 +139,7 @@
 						<option name="class_year" value="Β' Τάξη Διπλώματος">Β' Τάξη Διπλώματος</option>
 					</select>
 					<label for="class_year">Τάξη φοίτησης:</label>
-					<p class="infoText">Eάν δε τη γνωρίζετε, συμβουλευτείτε τη Γραμματεία της Σχολής στο τηλέφωνο 6983380631.</p>
+					<p class="infoText">Eάν δε τη γνωρίζετε, συμβουλευτείτε τη Γραμματεία της Σχολής στο τηλέφωνο 6983380631 .</p>
 					<div class="svgContainer">
 						<i class="fa-solid fa-user-graduate"></i>
 					</div>
@@ -175,21 +189,24 @@
 					<input type="text" name="otherTeacher" id="otherTeacherInput" />
 					<div class="svgContainer">
 						<i class="fa-solid fa-user"></i>
-					</div>
+					</div>					
 				</div>
-				<div class="formInputContainer" id="classContainer">
+				<div class="formInputContainer infoContainer" id="classContainer">
 					<input type="checkbox" id="class" name="class" required />
-					<label for="class">Μάθημα:</label>
+					<label for="class">Τμήματα που επιθυμώ να παρακολουθήσω:</label>
+					<p class="infoText">
+						Έχετε την δυνατότητα να επιλέξετε παραπάνω από ένα τμήμα.
+					</p>
 					<div class="classSubContainer">
-						<p>Βυζαντινής Μουσικής:</p>
+						<p>1) Βυζαντινής Μουσικής:</p>
 						<div class="checkbox"><i class="fa-solid fa-check"></i></div>
 					</div>
 					<div class="classSubContainer">
-						<p>Παραδοσιακής Μουσικής - Οργάνων:</p>
+						<p>2) Παραδοσιακής Μουσικής - Οργάνων:</p>
 						<div class="checkbox"><i class="fa-solid fa-check"></i></div>
 					</div>
 					<div class="classSubContainer">
-						<p>Ευρωπαϊκής Μουσικής:</p>
+						<p>3) Ευρωπαϊκής Μουσικής:</p>
 						<div class="checkbox"><i class="fa-solid fa-check"></i></div>
 					</div>
 				</div>
@@ -217,6 +234,10 @@
 					</div>
 					<div class="successMsg">Επιτυχής Εγγραφή</div>
 					<div class="errorMsg">Αποτυχία Εγγραφής</div>
+				</div>
+				<div id="author">
+					<p> <span>Powered By:</span> Κωνσταντίνος Χαφής - Σπουδαστή της Σχολής Βυζαντινής Μουσικής Ι.Ν. Μεταμορφώσεως του Σωτήρος </p>
+					<!-- <p>Η ιστοσελίδα αυτή υλοποιήθηκε από τον σπουδαστή της Σχολής Βυζαντινής Μουσικής Χαφή Κωνσταντίνο και με τη βοήθεια και τις ευλογίες του π.Σωτηρίου Αλεβιζάκη</p> -->
 				</div>
 			</form>
 		</div>
