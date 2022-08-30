@@ -1,5 +1,12 @@
 const addRegister = document.getElementById("addRegisterForm");
-const checkbox = document.getElementById("checkbox");
+const toscheckbox = document.getElementById("tosfakecheckbox");
+const classCheckboxes = [...document.querySelectorAll(".classSubContainer > .checkbox")];
+const classes = {
+	1: false,
+	2: false,
+	3: false
+};
+let countClasses = 0;
 
 document.getElementById("teacher").addEventListener("change", e => e.target.blur());
 document.getElementById("class_year").addEventListener("change", e => e.target.blur());
@@ -13,7 +20,10 @@ addRegister.addEventListener("submit", async e => {
 		name,
 		father_name,
 		birth_year,
-		address,
+		road,
+		number,
+		TK,
+		region,
 		telephone,
 		phonenumber,
 		email,
@@ -22,22 +32,24 @@ addRegister.addEventListener("submit", async e => {
 		otherTeacher,
 		addRegisterSubmit
 	} = e.target.elements;
-	console.log(teacher.value, otherTeacher.value);
 	const data = {
-		ΑΜ: id.value,
-		Επώνυμο: last_name.value,
-		Όνομα: name.value,
-		Πατρώνυμο: father_name.value,
-		Έτος_Γέννησης: birth_year.value,
-		Διεύθυνση: address.value,
-		Σταθερό: telephone.value,
-		Κινητό: phonenumber.value,
+		AM: id.value,
+		LastName: last_name.value,
+		FirstName: name.value,
+		FatherName: father_name.value,
+		BirthYear: birth_year.value,
+		Road: road.value,
+		Number: number.value,
+		TK: TK.value,
+		Region: region.value,
+		Telephone: telephone.value,
+		Cellphone: phonenumber.value,
 		Email: email.value,
-		Έτος_Εγγραφής: "2022-2023",
-		Τάξη: class_year.value,
-		Καθηγητής: teacher.value !== "null" ? teacher.value : otherTeacher.value
+		RegistrationYear: "2022-2023",
+		ClassYear: class_year.value,
+		Teacher: teacher.value !== "null" ? teacher.value : otherTeacher.value,
+		Classes: countClasses
 	};
-
 	try {
 		const res = await fetch("/post_registration", {
 			method: "post",
@@ -61,17 +73,35 @@ addRegister.addEventListener("submit", async e => {
 	}
 });
 
+// Classes checkbox
+classCheckboxes.forEach((checkbox, i) => {
+	checkbox.addEventListener("click", e => {
+		classes[i] = !classes[i];
+		if (classes[i]) {
+			countClasses += 1 << i;
+			checkbox.classList.add("agree");
+		} else {
+			countClasses -= 1 << i;
+			checkbox.classList.remove("agree");
+		}
+		console.log(countClasses);
+		const inputCheckbox = document.getElementById("class");
+		if (countClasses > 0) inputCheckbox.checked = true;
+		else inputCheckbox.checked = false;
+	});
+});
+
 // TOS agreement
 let agree = false;
-checkbox.addEventListener("click", e => {
+toscheckbox.addEventListener("click", e => {
 	const inputCheckbox = document.getElementById("tosCheckbox");
 	agree = !agree;
 	if (agree) {
 		inputCheckbox.checked = true;
-		checkbox.classList.add("agree");
+		toscheckbox.classList.add("agree");
 	} else {
 		inputCheckbox.checked = false;
-		checkbox.classList.remove("agree");
+		toscheckbox.classList.remove("agree");
 	}
 });
 

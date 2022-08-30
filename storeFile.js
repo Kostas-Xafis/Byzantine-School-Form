@@ -1,48 +1,34 @@
-const { randomBytes } = require("crypto");
-const dotenv = require("dotenv");
-dotenv.config();
-// const enc_key = Buffer.from(process.env.enc_key || "", "base64");
-
-const storeFile = async (db, str, table) => {
-	if (table == "excel") {
-		const query = `DELETE FROM excel `;
-		await db.execute(query);
-	}
-	const query = `INSERT INTO ${table} (file, iv) VALUES (?, ?)`;
-	const iv = randomBytes(8);
-	// const ciph = createCipheriv("aes-256-gcm", enc_key, iv);
-	// const encData = ciph.update(str, "utf8", "hex") + ciph.final("hex");
-	const args = [str, iv];
+const storeStudent = async (db, student) => {
+	const query = `INSERT INTO students (AM, LastName, FirstName, FatherName, BirthYear, Road, Number, TK, Region, Telephone, Cellphone, Email, RegistrationYear, ClassYear, Teacher, Classes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+	const args = [
+		student.AM,
+		student.LastName,
+		student.FirstName,
+		student.FatherName,
+		student.BirthYear,
+		student.Road,
+		student.Number,
+		student.TK,
+		student.Region,
+		student.Telephone,
+		student.Cellphone,
+		student.Email,
+		student.RegistrationYear,
+		student.ClassYear,
+		student.Teacher,
+		student.Classes
+	];
 	await db.execute(query, args);
 };
 
-const getFiles = async db => {
+const getStudents = async db => {
 	try {
-		const query = "SELECT * FROM regs ";
-		const query2 = "SELECT * FROM excel ";
-		if (db == undefined || db == null) console.log("The Database object is dead");
-		const [pdfs] = await db.execute(query);
-		const [[excel]] = await db.execute(query2);
-		const fileBlobs = [];
-		pdfs?.forEach(fileData => {
-			// const decipher = createDecipheriv("aes-256-gcm", enc_key, fileData.iv);
-			// fileBlobs.push(decipher.update(fileData.file, "hex", "utf8"));
-			// if (a == 1) {
-			// 	console.log("Result buffer:", Buffer.from(fileBlobs[0], "utf8"));
-			// 	console.log("Result buffer:", Buffer.from(fileBlobs[0], "binary"));
-			// 	// const pdfDoc = await PDFDocument.load();
-			// 	await fs.writeFile("./out2.pdf", Buffer.from(fileBlobs[0], "utf8"));
-			// 	a--;
-			// }
-			fileBlobs.push(fileData?.file);
-		});
-
-		fileBlobs.push(excel.file.toString());
-		return fileBlobs;
+		const query2 = "SELECT * FROM students ";
+		const [students] = await db.execute(query2);
+		return students;
 	} catch (err) {
-		console.error("THERE IS AN ERROR IN THE GETFILES FUNCTION FOR SOME REASON");
 		console.log(err);
 	}
 };
 
-module.exports = { storeFile, getFiles };
+module.exports = { storeStudent, getStudents };

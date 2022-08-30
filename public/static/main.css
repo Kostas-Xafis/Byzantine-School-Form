@@ -8,6 +8,7 @@
 	--dk-txt-col: hsl(0, 0%, 15%);
 	--dk-txt-col-t2: hsla(0, 0%, 15%, 20%);
 	--dk-txt-col-t3: hsla(0, 0%, 15%, 30%);
+	--dk-txt-col-t6: hsla(0, 0%, 15%, 60%);
 	--dk-txt-col-t8: hsla(0, 0%, 15%, 80%);
 	--success-green: hsl(144, 100%, 43%);
 	--error-red: hsl(0, 100%, 69%);
@@ -129,7 +130,8 @@ p {
 	font-weight: bold;
 }
 
-.formInputContainer > label {
+.formInputContainer > label,
+.addressSubContainer > label {
 	--fs: 1.3rem;
 	position: relative;
 	grid-row: 1;
@@ -137,7 +139,8 @@ p {
 	width: max-content;
 }
 
-.formInputContainer > label::after {
+.formInputContainer > label::after,
+.addressSubContainer > label::after {
 	content: "";
 	position: absolute;
 	top: calc(var(--fs) + 4px); /*label height + offset*/
@@ -155,7 +158,8 @@ p {
 }
 
 .formInputContainer > input,
-.formInputContainer > select {
+.formInputContainer > select,
+.addressSubContainer > input {
 	grid-row: 2;
 
 	padding: 0.3rem 0;
@@ -170,7 +174,8 @@ p {
 	background: white;
 }
 
-.formInputContainer > input::placeholder {
+.formInputContainer > input::placeholder,
+.addressSubContainer > input::placeholder {
 	font-size: 1rem;
 }
 
@@ -189,20 +194,85 @@ p {
 }
 
 .formInputContainer > input:focus,
-.formInputContainer > select:focus {
+.formInputContainer > select:focus,
+.addressSubContainer > input:focus,
+.addressSubContainer > select:focus {
 	box-shadow: 1px 1px 0px 1px var(--dk-txt-col-t3);
 }
 
 .formInputContainer > input:focus + label::after,
-.formInputContainer > select:focus + label::after {
+.formInputContainer > select:focus + label::after,
+.addressSubContainer > input:focus + label::after {
 	transform: scale(1, 0.4);
 }
+
+/* 
+!============ Submit Form ============
+*/
+#addressContainer {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: 20% 1fr 1fr;
+	column-gap: 1rem;
+}
+
+#addressContainer > #addressLabel {
+	grid-column: 1 / main-end;
+}
+
+.addressSubContainer {
+	position: relative;
+	display: grid;
+	grid-template-rows: 35% max-content;
+}
+.addressSubContainer > label {
+	--fs: 1.1rem;
+	grid-row: 1;
+	font-size: 1.1rem;
+}
+.addressSubContainer > label::after {
+	top: calc(var(--fs) + 2px); /*label height + offset*/
+	left: 1px;
+	right: 0px;
+	height: 3px;
+	width: 100%;
+
+	background-color: var(--dk-txt-col-t8);
+}
+.addressSubContainer > input {
+	grid-row: 2;
+	width: 100%;
+}
+
+.addressSubContainer > .svgContainer {
+	top: calc(35% + 0.3rem + (var(--fs) / 2)); /*Label height + padding height + half txt font-size to center it*/
+}
+
+#roadContainer {
+	grid-column: 1 / 3;
+}
+
+#numberContainer {
+	grid-column: 3 / 4;
+}
+
+#TKContainer {
+	grid-column: 1 / 2;
+}
+
+#regionContainer {
+	grid-column: 2 / 4;
+}
+/* 
+!============ Teacher Select ============
+*/
 
 #teachersContainer {
 	grid-template-rows: 20% max-content 20% max-content;
 }
 
 #otherTeacherLabel {
+	--fs: 1.1rem;
 	height: 100%;
 	grid-row: 3;
 	font-size: 1.1rem;
@@ -219,6 +289,10 @@ p {
 #teachersContainer > .otherTeacherSelected {
 	opacity: 1;
 }
+
+/* 
+!============ TOS Input ============
+*/
 
 #tosContainer {
 	place-self: center;
@@ -242,7 +316,7 @@ p {
 	font-size: 1.3rem;
 }
 
-#checkbox {
+.checkbox {
 	place-self: center start;
 	grid-column: 3;
 	width: 1.5rem;
@@ -256,11 +330,11 @@ p {
 }
 
 .agree {
-	background: var(--dk-txt-col-t8);
+	background: var(--dk-txt-col-t6);
 }
 
-#checkbox > i {
-	font-weight: 1.3rem;
+.checkbox > i {
+	font-size: 1rem;
 	color: white;
 }
 
@@ -277,7 +351,47 @@ p {
 }
 
 /* 
-============ Submit Form ============
+!============ Class Checkbox ============
+*/
+
+#classContainer {
+	position: relative;
+	display: grid;
+	grid-template-rows: 20% 1fr 1fr 1fr;
+	grid-template-columns: max-content;
+}
+
+#classContainer > label {
+	width: max-content;
+}
+
+#classContainer > #class {
+	all: unset;
+	position: absolute;
+	top: calc(1.3rem + 5px);
+	left: calc(1.3rem * 2);
+	width: 1px;
+	height: 1px;
+	opacity: 1;
+	z-index: -1;
+}
+
+.classSubContainer {
+	display: grid;
+	grid-template-columns: 95% 5%;
+	place-items: center start;
+}
+
+.classSubContainer > p {
+	font-size: 1.2rem;
+}
+
+.classSubContainer > div {
+	justify-self: start;
+}
+
+/* 
+!============ Submit Form ============
 */
 
 .submitContainer {

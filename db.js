@@ -23,7 +23,7 @@ module.exports = getDatabase = async () => {
 		console.log("Connected to database");
 		return db;
 	} catch (err) {
-		throw Error("Could not establish connection with the database");
+		console.error("Could not establish connection with the database");
 		console.error(err);
 	}
 };

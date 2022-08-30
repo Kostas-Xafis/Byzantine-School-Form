@@ -55,11 +55,35 @@
 						<i class="fa-solid fa-calendar-days"></i>
 					</div>
 				</div>
-				<div class="formInputContainer">
-					<input type="text" id="address" name="address" placeholder="Χλόης 1, 14452, Μεταμόρφωση" required />
-					<label for="address">Διεύθυνση Κατοικίας:</label>
-					<div class="svgContainer">
-						<i class="fa-solid fa-location-dot"></i>
+				<div class="formInputContainer" id="addressContainer">
+					<label id="addressLabel">Διεύθυνση Κατοικίας</label>
+					<div class="addressSubContainer" id="roadContainer">
+						<input type="text" id="road" name="road" placeholder="Χλοής" required />
+						<label for="road">Οδός:</label>
+						<div class="svgContainer">
+							<i class="fa-solid fa-location-dot"></i>
+						</div>
+					</div>
+					<div class="addressSubContainer" id="numberContainer">
+						<input type="number" id="number" name="number" placeholder="1" inputmode="numeric" required />
+						<label for="number">Αριθμός:</label>
+						<div class="svgContainer">
+							<i class="fa-solid fa-hashtag"></i>
+						</div>
+					</div>
+					<div class="addressSubContainer" id="TKContainer">
+						<input type="number" id="TK" name="TK" placeholder="14452" inputmode="numeric" required />
+						<label for="TK">T.K.:</label>
+						<div class="svgContainer">
+							<i class="fa-solid fa-hashtag"></i>
+						</div>
+					</div>
+					<div class="addressSubContainer" id="regionContainer">
+						<input type="text" id="region" name="region" placeholder="Μεταμόρφωση" required />
+						<label for="region">Δήμος/Περιοχή:</label>
+						<div class="svgContainer">
+							<i class="fa-solid fa-tree-city"></i>
+						</div>
 					</div>
 				</div>
 				<div class="formInputContainer">
@@ -109,6 +133,7 @@
 				<div class="formInputContainer" id="teachersContainer">
 					<select name="teacher" id="teacher" required>
 						<option name="teacher" value=""></option>
+						<option name="teacher" value="null">Άλλος καθηγητής που δεν αναγράφεται</option>
 						<option name="teacher" value="π. Αναστάσιος Τραϊφόρος">π. Αναστάσιος Τραϊφόρος</option>
 						<option name="teacher" value="π. Γεώργιος Φέλλιος">π. Γεώργιος Φέλλιος</option>
 						<option name="teacher" value="π. Δημήτριος Καρυτινός">π. Δημήτριος Καρυτινός</option>
@@ -144,25 +169,34 @@
 						<option name="teacher" value="Σωκράτης Χάρης">Σωκράτης Χάρης</option>
 						<option name="teacher" value="Χρήστος Πανάγου">Χρήστος Πανάγου</option>
 						<option name="teacher" value="Χρήστος Σαράντης">Χρήστος Σαράντης</option>
-						<option  name="teacher" value="null">Άλλος καθηγητής που δεν αναφέρεται παραπάνω</option>
 					</select>
 					<label for="teacher">Καθηγητής:</label>
 					<label id="otherTeacherLabel" for="otherTeacher">Εισάγετε το όνομα:</label>
-					<input type="text" name="otherTeacher" id="otherTeacherInput" >
+					<input type="text" name="otherTeacher" id="otherTeacherInput" />
 					<div class="svgContainer">
 						<i class="fa-solid fa-user"></i>
 					</div>
-					<!-- <div class="formInputContainer">
-						<input type="radio" id="instrument" name="instrument" required />
-						<label for="instrument">Όργανο/Μουσική:</label>
-						<div class="svgContainer">
-							<i class="fa-solid fa-at"></i>
-					</div> -->
+				</div>
+				<div class="formInputContainer" id="classContainer">
+					<input type="checkbox" id="class" name="class" required />
+					<label for="class">Μάθημα:</label>
+					<div class="classSubContainer">
+						<p>Βυζαντινής Μουσικής:</p>
+						<div class="checkbox"><i class="fa-solid fa-check"></i></div>
+					</div>
+					<div class="classSubContainer">
+						<p>Παραδοσιακής Μουσικής - Οργάνων:</p>
+						<div class="checkbox"><i class="fa-solid fa-check"></i></div>
+					</div>
+					<div class="classSubContainer">
+						<p>Ευρωπαϊκής Μουσικής:</p>
+						<div class="checkbox"><i class="fa-solid fa-check"></i></div>
+					</div>
 				</div>
 				<div id="tosContainer">
 					<label for="tos">Δέχομαι τους όρους: </label>
-					<input type="checkbox" name="tos" id="tosCheckbox" required>
-					<div id="checkbox">
+					<input type="checkbox" name="tos" id="tosCheckbox" required />
+					<div id="tosfakecheckbox" class="checkbox">
 						<i class="fa-solid fa-check"></i>
 					</div>
 					<p>
@@ -183,7 +217,7 @@
 					</div>
 					<div class="successMsg">Επιτυχής Εγγραφή</div>
 					<div class="errorMsg">Αποτυχία Εγγραφής</div>
-				</div>				
+				</div>
 			</form>
 		</div>
 	</body>
