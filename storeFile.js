@@ -1,5 +1,5 @@
 const storeStudent = async (db, student) => {
-	const query = `INSERT INTO students (AM, LastName, FirstName, FatherName, BirthYear, Road, Number, TK, Region, Telephone, Cellphone, Email, RegistrationYear, ClassYear, Teacher, Classes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+	const query = `INSERT INTO students (AM, LastName, FirstName, FatherName, BirthYear, Road, Number, TK, Region, Telephone, Cellphone, Email, RegistrationYear, ClassYear, Teacher, Classes, Date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 	const args = [
 		student.AM,
 		student.LastName,
@@ -16,7 +16,8 @@ const storeStudent = async (db, student) => {
 		student.RegistrationYear,
 		student.ClassYear,
 		student.Teacher,
-		student.Classes
+		student.Classes,
+		student.Date
 	];
 	await db.execute(query, args);
 };

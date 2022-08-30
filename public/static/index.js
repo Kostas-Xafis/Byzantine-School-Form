@@ -42,13 +42,14 @@ addRegister.addEventListener("submit", async e => {
 		Number: number.value,
 		TK: TK.value,
 		Region: region.value,
-		Telephone: telephone.value,
+		Telephone: telephone.value || "-",
 		Cellphone: phonenumber.value,
 		Email: email.value,
 		RegistrationYear: "2022-2023",
 		ClassYear: class_year.value,
 		Teacher: teacher.value !== "null" ? teacher.value : otherTeacher.value,
-		Classes: countClasses
+		Classes: countClasses,
+		Date: new Date().getTime() + ""
 	};
 	try {
 		const res = await fetch("/post_registration", {
