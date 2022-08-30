@@ -29,7 +29,7 @@ button {
 }
 input,
 select {
-	width: 25ch !important;
+	width: 25ch;
 	outline: none !important;
 }
 input[type="number"] {
@@ -125,7 +125,7 @@ p {
 .infoText {
 	padding-top: 0.5rem;
 	width: 50ch;
-	font-size: 0.9rem;
+	font-size: 0.7rem;
 	font-weight: bold;
 }
 
@@ -198,13 +198,42 @@ p {
 	transform: scale(1, 0.4);
 }
 
+#teachersContainer {
+	grid-template-rows: 20% max-content 20% max-content;
+}
+
+#otherTeacherLabel {
+	height: 100%;
+	grid-row: 3;
+	font-size: 1.1rem;
+	opacity: 0.001;
+	transition: 300ms opacity linear;
+}
+
+#otherTeacherInput {
+	grid-row: 4;
+	opacity: 0.001;
+	transition: 300ms opacity linear;
+}
+
+#teachersContainer > .otherTeacherSelected {
+	opacity: 1;
+}
+
 #tosContainer {
 	place-self: center;
 	width: 100%;
 	height: 100%;
 	display: grid;
 	grid-template-rows: 20% 60%;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr 1% 1fr;
+}
+
+#tosCheckbox {
+	opacity: 0;
+	width: 100%;
+	margin-left: 0.8rem;
+	z-index: -1;
 }
 
 #tosContainer > label {
@@ -215,7 +244,7 @@ p {
 
 #checkbox {
 	place-self: center start;
-	grid-column: 2;
+	grid-column: 3;
 	width: 1.5rem;
 	height: 1.5rem;
 	display: grid;
@@ -236,11 +265,14 @@ p {
 }
 
 #tosContainer > p {
-	padding: 0.3rem;
-	grid-column: 1/3;
+	justify-self: start;
+	width: 80%;
+	padding: 0.5rem;
+	grid-column: 1/4;
 	font-weight: bold;
-	font-size: 0.8rem;
+	font-size: 0.75rem;
 	overflow-y: scroll;
+	border-radius: 5px;
 	box-shadow: 1px 1px 5px 1px var(--dk-txt-col-t3) inset, -1px -1px 5px 1px var(--dk-txt-col-t3) inset;
 }
 

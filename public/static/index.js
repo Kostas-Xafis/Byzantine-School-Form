@@ -7,8 +7,22 @@ document.querySelectorAll(".formSubmit").forEach(el => el.addEventListener("clic
 
 addRegister.addEventListener("submit", async e => {
 	e.preventDefault();
-	const { id, last_name, name, father_name, birth_year, address, telephone, phonenumber, email, class_year, teacher, addRegisterSubmit } =
-		e.target.elements;
+	const {
+		id,
+		last_name,
+		name,
+		father_name,
+		birth_year,
+		address,
+		telephone,
+		phonenumber,
+		email,
+		class_year,
+		teacher,
+		otherTeacher,
+		addRegisterSubmit
+	} = e.target.elements;
+	console.log(teacher.value, otherTeacher.value);
 	const data = {
 		ΑΜ: id.value,
 		Επώνυμο: last_name.value,
@@ -21,7 +35,7 @@ addRegister.addEventListener("submit", async e => {
 		Email: email.value,
 		Έτος_Εγγραφής: "2022-2023",
 		Τάξη: class_year.value,
-		Καθηγητής: teacher.value
+		Καθηγητής: teacher.value !== "null" ? teacher.value : otherTeacher.value
 	};
 
 	try {
@@ -47,9 +61,36 @@ addRegister.addEventListener("submit", async e => {
 	}
 });
 
+// TOS agreement
 let agree = false;
 checkbox.addEventListener("click", e => {
+	const inputCheckbox = document.getElementById("tosCheckbox");
 	agree = !agree;
-	if (agree) checkbox.classList.add("agree");
-	else checkbox.classList.remove("agree");
+	if (agree) {
+		inputCheckbox.checked = true;
+		checkbox.classList.add("agree");
+	} else {
+		inputCheckbox.checked = false;
+		checkbox.classList.remove("agree");
+	}
+});
+
+//User select a teacher not specified in the list
+let otherTeacherSelected = false;
+document.getElementById("teacher").addEventListener("change", e => {
+	const teacher = e.target.value;
+	const input = document.getElementById("otherTeacherInput");
+	const label = document.getElementById("otherTeacherLabel");
+	if (teacher !== "null") {
+		if (!otherTeacherSelected) return;
+		otherTeacherSelected = false;
+		input.classList.remove("otherTeacherSelected");
+		label.classList.remove("otherTeacherSelected");
+		input.required = true;
+		return;
+	}
+	otherTeacherSelected = true;
+	input.classList.add("otherTeacherSelected");
+	label.classList.add("otherTeacherSelected");
+	input.required = false;
 });

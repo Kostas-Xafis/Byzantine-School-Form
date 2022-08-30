@@ -106,7 +106,7 @@
 						<i class="fa-solid fa-user-graduate"></i>
 					</div>
 				</div>
-				<div class="formInputContainer">
+				<div class="formInputContainer" id="teachersContainer">
 					<select name="teacher" id="teacher" required>
 						<option name="teacher" value=""></option>
 						<option name="teacher" value="π. Αναστάσιος Τραϊφόρος">π. Αναστάσιος Τραϊφόρος</option>
@@ -119,6 +119,7 @@
 						<option name="teacher" value="π. Χρίστος Κυριακόπουλος">π. Χρίστος Κυριακόπουλος</option>
 						<option name="teacher" value="π. Χρυσοβαλάντης Θεοδώρου">π. Χρυσοβαλάντης Θεοδώρου</option>
 						<option name="teacher" value="Αθανάσιος Αδαμάκης">Αθανάσιος Αδαμάκης</option>
+						<option name="teacher" value="Αικατερίνη Σκρέκη">Αικατερίνη Σκρέκη</option>
 						<option name="teacher" value="Αναστάσιος Νίκας">Αναστάσιος Νίκας</option>
 						<option name="teacher" value="Ανδρέας Βαλιανάτος">Ανδρέας Βαλιανάτος</option>
 						<option name="teacher" value="Βασίλειος Παπαγεωργίου">Βασίλειος Παπαγεωργίου</option>
@@ -126,6 +127,9 @@
 						<option name="teacher" value="Γεώργιος Χάρης">Γεώργιος Χάρης</option>
 						<option name="teacher" value="Γρηγόριος Καλαφάτης">Γρηγόριος Καλαφάτης</option>
 						<option name="teacher" value="Δημήτριος Μυλωνάς">Δημήτριος Μυλωνάς</option>
+						<option name="teacher" value="Ζωή Προκοπίου">Ζωή Προκοπίου</option>
+						<option name="teacher" value="Θεόφιλος Βουτσινάς">Θεόφιλος Βουτσινάς</option>
+						<option name="teacher" value="Ιωάννης Μεταληνός">Ιωάννης Μεταληνός</option>
 						<option name="teacher" value="Ιωάννης Πούλης">Ιωάννης Πούλης</option>
 						<option name="teacher" value="Ιωάννης Τραϊφόρος">Ιωάννης Τραϊφόρος</option>
 						<option name="teacher" value="Κωνσταντίνος Κατσικογιώργος">Κωνσταντίνος Κατσικογιώργος</option>
@@ -140,9 +144,11 @@
 						<option name="teacher" value="Σωκράτης Χάρης">Σωκράτης Χάρης</option>
 						<option name="teacher" value="Χρήστος Πανάγου">Χρήστος Πανάγου</option>
 						<option name="teacher" value="Χρήστος Σαράντης">Χρήστος Σαράντης</option>
-						<option name="teacher" value=" ">Άλλος καθηγητής που δεν αναφέρεται παραπάνω</option>
+						<option  name="teacher" value="null">Άλλος καθηγητής που δεν αναφέρεται παραπάνω</option>
 					</select>
 					<label for="teacher">Καθηγητής:</label>
+					<label id="otherTeacherLabel" for="otherTeacher">Εισάγετε το όνομα:</label>
+					<input type="text" name="otherTeacher" id="otherTeacherInput" >
 					<div class="svgContainer">
 						<i class="fa-solid fa-user"></i>
 					</div>
@@ -154,12 +160,13 @@
 					</div> -->
 				</div>
 				<div id="tosContainer">
-					<label>Δέχομαι τους όρους: </label>
+					<label for="tos">Δέχομαι τους όρους: </label>
+					<input type="checkbox" name="tos" id="tosCheckbox" required>
 					<div id="checkbox">
 						<i class="fa-solid fa-check"></i>
 					</div>
 					<p>
-						Όροι και προϋποθέσεις για την προστασία των προσωπικών δεδομένων Σχετικά με την προστασία του απορρήτου των
+						Όροι και προϋποθέσεις για την προστασία των προσωπικών δεδομένων σχετικά με την προστασία του απορρήτου των
 						προσωπικών σας δεδομένων, η Σχολή Βυζαντινής και Παραδοσιακής Μουσικής του Ιερού Καθεδρικού Ναού Μεταμορφώσεως του
 						Σωτήρος Δήμου Μεταμόρφωσης σας ενημερώνει για τα εξής: Για την προστασία των προσωπικών δεδομένων εφαρμόζεται πλήρως
 						ο σχετικός κανονισμός του Ευρωπαϊκού Κοινοβουλίου (GDPR Γενικός Κανονισμός Προστασίας Δεδομένων). Τα στοιχεία σας θα
