@@ -16,9 +16,6 @@ CREATE TABLE `students` (
   `ClassYear` varchar(40) NOT NULL,
   `Teacher` varchar(80) NOT NULL,
   `Classes` int NOT NULL,
-  `Date` int NOT NULL,
+  `Date` varchar(40) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-ALTER TABLE `students` 
-ADD COLUMN `Date` INT NOT NULL AFTER `Classes`;

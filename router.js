@@ -3,9 +3,8 @@ dotenv.config();
 const express = require("express");
 const hashedPwd = require("process").env.HASH;
 const getDatabase = require("./db.js");
-const sendRegistrations = require("./sendFiles.js");
 const { scryptSync } = require("crypto");
-const { storeStudent } = require("./storeFile.js");
+const { storeStudent, getStudents } = require("./storeFile.js");
 
 module.exports = router = async function () {
 	const router = express.Router();
@@ -25,7 +24,7 @@ module.exports = router = async function () {
 		const [pwdHash, salt] = hashedPwd.split(":");
 		const newHash = scryptSync(req.body.pwd, salt, 64).toString("hex");
 		if (newHash !== pwdHash) return res.status(400).send();
-		res.json(await sendRegistrations(db));
+		res.json(await getStudents(db));
 	});
 
 	return router;

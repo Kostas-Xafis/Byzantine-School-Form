@@ -26,7 +26,7 @@ const getStudents = async db => {
 	try {
 		const query2 = "SELECT * FROM students ";
 		const [students] = await db.execute(query2);
-		return students;
+		return { students };
 	} catch (err) {
 		console.log(err);
 	}

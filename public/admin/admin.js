@@ -4,31 +4,21 @@ const sleep = async ms => new Promise(res => setTimeout(res, ms));
 pwdForm.addEventListener("submit", async e => {
 	e.preventDefault();
 	const pwd = document.getElementById("pwd").value;
-	while (XLSX == null) await sleep(200);
+	console.log("bob");
+	while (XLSX == null && PDFLib == null && JSZip == null && window.fontkit == null) await sleep(200);
+	console.log("alice");
 	try {
 		const res = await fetch("/get_registrations", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ pwd })
 		});
+
 		if (res.status >= 400) return;
 
-		const { zip, students } = await res.json();
-		const data = new Uint8Array(zip.data);
-		const blob = new Blob([data], { type: "application/zip" });
-		const downloadUrl = URL.createObjectURL(blob);
-		const a = document.createElement("a");
-		a.href = downloadUrl;
-		a.download = "file.zip";
-		document.body.appendChild(a);
-		a.click();
-
-		//convert student database names to greek ones
-		const greekStudentSheet = convertColumn(students);
-		const wb = XLSX.utils.book_new();
-		const sheet = XLSX.utils.json_to_sheet(greekStudentSheet);
-		XLSX.utils.book_append_sheet(wb, sheet, "Εγγραφές");
-		XLSX.writeFile(wb, "Εγγραφές.xlsx");
+		const { students } = await res.json();
+		createExcel(students);
+		await createZip(students);
 	} catch (err) {
 		console.log(err);
 	}
@@ -37,6 +27,12 @@ pwdForm.addEventListener("submit", async e => {
 function convertColumn(students) {
 	const greekStudents = [];
 	students.forEach(student => {
+		const time = new Date(Number(student.Date));
+		const date = time.getDate();
+		const monthNum = time.getMonth(time) + 1;
+		const day = date >= 10 ? "" + date : "0" + date;
+		const month = monthNum >= 10 ? "" + monthNum : "0" + monthNum;
+		const formattedDate = `${day}/${month}/${time.getFullYear()}`;
 		const greekStudent = {};
 		greekStudent["Επώνυμο"] = student?.LastName;
 		greekStudent["Όνομα"] = student?.FirstName;
@@ -50,7 +46,7 @@ function convertColumn(students) {
 		greekStudent["Σταθερό"] = student?.Telephone;
 		greekStudent["Κινητό"] = student?.Cellphone;
 		greekStudent["Email"] = student?.Email;
-		greekStudent["Ημερομηνία"] = student?.Date;
+		greekStudent["Ημερομηνία"] = formattedDate;
 		greekStudent["Έτος Εγγραφής"] = student?.RegistrationYear;
 		greekStudent["Τάξη Φοίτησης"] = student?.ClassYear;
 		greekStudent["Καθηγητής"] = student?.Teacher;
@@ -61,3 +57,93 @@ function convertColumn(students) {
 	});
 	return greekStudents;
 }
+
+const createExcel = students => {
+	const greekStudentSheet = convertColumn(students);
+	const wb = XLSX.utils.book_new();
+	const sheet = XLSX.utils.json_to_sheet(greekStudentSheet);
+	XLSX.utils.book_append_sheet(wb, sheet, "Εγγραφές");
+	XLSX.writeFile(wb, "Εγγραφές.xlsx");
+};
+
+const createpdf = async () => {
+	const fontkit = window.fontkit;
+	const fontBuffer = await getFileBuffer("./fonts/arial.ttf");
+	const pdfBuffer = new Uint8Array(await getFileBuffer("./dummy.pdf"));
+	const { PDFDocument, rgb } = PDFLib;
+	return async data => {
+		const pdfDoc = await PDFDocument.load(new Uint8Array(pdfBuffer));
+		pdfDoc.registerFontkit(fontkit);
+		const arialFont = await pdfDoc.embedFont(fontBuffer);
+		const pages = pdfDoc.getPages();
+		const ctx = pages[0];
+		const textOptions = { font: arialFont, size: 14, rgb: rgb(0.01, 0.01, 0.01) };
+
+		const time = new Date(Number(data.Date));
+		const date = time.getDate();
+		const monthNum = time.getMonth(time) + 1;
+		const day = date >= 10 ? "" + date : "0" + date;
+		const month = monthNum >= 10 ? "" + monthNum : "0" + monthNum;
+
+		ctx.drawText(data.LastName, { ...textOptions, x: 100, y: 555 });
+		ctx.drawText(data.FirstName, { ...textOptions, x: 100, y: 530 });
+		ctx.drawText(data.FatherName, { ...textOptions, x: 130, y: 505 });
+		ctx.drawText(data.BirthYear + "", { ...textOptions, x: 130, y: 480 });
+		ctx.drawText(data.AM, { ...textOptions, x: 135, y: 580 });
+		ctx.drawText(data.Road, { ...textOptions, x: 75, y: 430 });
+		ctx.drawText(data.Number + "", { ...textOptions, x: 105, y: 403 });
+		ctx.drawText(data.TK + "", { ...textOptions, x: 200, y: 403 });
+		ctx.drawText(data.Region, { ...textOptions, x: 145, y: 379 });
+		ctx.drawText(data.Telephone, { ...textOptions, x: 135, y: 350 });
+		ctx.drawText(data.Cellphone, { ...textOptions, x: 135, y: 325 });
+		ctx.drawText(data.Email, { ...textOptions, x: 85, y: 300 });
+		ctx.drawText(data.RegistrationYear, { ...textOptions, x: 135, y: 275 });
+		ctx.drawText(data.ClassYear, { ...textOptions, x: 135, y: 248 });
+		ctx.drawText(data.Teacher, { ...textOptions, x: 115, y: 223 });
+		ctx.drawText("22", { ...textOptions, x: 420, y: 405 });
+		ctx.drawText("23", { ...textOptions, x: 478, y: 405 });
+		(data.Classes & 1) > 0 ? ctx.drawText("X", { ...textOptions, x: 467, y: 350 }) : null;
+		(data.Classes & 2) > 0 ? ctx.drawText("X", { ...textOptions, x: 548.5, y: 325.5 }) : null;
+		(data.Classes & 4) > 0 ? ctx.drawText("X", { ...textOptions, x: 468.5, y: 298.5 }) : null;
+		ctx.drawText(data.LastName + " " + data.FirstName, { ...textOptions, x: 355, y: 130 });
+		ctx.drawText(day, { ...textOptions, x: 165, y: 105 });
+		ctx.drawText(month, { ...textOptions, x: 193, y: 105 });
+		ctx.drawText("22", { ...textOptions, x: 234, y: 105 });
+		const pdfUint8Array = await pdfDoc.save();
+		return pdfUint8Array;
+	};
+};
+
+const getFileBuffer = async url => {
+	try {
+		const res = await fetch(url, { method: "GET" });
+		if (res >= 400) return;
+		return await res.arrayBuffer();
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const createZip = async students => {
+	const createPDF = await createpdf();
+	const zip = new JSZip();
+	const studentNames = {};
+	const prog = document.getElementById("progressTxt");
+	for (let i = 0; i < students.length; i++) {
+		let fullname = students[i].FirstName + students[i].LastName;
+		if (!(fullname in studentNames)) {
+			studentNames[fullname] = true;
+		} else fullname = fullname + i;
+		zip.folder(`${students[i].Teacher}`).file(`${fullname}.pdf`, await createPDF(students[i]));
+		prog.innerText = "Προετιμασία αρχείου zip :" + parseInt(((i + 1) * 100) / students.length) + "%";
+	}
+	prog.innerText = "Δημιουργία αρχείου zip...";
+	zip.generateAsync({ type: "base64" }).then(function (base64) {
+		const a = document.createElement("a");
+		a.href = "data:application/zip;base64," + base64;
+		a.download = "file.zip";
+		document.body.appendChild(a);
+		a.click();
+		prog.innerText = "Επιτυχής λήψη αρχείου zip...";
+	});
+};

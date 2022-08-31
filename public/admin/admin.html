@@ -1,18 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Συλλογή Στοιχείων Μαθητών</title>
-    <script defer src="admin.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.mini.min.js" integrity="sha512-NDQhXrK2pOCL18FV5/Nc+ya9Vz+7o8dJV1IGRwuuYuRMFhAR0allmjWdZCSHFLDYgMvXKyN2jXlSy2JJEmq+ZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../main.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins" />
-</head>
-<body>
-    <div id="SchoolName">
-			<img id="logo" src="../logo.jpg" alt="Λογότυπο Σχολής Βυζαντινής και Παραδοσιακής Μουσικής">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Συλλογή Στοιχείων Μαθητών</title>
+		<script defer src="admin.js"></script>
+		<script
+			defer
+			src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.mini.min.js"
+			integrity="sha512-NDQhXrK2pOCL18FV5/Nc+ya9Vz+7o8dJV1IGRwuuYuRMFhAR0allmjWdZCSHFLDYgMvXKyN2jXlSy2JJEmq+ZA=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.js"
+			integrity="sha512-qaBWRiAKQzF5H0yRU9yyAxfK2w70XUOgB4i0YL6Xg86jWbpnUHbAWfx4x08SqoqnmXmF/NjmqtErDHIwYXeulQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script
+			defer
+			src="https://unpkg.com/@pdf-lib/fontkit/dist/fontkit.umd.min.js"
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script
+			defer
+			src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"
+			integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<link rel="stylesheet" href="../main.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins" />
+		<link rel="icon" type="image/png" href="../favicon.jpg" />
+	</head>
+	<body>
+		<div id="SchoolName">
+			<img id="logo" src="../logo.jpg" alt="Λογότυπο Σχολής Βυζαντινής και Παραδοσιακής Μουσικής" />
 			<p class="NameRow SchoolTitle" id="NameRow1">ΣΧΟΛΗ ΒΥΖΑΝΤΙΝΗΣ ΚΑΙ ΠΑΡΑΔΟΣΙΑΚΗΣ ΜΟΥΣΙΚΗΣ</p>
 			<p class="NameRow SchoolTitle" id="NameRow2">ΙΕΡΟΥ ΝΑΟΥ ΜΕΤΑΜΟΡΦΩΣΕΩΣ ΤΟΥ ΣΩΤΗΡΟΣ</p>
 			<p class="NameRow SchoolTitle" id="NameRow3">ΔΗΜΟΥ ΜΕΤΑΜΟΡΦΩΣΗΣ</p>
@@ -20,21 +46,22 @@
 			<p class="NameRow SchoolCert" id="NameRow5">ΑΡ. ΙΔΡΥΤ. ΠΡΑΞΕΩΣ: 344/20-4-2016/Δ. ΜΕΤ/ΣΗΣ</p>
 			<p class="NameRow SchoolCert" id="NameRow6">& ΑΡ. ΤΡΟΠ. ΠΡΑΞΕΩΣ: 433/20/06/2022/ Δ. ΜΕΤ/ΣΗΣ</p>
 			<p class="NameRow SchoolCert" id="NameRow7">ΦΕΚ: τ.Β΄/1427/20.05.2016 & τ.Β´/3730/14.07.2022</p>
-    </div>
-    <div id="getRegistrationsForm" class="formContainer">
-        <p class="title mdHeader">Συλλογή Εγγραφών</p>
-        <form class="forms">
-            <div class="formInputContainer">
-                <input type="text" id="pwd" name="pwd" required />
-                <label for="pwd">Κωδικός:</label>
-                <div class="svgContainer">
-                    <i class="fa-solid fa-lock"></i>
-                </div>
-            </div>
-            <div class="submitContainer">
-                <button type="submit" id="addRegisterSubmit" class="formSubmit">Λήψη</button>
-            </div>
-        </form>
-    </div>
-</body>
+		</div>
+		<div id="getRegistrationsForm" class="formContainer">
+			<p class="title mdHeader">Συλλογή Εγγραφών</p>
+			<form class="forms" id="adminForm">
+				<div class="formInputContainer">
+					<input type="text" id="pwd" name="pwd" required />
+					<label for="pwd">Κωδικός:</label>
+					<div class="svgContainer">
+						<i class="fa-solid fa-lock"></i>
+					</div>
+				</div>
+				<div class="submitContainer">
+					<button type="submit" id="addRegisterSubmit" class="formSubmit">Λήψη</button>
+                    <p id="progressTxt"></p>
+				</div>
+			</form>
+		</div>
+	</body>
 </html>

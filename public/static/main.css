@@ -716,3 +716,25 @@ a:focus {
 #Contact > a:hover {
 	background: var(--dk-txt-col-t4);
 }
+
+#adminForm {
+	grid-template-rows: clamp(150px, 30%, 250px);
+	grid-template-columns: clamp(300px, 100%, 420px);
+}
+
+#adminForm > .submitContainer {
+	place-self: start;
+	grid-template-rows: 100%;
+	grid-template-columns: max-content 1fr;
+	place-items: center;
+	row-gap: 2rem;
+}
+
+#adminForm > .submitContainer > .formSubmit {
+	grid-row: 1;
+}
+
+#progressTxt {
+	font-weight: bold;
+	font-size: 1.5rem;
+}

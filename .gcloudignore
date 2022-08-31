@@ -12,8 +12,5 @@
 # below:
 .git
 .gitignore
-*.txt
-initdb.js
-reset.js
 # Node.js dependencies:
 node_modules/
