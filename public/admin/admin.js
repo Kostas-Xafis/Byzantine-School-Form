@@ -89,12 +89,12 @@ const createpdf = async () => {
 		ctx.drawText(data.FirstName, { ...textOptions, x: 100, y: 530 });
 		ctx.drawText(data.FatherName, { ...textOptions, x: 130, y: 505 });
 		ctx.drawText(data.BirthYear + "", { ...textOptions, x: 130, y: 480 });
-		ctx.drawText(data.AM, { ...textOptions, x: 135, y: 580 });
+		data.AM !== "000" ? ctx.drawText(data.AM, { ...textOptions, x: 135, y: 580 }) : null;
 		ctx.drawText(data.Road, { ...textOptions, x: 75, y: 430 });
 		ctx.drawText(data.Number + "", { ...textOptions, x: 105, y: 403 });
 		ctx.drawText(data.TK + "", { ...textOptions, x: 200, y: 403 });
 		ctx.drawText(data.Region, { ...textOptions, x: 145, y: 379 });
-		ctx.drawText(data.Telephone, { ...textOptions, x: 135, y: 350 });
+		data.Telephone !== "-" ? ctx.drawText(data.Telephone, { ...textOptions, x: 135, y: 350 }) : null;
 		ctx.drawText(data.Cellphone, { ...textOptions, x: 135, y: 325 });
 		ctx.drawText(data.Email, { ...textOptions, x: 85, y: 300 });
 		ctx.drawText(data.RegistrationYear, { ...textOptions, x: 135, y: 275 });
@@ -130,7 +130,7 @@ const createZip = async students => {
 	const studentNames = {};
 	const prog = document.getElementById("progressTxt");
 	for (let i = 0; i < students.length; i++) {
-		let fullname = students[i].FirstName + students[i].LastName;
+		let fullname = students[i].FirstName + " " + students[i].LastName;
 		if (!(fullname in studentNames)) {
 			studentNames[fullname] = true;
 		} else fullname = fullname + i;
