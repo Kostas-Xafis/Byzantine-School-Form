@@ -12,5 +12,6 @@
 # below:
 .git
 .gitignore
+deleteDups.sql
 # Node.js dependencies:
 node_modules/

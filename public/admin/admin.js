@@ -1,12 +1,10 @@
-const pwdForm = document.getElementById("getRegistrationsForm");
+const downloadExcel = document.getElementById("getExcel");
+const downloadZip = document.getElementById("getZip");
 const sleep = async ms => new Promise(res => setTimeout(res, ms));
 
-pwdForm.addEventListener("submit", async e => {
-	e.preventDefault();
+const getStudents = async () => {
 	const pwd = document.getElementById("pwd").value;
-	console.log("bob");
 	while (XLSX == null && PDFLib == null && JSZip == null && window.fontkit == null) await sleep(200);
-	console.log("alice");
 	try {
 		const res = await fetch("/get_registrations", {
 			method: "post",
@@ -15,14 +13,33 @@ pwdForm.addEventListener("submit", async e => {
 		});
 
 		if (res.status >= 400) return;
+		return await res.json();
+	} catch (err) {
+		console.log(err);
+	}
+};
 
-		const { students } = await res.json();
+downloadExcel.addEventListener("click", async e => {
+	e.preventDefault();
+	try {
+		const { students } = await getStudents();
 		createExcel(students);
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+downloadZip.addEventListener("click", async e => {
+	e.preventDefault();
+	try {
+		const { students } = await getStudents();
 		await createZip(students);
 	} catch (err) {
 		console.log(err);
 	}
 });
+
+// ! Excel utils
 
 function convertColumn(students) {
 	const greekStudents = [];
@@ -66,6 +83,8 @@ const createExcel = students => {
 	XLSX.writeFile(wb, "Εγγραφές.xlsx");
 };
 
+// ! PDF utils
+
 const createpdf = async () => {
 	const fontkit = window.fontkit;
 	const fontBuffer = await getFileBuffer("./fonts/arial.ttf");
@@ -89,7 +108,7 @@ const createpdf = async () => {
 		ctx.drawText(data.FirstName, { ...textOptions, x: 100, y: 530 });
 		ctx.drawText(data.FatherName, { ...textOptions, x: 130, y: 505 });
 		ctx.drawText(data.BirthYear + "", { ...textOptions, x: 130, y: 480 });
-		data.AM !== "000" ? ctx.drawText(data.AM, { ...textOptions, x: 135, y: 580 }) : null;
+		data.AM !== "000" && data.AM.length === 3 ? ctx.drawText(data.AM, { ...textOptions, x: 135, y: 580 }) : null;
 		ctx.drawText(data.Road, { ...textOptions, x: 75, y: 430 });
 		ctx.drawText(data.Number + "", { ...textOptions, x: 105, y: 403 });
 		ctx.drawText(data.TK + "", { ...textOptions, x: 200, y: 403 });
