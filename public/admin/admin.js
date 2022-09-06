@@ -154,7 +154,7 @@ const createZip = async students => {
 			studentNames[fullname] = true;
 		} else fullname = fullname + i;
 		zip.folder(`${students[i].Teacher}`).file(`${fullname}.pdf`, await createPDF(students[i]));
-		prog.innerText = "Προετιμασία αρχείου zip :" + parseInt(((i + 1) * 100) / students.length) + "%";
+		prog.innerText = "Προετοιμασία αρχείου zip :" + parseInt(((i + 1) * 100) / students.length) + "%";
 	}
 	prog.innerText = "Δημιουργία αρχείου zip...";
 	zip.generateAsync({ type: "base64" }).then(function (base64) {

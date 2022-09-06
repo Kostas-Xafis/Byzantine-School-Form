@@ -11,12 +11,12 @@
 		<meta property="og:image" content="https://webtechnologies-349709.nw.r.appspot.com/logo.jpg" />
 
 		<script defer src="index.js"></script>
-		<link rel="stylesheet" href="./main.css" />
+		<link rel="stylesheet" href="main.css" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins" />
 		<meta name="facebook:image" content="https://webtechnologies-349709.nw.r.appspot.com/logo.jpg" />
 		<meta name="messenger:image" content="https://webtechnologies-349709.nw.r.appspot.com/logo.jpg" />
 		<meta name="viber:image" content="https://webtechnologies-349709.nw.r.appspot.com/logo.jpg" />
-		<link rel="icon" type="image/png" href="./favicon.jpg" />
+		<link rel="icon" type="image/png" href="favicon.ico" />
 	</head>
 	<body>
 		<div id="SchoolName">
@@ -37,21 +37,21 @@
 			</p>
 			<form class="forms">
 				<div class="formInputContainer">
-					<input type="text" id="last_name" name="LastName"  required />
+					<input type="text" pattern="[a-zA-Zα-ωΑ-ΩίϊΐόάέύϋΰήώΊΪΌΆΈΎΫΉΏ\s-]+" id="last_name" name="LastName"  required />
 					<label for="LastName">Επώνυμο:</label>
 					<div class="svgContainer">
 						<i class="fa-solid fa-user"></i>
 					</div>
 				</div>
 				<div class="formInputContainer">
-					<input type="text" id="name" name="name" required />
+					<input type="text" pattern="[a-zA-Zα-ωΑ-ΩίϊΐόάέύϋΰήώΊΪΌΆΈΎΫΉΏ\s-]+" id="name" name="name" required />
 					<label for="name">Όνομα:</label>
 					<div class="svgContainer">
 						<i class="fa-solid fa-user"></i>
 					</div>
 				</div>
 				<div class="formInputContainer infoContainer">
-					<input type="text" id="id" name="id" required />
+					<input type="number" min="000" max="999" inputmode="numeric" id="id" name="id" required />
 					<label for="id">Αριθμός Μητρώου:</label>
 					<p class="infoText">
 						Eάν δεν τον γνωρίζετε, συμβουλευτείτε τη Γραμματεία της Σχολής στο τηλέφωνο 6983380631. Οι πρωτοετείς σπουδαστές θα
@@ -62,7 +62,7 @@
 					</div>
 				</div>
 				<div class="formInputContainer">
-					<input type="text" id="father_name" name="father_name" required />
+					<input type="text" pattern="[a-zA-Zα-ωΑ-ΩίϊΐόάέύϋΰήώΊΪΌΆΈΎΫΉΏ\s-]+" id="father_name" name="father_name" required />
 					<label for="father_name">Πατρώνυμο:</label>
 					<div class="svgContainer">
 						<i class="fa-solid fa-user"></i>
@@ -192,7 +192,7 @@
 					</select>
 					<label for="teacher">Καθηγητής:</label>
 					<label id="otherTeacherLabel" for="otherTeacher">Εισάγετε το όνομα:</label>
-					<input type="text" name="otherTeacher" id="otherTeacherInput" />
+					<input type="text" pattern="[a-zA-Zα-ωΑ-ΩίϊΐόάέύϋΰήώΊΪΌΆΈΎΫΉΏ\s-]+" name="otherTeacher" id="otherTeacherInput" />
 					<div class="svgContainer">
 						<i class="fa-solid fa-user"></i>
 					</div>
@@ -246,8 +246,7 @@
 					</p>
 				</div>
 				<div id="Contact">
-					Γενικές πληροφορίες στη Γραμματεία της Σχολής στο 6983380631 και μέσω e-mail στο byzschole@gmail.com.
-					
+					Γενικές πληροφορίες στη Γραμματεία της Σχολής στο 6983380631 και μέσω e-mail στο byzscholemousikhs@gmail.com .
 					<a href="https://inmm.gr/index.php/pnevmatiko-kentro/vyzantini-mousiki/i-sxoli-mas-parartimata"> Δείτε επίσης τη Σχολή μας.</a>
 				</div>
 				<div class="formInputContainer"></div>

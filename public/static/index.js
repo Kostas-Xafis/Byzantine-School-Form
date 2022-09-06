@@ -34,9 +34,9 @@ addRegister.addEventListener("submit", async e => {
 	} = e.target.elements;
 	const data = {
 		AM: id.value,
-		LastName: last_name.value,
-		FirstName: name.value,
-		FatherName: father_name.value,
+		LastName: last_name.value.replaceAll(" ", ""),
+		FirstName: name.value.replaceAll(" ", ""),
+		FatherName: father_name.value.replaceAll(" ", ""),
 		BirthYear: birth_year.value,
 		Road: road.value,
 		Number: number.value,
