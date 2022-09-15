@@ -1,18 +1,33 @@
 const downloadExcel = document.getElementById("getExcel");
 const downloadZip = document.getElementById("getZip");
 const sleep = async ms => new Promise(res => setTimeout(res, ms));
+const formattedDate = (time, isInput) => {
+	if (!time) time = new Date();
+	const date = time.getDate();
+	const monthNum = time.getMonth(time) + 1;
+	const day = date >= 10 ? "" + date : "0" + date;
+	const month = monthNum >= 10 ? "" + monthNum : "0" + monthNum;
+	if (isInput) return `${time.getFullYear()}-${month}-${day}`;
+	return `${day}/${month}/${time.getFullYear()}`;
+};
+
+const addDay = 1000 * 60 * 60 * 24;
+
+document.getElementById("dateEnd").value = formattedDate(null, true);
 
 const getStudents = async () => {
-	const pwd = document.getElementById("pwd").value;
 	while (XLSX == null && PDFLib == null && JSZip == null && window.fontkit == null) await sleep(200);
 	try {
+		const pwd = document.getElementById("pwd").value;
+		const dStart = document.getElementById("dateStart").value && new Date(document.getElementById("dateStart").value).getTime() + "";
+		const dEnd = new Date(document.getElementById("dateEnd").value).getTime() + addDay + "";
 		const res = await fetch("/get_registrations", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ pwd })
+			body: JSON.stringify({ pwd, date: !dStart ? null : { start: dStart, end: dEnd } })
 		});
 
-		if (res.status >= 400) return;
+		if (res.status >= 400) return console.log(await res.text());
 		return await res.json();
 	} catch (err) {
 		console.log(err);
@@ -44,12 +59,7 @@ downloadZip.addEventListener("click", async e => {
 function convertColumn(students) {
 	const greekStudents = [];
 	students.forEach(student => {
-		const time = new Date(Number(student.Date));
-		const date = time.getDate();
-		const monthNum = time.getMonth(time) + 1;
-		const day = date >= 10 ? "" + date : "0" + date;
-		const month = monthNum >= 10 ? "" + monthNum : "0" + monthNum;
-		const formattedDate = `${day}/${month}/${time.getFullYear()}`;
+		const date = formattedDate(new Date(Number(student.Date)));
 		const greekStudent = {};
 		greekStudent["Επώνυμο"] = student?.LastName;
 		greekStudent["Όνομα"] = student?.FirstName;
@@ -63,7 +73,7 @@ function convertColumn(students) {
 		greekStudent["Σταθερό"] = student?.Telephone;
 		greekStudent["Κινητό"] = student?.Cellphone;
 		greekStudent["Email"] = student?.Email;
-		greekStudent["Ημερομηνία"] = formattedDate;
+		greekStudent["Ημερομηνία"] = date;
 		greekStudent["Έτος Εγγραφής"] = student?.RegistrationYear;
 		greekStudent["Τάξη Φοίτησης"] = student?.ClassYear;
 		greekStudent["Καθηγητής"] = student?.Teacher;

@@ -4,7 +4,7 @@ const express = require("express");
 const hashedPwd = require("process").env.HASH;
 const getDatabase = require("./db.js");
 const { scryptSync } = require("crypto");
-const { storeStudent, getStudents } = require("./storeFile.js");
+const { storeStudent, getStudents } = require("./studentQueries.js");
 
 module.exports = router = async function () {
 	const router = express.Router();
@@ -21,10 +21,11 @@ module.exports = router = async function () {
 	});
 
 	router.post("/get_registrations", async (req, res) => {
+		const { pwd, date } = req.body;
 		const [pwdHash, salt] = hashedPwd.split(":");
-		const newHash = scryptSync(req.body.pwd, salt, 64).toString("hex");
+		const newHash = scryptSync(pwd, salt, 64).toString("hex");
 		if (newHash !== pwdHash) return res.status(400).send();
-		res.json(await getStudents(db));
+		res.json(await getStudents(db, date));
 	});
 
 	return router;

@@ -22,10 +22,10 @@ const storeStudent = async (db, student) => {
 	await db.execute(query, args);
 };
 
-const getStudents = async db => {
+const getStudents = async (db, date) => {
 	try {
-		const query2 = "SELECT * FROM students ";
-		const [students] = await db.execute(query2);
+		const query = !date ? "SELECT * FROM students ;" : "SELECT * FROM students WHERE Date BETWEEN ? AND ? ;";
+		const [students] = await db.execute(query, !date ? [] : [date.start, date.end]);
 		return { students };
 	} catch (err) {
 		console.log(err);
