@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
 const hashedPwd = require("process").env.HASH;
-const getDatabase = require("./db.js");
+const { getDatabase } = require("./db.js");
 const { scryptSync } = require("crypto");
 const { storeStudent, getStudents } = require("./studentQueries.js");
 

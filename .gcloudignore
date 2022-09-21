@@ -12,6 +12,7 @@
 # below:
 .git
 .gitignore
-deleteDups.sql
+queries.sql
+getData/
 # Node.js dependencies:
 node_modules/

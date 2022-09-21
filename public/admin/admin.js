@@ -2,7 +2,6 @@ const downloadExcel = document.getElementById("getExcel");
 const downloadZip = document.getElementById("getZip");
 const sleep = async ms => new Promise(res => setTimeout(res, ms));
 const formattedDate = (time, isInput) => {
-	if (!time) time = new Date();
 	const date = time.getDate();
 	const monthNum = time.getMonth(time) + 1;
 	const day = date >= 10 ? "" + date : "0" + date;
@@ -13,7 +12,7 @@ const formattedDate = (time, isInput) => {
 
 const addDay = 1000 * 60 * 60 * 24;
 
-document.getElementById("dateEnd").value = formattedDate(null, true);
+document.getElementById("dateEnd").value = formattedDate(new Date(), true);
 
 const getStudents = async () => {
 	while (XLSX == null && PDFLib == null && JSZip == null && window.fontkit == null) await sleep(200);
