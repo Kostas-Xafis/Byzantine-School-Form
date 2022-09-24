@@ -109,7 +109,7 @@ toscheckbox.addEventListener("click", e => {
 let otherTeacherSelected = false;
 document.getElementById("teacher").addEventListener("change", e => {
 	const teacher = e.target.value;
-	const input = document.getElementById("otherTeacherInput");
+	const input = document.getElementById("otherTeacher");
 	const label = document.getElementById("otherTeacherLabel");
 	if (teacher !== "null") {
 		if (!otherTeacherSelected) return;

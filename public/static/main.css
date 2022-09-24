@@ -374,7 +374,7 @@ a:focus {
 	transition: 300ms opacity linear;
 }
 
-#otherTeacherInput {
+#otherTeacher {
 	grid-row: 4;
 	opacity: 0.001;
 	transition: 300ms opacity linear;
@@ -680,7 +680,7 @@ a:focus {
 }
 
 #author > p > span {
-	color: hsl(144, 85, 29%);
+	color: hsl(144, 85%, 29%);
 	opacity: 70%;
 }
 
