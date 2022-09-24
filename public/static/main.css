@@ -1,19 +1,7 @@
-@import url("//use.fontawesome.com/releases/v6.1.2/css/all.css");
-
 @font-face {
 	font-weight: bold;
 	font-family: "THOMADAKI1";
 	src: url("./fonts/3-2-2003_THOMADAKIANNA2003.TTF");
-}
-
-@font-face {
-	font-family: "THOMADAKI2";
-	src: url("./fonts/2003_ANNA_BYZANT.TTF");
-}
-
-@font-face {
-	font-family: "THOMADAKI3";
-	src: url("./fonts/2003_ANNA_BYZANT_0.TTF");
 }
 
 @font-face {
@@ -30,7 +18,7 @@
 	--dk-txt-col-t2: hsla(0, 0%, 15%, 20%);
 	--dk-txt-col-t3: hsla(0, 0%, 15%, 30%);
 	--dk-txt-col-t4: hsla(0, 0%, 15%, 40%);
-	--dk-txt-col-t5: hsla(0, 0%, 15%, 50%);
+	--dk-txt-col-t5: hsl(0, 0%, 45%);
 	--dk-txt-col-t6: hsla(0, 0%, 15%, 60%);
 	--dk-txt-col-t8: hsla(0, 0%, 15%, 80%);
 	--success-green: hsl(144, 100%, 43%);
@@ -114,7 +102,7 @@ a:focus {
 	grid-column: 1;
 	grid-row: 1 / end;
 	width: min(200px, 75%);
-	aspect-ratio: 1/1;
+	aspect-ratio: 0.99/1;
 }
 
 .NameRow {
@@ -125,6 +113,7 @@ a:focus {
 
 .SchoolTitle {
 	position: relative;
+	font-display: swap;
 	font-family: "THOMADAKI1", "Poppins";
 	color: hsl(0, 91%, 27%);
 	background-color: transparent;
@@ -132,6 +121,7 @@ a:focus {
 
 .SchoolCert {
 	font-weight: bold;
+	font-display: swap;
 	font-family: "ANAKTORIA", "Poppins";
 	color: hsl(0, 0%, 5%);
 }
@@ -165,6 +155,7 @@ a:focus {
 	z-index: -1;
 	color: var(--dk-txt-col-t3);
 	font-size: var(--fs);
+	font-display: swap;
 	font-family: "THOMADAKI1", "Poppins";
 }
 
@@ -689,7 +680,7 @@ a:focus {
 }
 
 #author > p > span {
-	color: hsl(144, 80%, 32%);
+	color: hsl(144, 85, 29%);
 	opacity: 70%;
 }
 

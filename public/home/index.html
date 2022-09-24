@@ -9,6 +9,7 @@
 		<meta property="og:type" content="school.website"/>
 		<meta property="og:url" content="https://webtechnologies-349709.nw.r.appspot.com" />
 		<meta property="og:image" content="https://webtechnologies-349709.nw.r.appspot.com/logo.jpg" />
+		<meta property="og:description" content="Ηλεκτρονική φόρμα εγγραφής στη Σχολή Βυζαντινής και Παραδοσιακής Μουσικής του Ιερού Ναού Μεταμορφώσεως του Σωτήρος του Δήμου Μεταμόρφωσης" />
 
 		<script defer src="index.js"></script>
 		<link rel="stylesheet" href="main.css" />
@@ -17,10 +18,11 @@
 		<meta name="messenger:image" content="https://webtechnologies-349709.nw.r.appspot.com/logo.jpg" />
 		<meta name="viber:image" content="https://webtechnologies-349709.nw.r.appspot.com/logo.jpg" />
 		<link rel="icon" type="image/png" href="favicon.ico" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	</head>
 	<body>
 		<div id="SchoolName">
-			<img id="logo" src="./logo.jpg" alt="Λογότυπο Σχολής Βυζαντινής και Παραδοσιακής Μουσικής" />
+			<img id="logo" src="./logo.webp" alt="Λογότυπο Σχολής Βυζαντινής και Παραδοσιακής Μουσικής" />
 			<p class="NameRow SchoolTitle" id="NameRow1">ΣΧΟΛΗ ΒΥΖΑΝΤΙΝΗΣ ΚΑΙ ΠΑΡΑΔΟΣΙΑΚΗΣ ΜΟΥΣΙΚΗΣ</p>
 			<p class="NameRow SchoolTitle" id="NameRow2">ΙΕΡΟΥ ΝΑΟΥ ΜΕΤΑΜΟΡΦΩΣΕΩΣ ΤΟΥ ΣΩΤΗΡΟΣ</p>
 			<p class="NameRow SchoolTitle" id="NameRow3">ΔΗΜΟΥ ΜΕΤΑΜΟΡΦΩΣΗΣ</p>
@@ -192,7 +194,7 @@
 					</select>
 					<label for="teacher">Καθηγητής:</label>
 					<label id="otherTeacherLabel" for="otherTeacher">Εισάγετε το όνομα:</label>
-					<input type="text" pattern="[a-zA-Zα-ωΑ-ΩίϊΐόάέύϋΰήώΊΪΌΆΈΎΫΉΏ\s-]+" name="otherTeacher" id="otherTeacherInput" />
+					<input type="text" pattern="[a-zA-Zα-ωΑ-ΩίϊΐόάέύϋΰήώΊΪΌΆΈΎΫΉΏ\s-]+" name="otherTeacher" id="otherTeacher" />
 					<div class="svgContainer">
 						<i class="fa-solid fa-user"></i>
 					</div>
@@ -215,8 +217,8 @@
 					</div>
 				</div>
 				<div id="tosContainer">
-					<label for="tos">Δέχομαι τους όρους: </label>
-					<input type="checkbox" name="tos" id="tosCheckbox" required />
+					<label for="tosCheckbox">Δέχομαι τους όρους: </label>
+					<input type="checkbox" name="tosCheckbox" id="tosCheckbox" required />
 					<div id="tosfakecheckbox" class="checkbox">
 						<i class="fa-solid fa-check"></i>
 					</div>
