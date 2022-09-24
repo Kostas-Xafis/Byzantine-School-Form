@@ -1,4 +1,7 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const { argv } = require("process");
+const { getDatabase } = require("../db.js");
 // const { readFile } = require("fs/promises");
 
 (async function () {
@@ -17,6 +20,6 @@ const { argv } = require("process");
 			"DELETE s FROM students s INNER JOIN students s2 WHERE s.LastName=s2.LastName AND s.FirstName=s2.FirstName AND s.Email=s2.Email AND s.id<s2.id ;";
 	}
 	const [data] = await db.execute(query);
-	console.log(data);
+	console.log(JSON.stringify({data}, null, 4));
 	return;
 })();

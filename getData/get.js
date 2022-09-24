@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const { writeFile } = require("fs/promises");
 const { getDatabase } = require("../db.js");
 const sqlQuery = student => {
