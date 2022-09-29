@@ -1,10 +1,11 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
-const hashedPwd = require("process").env.HASH;
+const hashedPwd = process.env.HASH;
 const { getDatabase } = require("./db.js");
 const { scryptSync } = require("crypto");
 const { storeStudent, getStudents } = require("./studentQueries.js");
+const { sendMail } = require("./sendMail.js");
 
 module.exports = router = async function () {
 	const router = express.Router();
@@ -14,6 +15,7 @@ module.exports = router = async function () {
 		try {
 			await storeStudent(db, req.body);
 			res.status(200).send();
+			sendMail(req.body);
 		} catch (error) {
 			console.log(error);
 			res.status(400).send();

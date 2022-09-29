@@ -11,7 +11,7 @@ module.exports = {
 					port: 7123,
 					multipleStatements: false
 				});
-				console.log("Connected production to database");
+				console.log("Connected to production database");
 				return db;
 			} else {
 				const db = await mysql.createConnection({
@@ -22,7 +22,7 @@ module.exports = {
 					port: 6000,
 					multipleStatements: false
 				});
-				console.log("Connected development to database");
+				console.log("Connected to development database");
 				return db;
 			}
 		} catch (err) {
