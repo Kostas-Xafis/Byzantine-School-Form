@@ -5,8 +5,8 @@ module.exports = {
 	sendMail: async student => {
 		const msg = {
 			from: "koxafis@gmail.com", // Use the email address or domain you verified above
-			to: "poupakos1@gmail.com",
-			subject: "Νέα Αίτηση",
+			to: "byzscholemousikhs@gmail.com",
+			subject: `Νέα Αίτηση του/της ${student.FirstName + " " + student.LastName}`,
 			html: `<strong>Νέα αίτηση του/της ${student.FirstName + " " + student.LastName} με καθηγητή/τρια τον/την ${
 				student.Teacher
 			} </strong>`
