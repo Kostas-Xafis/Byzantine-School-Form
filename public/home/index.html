@@ -153,70 +153,105 @@
 						<i class="fa-solid fa-user-graduate"></i>
 					</div>
 				</div>
-				<div class="formInputContainer" id="teachersContainer">
-					<select name="teacher" id="teacher" required>
-						<option name="teacher" value=""></option>
-						<option name="teacher" value="null">Άλλος καθηγητής που δεν αναγράφεται</option>
-						<option name="teacher" value="π. Αναστάσιος Τραϊφόρος">π. Αναστάσιος Τραϊφόρος</option>
-						<option name="teacher" value="π. Βασίλειος Ντάβος">π. Βασίλειος Ντάβος</option>
-						<option name="teacher" value="π. Γεώργιος Φέλλιος">π. Γεώργιος Φέλλιος</option>
-						<option name="teacher" value="π. Θεόδωρος Παπαγιάννης">π. Θεόδωρος Παπαγιάννης</option>
-						<option name="teacher" value="π. Κωνσταντίνος Βασιλάκης">π. Κωνσταντίνος Βασιλάκης</option>
-						<option name="teacher" value="π. Νικόλαος Κολοβός">π. Νικόλαος Κολοβός</option>
-						<option name="teacher" value="π. Σωτήριος Αλεβιζάκης">π. Σωτήριος Αλεβιζάκης</option>
-						<option name="teacher" value="π. Χρυσοβαλάντης Θεοδώρου">π. Χρυσοβαλάντης Θεοδώρου</option>
-						<option name="teacher" value="Αθανάσιος Αδαμάκης">Αθανάσιος Αδαμάκης</option>
-						<option name="teacher" value="Αικατερίνη Σκρέκη">Αικατερίνη Σκρέκη</option>
-						<option name="teacher" value="Αναστάσιος Νίκας">Αναστάσιος Νίκας</option>
-						<option name="teacher" value="Ανδρέας Βαλιανάτος">Ανδρέας Βαλιανάτος</option>
-						<option name="teacher" value="Βασίλειος Παπαγεωργίου">Βασίλειος Παπαγεωργίου</option>
-						<option name="teacher" value="Βενέδικτος Γαρουφαλής">Βενέδικτος Γαρουφαλής</option>
-						<option name="teacher" value="Γεώργιος Χάρης">Γεώργιος Χάρης</option>
-						<option name="teacher" value="Γρηγόριος Καλαφάτης">Γρηγόριος Καλαφάτης</option>
-						<option name="teacher" value="Δημήτριος Μυλωνάς">Δημήτριος Μυλωνάς</option>
-						<option name="teacher" value="Ζωή Προκοπίου">Ζωή Προκοπίου</option>
-						<option name="teacher" value="Θεόφιλος Βουτσινάς">Θεόφιλος Βουτσινάς</option>
-						<option name="teacher" value="Θωμάς Κραβαρίτης">Θωμάς Κραβαρίτης</option>
-						<option name="teacher" value="Ιωάννης Μεταληνός">Ιωάννης Μεταληνός</option>
-						<option name="teacher" value="Ιωάννης Πούλης">Ιωάννης Πούλης</option>
-						<option name="teacher" value="Ιωάννης Τραϊφόρος">Ιωάννης Τραϊφόρος</option>
-						<option name="teacher" value="Κωνσταντίνος Κατσικογιώργος">Κωνσταντίνος Κατσικογιώργος</option>
-						<option name="teacher" value="Κωνσταντίνος Κολοβός">Κωνσταντίνος Κολοβός</option>
-						<option name="teacher" value="Ναταλία Ζαχαράκη">Ναταλία Ζαχαράκη</option>
-						<option name="teacher" value="Νικήτας Αθανασόπουλος">Νικήτας Αθανασόπουλος</option>
-						<option name="teacher" value="Παναγιώτης Μητρόπουλος">Παναγιώτης Μητρόπουλος</option>
-						<option name="teacher" value="Παύλος Χάρης">Παύλος Χάρης</option>
-						<option name="teacher" value="Πολύκαρπος Πολυκαρπίδης">Πολύκαρπος Πολυκαρπίδης</option>
-						<option name="teacher" value="Στέφανος Συμεωνίδης">Στέφανος Συμεωνίδης</option>
-						<option name="teacher" value="Σωκράτης Χάρης">Σωκράτης Χάρης</option>
-						<option name="teacher" value="Χρήστος Πανάγου">Χρήστος Πανάγου</option>
-						<option name="teacher" value="Χρήστος Σαράντης">Χρήστος Σαράντης</option>
-					</select>
-					<label for="teacher">Καθηγητής:</label>
-					<label id="otherTeacherLabel" for="otherTeacher">Εισάγετε το όνομα:</label>
-					<input type="text" pattern="[a-zA-Zα-ωΑ-ΩίϊΐόάέύϋΰήώΊΪΌΆΈΎΫΉΏ\s-]+" name="otherTeacher" id="otherTeacher" />
-					<div class="svgContainer">
-						<i class="fa-solid fa-user"></i>
-					</div>
-				</div>
+				<div class="formInputContainer"></div>
 				<div class="formInputContainer infoContainer" id="classContainer">
 					<input type="checkbox" id="class" name="class" required />
 					<label for="class">Τμήματα που επιθυμώ να παρακολουθήσω:</label>
 					<p class="infoText">Έχετε την δυνατότητα να επιλέξετε παραπάνω από ένα τμήμα.</p>
 					<div class="classSubContainer">
 						<p>1) Βυζαντινής Μουσικής:</p>
-						<div class="checkbox"><i class="fa-solid fa-check"></i></div>
+						<div class="checkbox" data-classType=1><i class="fa-solid fa-check"></i></div>
 					</div>
 					<div class="classSubContainer">
 						<p>2) Παραδοσιακής Μουσικής - Οργάνων:</p>
-						<div class="checkbox"><i class="fa-solid fa-check"></i></div>
+						<div class="checkbox" data-classType=2><i class="fa-solid fa-check"></i></div>
 					</div>
 					<div class="classSubContainer">
 						<p>3) Ευρωπαϊκής Μουσικής:</p>
-						<div class="checkbox"><i class="fa-solid fa-check"></i></div>
+						<div class="checkbox" data-classType=4><i class="fa-solid fa-check"></i></div>
 					</div>
 				</div>
-				<div id="tosContainer">
+				<div class="formInputContainer" id="teachersContainer">
+					<label for="teacher" id="class">Καθηγητές:</label>
+					<div></div>
+					<div class="formInputContainer">
+						<select name="teacher1" id="teacherByzantini" class="teachersSelect" data-classType=1>
+							<option name="teacher" value=""></option>
+							<option name="teacher" value="null">Άλλος καθηγητής που δεν αναγράφεται</option>
+							<option name="teacher" value="π. Αναστάσιος Τραϊφόρος">π. Αναστάσιος Τραϊφόρος</option>
+							<option name="teacher" value="π. Βασίλειος Ντάβος">π. Βασίλειος Ντάβος</option>
+							<option name="teacher" value="π. Γεώργιος Φέλλιος">π. Γεώργιος Φέλλιος</option>
+							<option name="teacher" value="π. Θεόδωρος Παπαγιάννης">π. Θεόδωρος Παπαγιάννης</option>
+							<option name="teacher" value="π. Κωνσταντίνος Βασιλάκης">π. Κωνσταντίνος Βασιλάκης</option>
+							<option name="teacher" value="π. Νικόλαος Κολοβός">π. Νικόλαος Κολοβός</option>
+							<option name="teacher" value="π. Σωτήριος Αλεβιζάκης">π. Σωτήριος Αλεβιζάκης</option>
+							<option name="teacher" value="π. Χρυσοβαλάντης Θεοδώρου">π. Χρυσοβαλάντης Θεοδώρου</option>
+							<option name="teacher" value="Αθανάσιος Αδαμάκης">Αθανάσιος Αδαμάκης</option>
+							<option name="teacher" value="Αικατερίνη Σκρέκη">Αικατερίνη Σκρέκη</option>
+							<option name="teacher" value="Αναστάσιος Νίκας">Αναστάσιος Νίκας</option>
+							<option name="teacher" value="Ανδρέας Βαλιανάτος">Ανδρέας Βαλιανάτος</option>
+							<option name="teacher" value="Βασίλειος Παπαγεωργίου">Βασίλειος Παπαγεωργίου</option>
+							<option name="teacher" value="Βενέδικτος Γαρουφαλής">Βενέδικτος Γαρουφαλής</option>
+							<option name="teacher" value="Γεώργιος Χάρης">Γεώργιος Χάρης</option>
+							<option name="teacher" value="Γρηγόριος Καλαφάτης">Γρηγόριος Καλαφάτης</option>
+							<option name="teacher" value="Δημήτριος Μυλωνάς">Δημήτριος Μυλωνάς</option>
+							<option name="teacher" value="Ζωή Προκοπίου">Ζωή Προκοπίου</option>
+							<option name="teacher" value="Θεόφιλος Βουτσινάς">Θεόφιλος Βουτσινάς</option>
+							<option name="teacher" value="Θωμάς Κραβαρίτης">Θωμάς Κραβαρίτης</option>
+							<option name="teacher" value="Ιωάννης Μεταληνός">Ιωάννης Μεταληνός</option>
+							<option name="teacher" value="Ιωάννης Πούλης">Ιωάννης Πούλης</option>
+							<option name="teacher" value="Ιωάννης Τραϊφόρος">Ιωάννης Τραϊφόρος</option>
+							<option name="teacher" value="Κωνσταντίνος Κατσικογιώργος">Κωνσταντίνος Κατσικογιώργος</option>
+							<option name="teacher" value="Κωνσταντίνος Κολοβός">Κωνσταντίνος Κολοβός</option>
+							<option name="teacher" value="Ναταλία Ζαχαράκη">Ναταλία Ζαχαράκη</option>
+							<option name="teacher" value="Νικήτας Αθανασόπουλος">Νικήτας Αθανασόπουλος</option>
+							<option name="teacher" value="Παναγιώτης Μητρόπουλος">Παναγιώτης Μητρόπουλος</option>
+							<option name="teacher" value="Παύλος Χάρης">Παύλος Χάρης</option>
+							<option name="teacher" value="Πολύκαρπος Πολυκαρπίδης">Πολύκαρπος Πολυκαρπίδης</option>
+							<option name="teacher" value="Στέφανος Συμεωνίδης">Στέφανος Συμεωνίδης</option>
+							<option name="teacher" value="Σωκράτης Χάρης">Σωκράτης Χάρης</option>
+							<option name="teacher" value="Χρήστος Πανάγου">Χρήστος Πανάγου</option>
+							<option name="teacher" value="Χρήστος Σαράντης">Χρήστος Σαράντης</option>
+						</select>
+						<input type="text" pattern="[a-zA-Zα-ωΑ-ΩίϊΐόάέύϋΰήώΊΪΌΆΈΎΫΉΏ\s-]+" class="otherTeacher" />
+						<div class="svgContainer">
+							<i class="fa-solid fa-user"></i>
+						</div>
+					</div>
+					<div class="formInputContainer">
+						<select name="teacher2" id="teacherParadosiaki" class="teachersSelect" data-classType=2 >
+							<option name="teacher" value=""></option>
+							<option name="teacher" value="null">Άλλος καθηγητής που δεν αναγράφεται</option>
+							<option name="teacher" value="π. Αναστάσιος Τραϊφόρος">π. Αναστάσιος Τραϊφόρος</option>
+							<option name="teacher" value="π. Βασίλειος Ντάβος">π. Βασίλειος Ντάβος</option>
+							<option name="teacher" value="π. Γεώργιος Φέλλιος">π. Γεώργιος Φέλλιος</option>
+							<option name="teacher" value="Σωκράτης Χάρης">Σωκράτης Χάρης</option>
+							<option name="teacher" value="Χρήστος Πανάγου">Χρήστος Πανάγου</option>
+							<option name="teacher" value="Χρήστος Σαράντης">Χρήστος Σαράντης</option>
+						</select>
+						<input type="text" pattern="[a-zA-Zα-ωΑ-ΩίϊΐόάέύϋΰήώΊΪΌΆΈΎΫΉΏ\s-]+" class="otherTeacher" />
+						<div class="svgContainer">
+							<i class="fa-solid fa-user"></i>
+						</div>
+					</div>
+					<div class="formInputContainer">
+						<select name="teacher3" id="teacherEuropaiki" class="teachersSelect" data-classType=4 >
+							<option name="teacher" value=""></option>
+							<option name="teacher" value="null">Άλλος καθηγητής που δεν αναγράφεται</option>
+							<option name="teacher" value="π. Αναστάσιος Τραϊφόρος">π. Αναστάσιος Τραϊφόρος</option>
+							<option name="teacher" value="π. Βασίλειος Ντάβος">π. Βασίλειος Ντάβος</option>
+							<option name="teacher" value="π. Γεώργιος Φέλλιος">π. Γεώργιος Φέλλιος</option>
+							<option name="teacher" value="Σωκράτης Χάρης">Σωκράτης Χάρης</option>
+							<option name="teacher" value="Χρήστος Πανάγου">Χρήστος Πανάγου</option>
+							<option name="teacher" value="Χρήστος Σαράντης">Χρήστος Σαράντης</option>
+						</select>
+						<input type="text" pattern="[a-zA-Zα-ωΑ-ΩίϊΐόάέύϋΰήώΊΪΌΆΈΎΫΉΏ\s-]+"  class="otherTeacher" />
+						<div class="svgContainer">
+							<i class="fa-solid fa-user"></i>
+						</div>
+					</div>
+				</div>
+				<div class="formInputContainer" id="tosContainer">
 					<label for="tosCheckbox">Δέχομαι τους όρους: </label>
 					<input type="checkbox" name="tosCheckbox" id="tosCheckbox" required />
 					<div id="tosfakecheckbox" class="checkbox">

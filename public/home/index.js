@@ -1,19 +1,27 @@
 const addRegister = document.getElementById("addRegisterForm");
-const toscheckbox = document.getElementById("tosfakecheckbox");
+const tosCheckbox = document.getElementById("tosfakecheckbox");
 const classCheckboxes = [...document.querySelectorAll(".classSubContainer > .checkbox")];
 const classes = {
 	1: false,
 	2: false,
-	3: false
+	4: false
+};
+const teachers = {
+	1: document.getElementById("teacherByzantini"),
+	2: document.getElementById("teacherParadosiaki"),
+	4: document.getElementById("teacherEuropaiki")
 };
 let countClasses = 0;
 
-document.getElementById("teacher").addEventListener("change", e => e.target.blur());
 document.getElementById("class_year").addEventListener("change", e => e.target.blur());
 document.querySelectorAll(".formSubmit").forEach(el => el.addEventListener("click", () => el.blur()));
 
 addRegister.addEventListener("submit", async e => {
 	e.preventDefault();
+	const getTeachers = (...teachers) =>
+		teachers
+			.map(teacherEl => (teacherEl.value !== "null" ? teacherEl.value : teacherEl.nextElementSibling.value))
+			.filter(teacher => teacher !== "");
 	const {
 		id,
 		last_name,
@@ -28,8 +36,9 @@ addRegister.addEventListener("submit", async e => {
 		phonenumber,
 		email,
 		class_year,
-		teacher,
-		otherTeacher,
+		teacher1,
+		teacher2,
+		teacher3,
 		addRegisterSubmit
 	} = e.target.elements;
 	const data = {
@@ -47,7 +56,7 @@ addRegister.addEventListener("submit", async e => {
 		Email: email.value,
 		RegistrationYear: "2022-2023",
 		ClassYear: class_year.value,
-		Teacher: teacher.value !== "null" ? teacher.value : otherTeacher.value,
+		Teachers: getTeachers(teacher1, teacher2, teacher3),
 		Classes: countClasses,
 		Date: new Date().getTime() + ""
 	};
@@ -78,12 +87,17 @@ addRegister.addEventListener("submit", async e => {
 classCheckboxes.forEach((checkbox, i) => {
 	checkbox.addEventListener("click", e => {
 		classes[i] = !classes[i];
+		const classType = Number(checkbox.getAttribute("data-classType"));
 		if (classes[i]) {
-			countClasses += 1 << i;
+			countClasses += classType;
 			checkbox.classList.add("agree");
+			teachers[classType].parentElement.classList.add("showTeachers");
+			teachers[classType].required = true;
 		} else {
-			countClasses -= 1 << i;
+			countClasses -= classType;
 			checkbox.classList.remove("agree");
+			teachers[classType].parentElement.classList.remove("showTeachers");
+			teachers[classType].required = false;
 		}
 		const inputCheckbox = document.getElementById("class");
 		if (countClasses > 0) inputCheckbox.checked = true;
@@ -93,34 +107,39 @@ classCheckboxes.forEach((checkbox, i) => {
 
 // TOS agreement
 let agree = false;
-toscheckbox.addEventListener("click", e => {
+tosCheckbox.addEventListener("click", e => {
 	const inputCheckbox = document.getElementById("tosCheckbox");
 	agree = !agree;
 	if (agree) {
 		inputCheckbox.checked = true;
-		toscheckbox.classList.add("agree");
+		tosCheckbox.classList.add("agree");
 	} else {
 		inputCheckbox.checked = false;
-		toscheckbox.classList.remove("agree");
+		tosCheckbox.classList.remove("agree");
 	}
 });
 
 //User select a teacher not specified in the list
-let otherTeacherSelected = false;
-document.getElementById("teacher").addEventListener("change", e => {
-	const teacher = e.target.value;
-	const input = document.getElementById("otherTeacher");
-	const label = document.getElementById("otherTeacherLabel");
-	if (teacher !== "null") {
-		if (!otherTeacherSelected) return;
-		otherTeacherSelected = false;
-		input.classList.remove("otherTeacherSelected");
-		label.classList.remove("otherTeacherSelected");
+let otherTeacherSelected = {
+	1: false,
+	2: false,
+	4: false
+};
+[...document.querySelectorAll(".teachersSelect")].forEach(teacherEl => {
+	teacherEl.addEventListener("change", e => {
+		teacherEl.blur();
+		const classType = Number(teacherEl.getAttribute("data-classType"));
+		const teacher = e.target.value;
+		const input = teacherEl.nextElementSibling;
+		if (teacher !== "null") {
+			if (!otherTeacherSelected[classType]) return;
+			otherTeacherSelected[classType] = false;
+			input.classList.remove("otherTeacherSelected");
+			input.required = false;
+			return;
+		}
+		otherTeacherSelected[classType] = true;
+		input.classList.add("otherTeacherSelected");
 		input.required = true;
-		return;
-	}
-	otherTeacherSelected = true;
-	input.classList.add("otherTeacherSelected");
-	label.classList.add("otherTeacherSelected");
-	input.required = false;
+	});
 });

@@ -3,7 +3,6 @@ sgMail.setApiKey(process.env.EMAIL_API_KEY);
 
 module.exports = {
 	sendMail: async student => {
-		if (process.env?.env !== "production") return;
 		const msg = {
 			from: "koxafis@gmail.com", // Use the email address or domain you verified above
 			to: process.env?.env === "production" ? "byzscholemousikhs@gmail.com" : "koxafis@gmail.com",

@@ -362,29 +362,40 @@ a:focus {
 */
 
 #teachersContainer {
-	grid-template-rows: 20% max-content 20% max-content;
+	grid-template-rows: 20% 10% 1fr 1fr 1fr;
 }
 
-#otherTeacherLabel {
-	--fs: 1.1rem;
-	height: 100%;
-	grid-row: 3;
-	font-size: 1.1rem;
+#teachersContainer > .formInputContainer {
+	opacity: 0.001;
+	cursor: pointer;
+	grid-template-rows: 80%;
+	column-gap: 0.5rem;
+	transition: 300ms opacity linear;
+}
+
+#teachersContainer > .formInputContainer > select {
+	grid-row: 1;
+}
+
+#teachersContainer .svgContainer {
+	top: calc(0.3rem + (var(--fs) / 2 - 2px)); /*Label height + padding height + half txt font-size to center it*/
+}
+
+#teachersContainer .otherTeacher {
+	grid-row: 1;
 	opacity: 0.001;
 	transition: 300ms opacity linear;
 }
 
-#otherTeacher {
-	grid-row: 4;
-	opacity: 0.001;
-	transition: 300ms opacity linear;
-}
-
-#teachersContainer > .otherTeacherSelected {
+#teachersContainer > .showTeachers {
 	opacity: 1;
 }
 
-/* 
+#teachersContainer .otherTeacherSelected {
+	opacity: 1;
+}
+
+/*
 !============ TOS Input ============
 */
 
@@ -408,6 +419,10 @@ a:focus {
 	align-self: center;
 	grid-column: 1;
 	font-size: 1.3rem;
+}
+
+#tosContainer > #tosCheckbox {
+	grid-row: auto;
 }
 
 .checkbox {
@@ -451,7 +466,7 @@ a:focus {
 #classContainer {
 	position: relative;
 	display: grid;
-	grid-template-rows: 20% 20% 1fr 1fr 1fr;
+	grid-template-rows: 20% 10% 1fr 1fr 1fr;
 	grid-template-columns: max-content;
 }
 
@@ -726,9 +741,20 @@ a:focus {
 	row-gap: 2rem;
 }
 
+#adminForm > #excelDownload {
+	grid-template-rows: repeat(3, 1fr);
+}
+
 #adminForm > .submitContainer > .formSubmit {
-	grid-row: 1;
 	padding: 0.5rem 1rem;
+}
+
+#adminForm > #excelDownload > .formSubmit {
+	grid-row: auto;
+}
+
+#adminForm > .submitContainer > #getZip {
+	grid-row: 1;
 }
 
 #progressTxt {

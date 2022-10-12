@@ -1,4 +1,4 @@
-const downloadExcel = document.getElementById("getExcel");
+const downloadExcel = [...document.getElementById("excelDownload").children];
 const downloadZip = document.getElementById("getZip");
 const sleep = async ms => new Promise(res => setTimeout(res, ms));
 const formattedDate = (time, isInput) => {
@@ -9,21 +9,28 @@ const formattedDate = (time, isInput) => {
 	if (isInput) return `${time.getFullYear()}-${month}-${day}`;
 	return `${day}/${month}/${time.getFullYear()}`;
 };
-
 const addDay = 1000 * 60 * 60 * 24;
 
+const classes = { 1: "Βυζαντινής Μουσικής", 2: "Παραδοσιακής Μουσικής", 4: "Ευρωπαϊκής Μουσικής" };
+
+//Display current date on the "until" input
 document.getElementById("dateEnd").value = formattedDate(new Date(), true);
 
 const getStudents = async submitButton => {
 	while (XLSX == null || PDFLib == null || JSZip == null || window.fontkit == null) await sleep(200);
 	try {
-		const pwd = document.getElementById("pwd").value;
+		//Get date if choosen
 		const dStart = document.getElementById("dateStart").value && new Date(document.getElementById("dateStart").value).getTime() + "";
 		const dEnd = new Date(document.getElementById("dateEnd").value).getTime() + addDay + "";
+		const date = !dStart ? null : { start: dStart, end: dEnd };
+
+		const pwd = document.getElementById("pwd").value;
+		const classType = Number(submitButton.getAttribute("data-classType")) || null;
+
 		const res = await fetch("/get_registrations", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ pwd, date: !dStart ? null : { start: dStart, end: dEnd } })
+			body: JSON.stringify({ pwd, classType, date })
 		});
 
 		if (res.status >= 400) {
@@ -39,15 +46,17 @@ const getStudents = async submitButton => {
 	}
 };
 
-downloadExcel.addEventListener("click", async e => {
-	e.preventDefault();
-	try {
-		const students = (await getStudents(downloadExcel))?.students;
-		if (!students) return;
-		createExcel(students);
-	} catch (err) {
-		console.log(err);
-	}
+downloadExcel.forEach(submitButton => {
+	submitButton.addEventListener("click", async e => {
+		e.preventDefault();
+		try {
+			const students = (await getStudents(submitButton))?.students;
+			if (!students) return;
+			createExcel(students, classes[Number(submitButton.getAttribute("data-classType"))]);
+		} catch (err) {
+			console.log(err);
+		}
+	});
 });
 
 downloadZip.addEventListener("click", async e => {
@@ -62,7 +71,6 @@ downloadZip.addEventListener("click", async e => {
 });
 
 // ! Excel utils
-
 function convertColumn(students) {
 	const greekStudents = [];
 	students.forEach(student => {
@@ -84,30 +92,26 @@ function convertColumn(students) {
 		greekStudent["Έτος Εγγραφής"] = student?.RegistrationYear;
 		greekStudent["Τάξη Φοίτησης"] = student?.ClassYear;
 		greekStudent["Καθηγητής"] = student?.Teacher;
-		greekStudent["Βυζαντινής Μουσικής"] = student?.Classes & 1 ? "Ναι" : "";
-		greekStudent["Παραδοσιακής Μουσικής - Οργάνων"] = student?.Classes & 2 ? "Ναι" : "";
-		greekStudent["Ευρωπαϊκής Μουσικής"] = student?.Classes & 4 ? "Ναι" : "";
 		greekStudents.push(greekStudent);
 	});
 	return greekStudents;
 }
 
-const createExcel = students => {
+const createExcel = (students, classType) => {
 	const greekStudentSheet = convertColumn(students);
 	const wb = XLSX.utils.book_new();
 	const sheet = XLSX.utils.json_to_sheet(greekStudentSheet);
-	XLSX.utils.book_append_sheet(wb, sheet, "Εγγραφές");
-	XLSX.writeFile(wb, "Εγγραφές.xlsx");
+	XLSX.utils.book_append_sheet(wb, sheet, classType);
+	XLSX.writeFile(wb, `Εγγραφές ${classType}.xlsx`);
 };
 
 // ! PDF utils
-
 const createpdf = async () => {
 	const fontkit = window.fontkit;
 	const fontBuffer = await getFileBuffer("./fonts/arial.ttf");
 	const pdfBuffer = new Uint8Array(await getFileBuffer("./dummy.pdf"));
 	const { PDFDocument, rgb } = PDFLib;
-	return async data => {
+	return async (data, teacher, classType) => {
 		const pdfDoc = await PDFDocument.load(new Uint8Array(pdfBuffer));
 		pdfDoc.registerFontkit(fontkit);
 		const arialFont = await pdfDoc.embedFont(fontBuffer);
@@ -135,12 +139,12 @@ const createpdf = async () => {
 		ctx.drawText(data.Email, { ...textOptions, x: 85, y: 300 });
 		ctx.drawText(data.RegistrationYear, { ...textOptions, x: 135, y: 275 });
 		ctx.drawText(data.ClassYear, { ...textOptions, x: 135, y: 248 });
-		ctx.drawText(data.Teacher, { ...textOptions, x: 115, y: 223 });
+		ctx.drawText(teacher, { ...textOptions, x: 115, y: 223 });
 		ctx.drawText("22", { ...textOptions, x: 420, y: 405 });
 		ctx.drawText("23", { ...textOptions, x: 478, y: 405 });
-		(data.Classes & 1) > 0 ? ctx.drawText("X", { ...textOptions, x: 467, y: 350 }) : null;
-		(data.Classes & 2) > 0 ? ctx.drawText("X", { ...textOptions, x: 548.5, y: 325.5 }) : null;
-		(data.Classes & 4) > 0 ? ctx.drawText("X", { ...textOptions, x: 468.5, y: 298.5 }) : null;
+		if (classType == 1) ctx.drawText("X", { ...textOptions, x: 467, y: 350 });
+		else if (classType == 2) ctx.drawText("X", { ...textOptions, x: 548.5, y: 325.5 });
+		else if (classType == 4) ctx.drawText("X", { ...textOptions, x: 468.5, y: 298.5 });
 		ctx.drawText(data.LastName + " " + data.FirstName, { ...textOptions, x: 355, y: 130 });
 		ctx.drawText(day, { ...textOptions, x: 165, y: 105 });
 		ctx.drawText(month, { ...textOptions, x: 193, y: 105 });
@@ -170,7 +174,17 @@ const createZip = async students => {
 		if (!(fullname in studentNames)) {
 			studentNames[fullname] = true;
 		} else fullname = fullname + i;
-		zip.folder(`${students[i].Teacher}`).file(`${fullname}.pdf`, await createPDF(students[i]));
+		for (let k = 0, j = 0; k < 3; k++, j++) {
+			if (students[i].Classes === 0) break;
+			//prettier-ignore
+			while (1 << k & students[i].Classes === 0) k++;
+			students[i].Classes -= 1 << k;
+			const classTypeName = classes[1 << k];
+			const teacher = students[i].Teachers[j];
+			if (!teacher) break;
+			zip.folder(`${classTypeName}/${teacher}`).file(`${fullname}.pdf`, await createPDF(students[i], teacher, 1 << k));
+		}
+
 		prog.innerText = "Προετοιμασία αρχείου zip :" + parseInt(((i + 1) * 100) / students.length) + "%";
 	}
 	prog.innerText = "Δημιουργία αρχείου zip...";
