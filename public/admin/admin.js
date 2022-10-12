@@ -14,8 +14,8 @@ const addDay = 1000 * 60 * 60 * 24;
 
 document.getElementById("dateEnd").value = formattedDate(new Date(), true);
 
-const getStudents = async () => {
-	while (XLSX == null && PDFLib == null && JSZip == null && window.fontkit == null) await sleep(200);
+const getStudents = async submitButton => {
+	while (XLSX == null || PDFLib == null || JSZip == null || window.fontkit == null) await sleep(200);
 	try {
 		const pwd = document.getElementById("pwd").value;
 		const dStart = document.getElementById("dateStart").value && new Date(document.getElementById("dateStart").value).getTime() + "";
@@ -26,7 +26,13 @@ const getStudents = async () => {
 			body: JSON.stringify({ pwd, date: !dStart ? null : { start: dStart, end: dEnd } })
 		});
 
-		if (res.status >= 400) return console.log(await res.text());
+		if (res.status >= 400) {
+			submitButton.classList.add("errorSubmit");
+			setTimeout(() => {
+				submitButton.classList.remove("errorSubmit");
+			}, 1000);
+			return;
+		}
 		return await res.json();
 	} catch (err) {
 		console.log(err);
@@ -36,7 +42,8 @@ const getStudents = async () => {
 downloadExcel.addEventListener("click", async e => {
 	e.preventDefault();
 	try {
-		const { students } = await getStudents();
+		const students = (await getStudents(downloadExcel))?.students;
+		if (!students) return;
 		createExcel(students);
 	} catch (err) {
 		console.log(err);
@@ -46,7 +53,8 @@ downloadExcel.addEventListener("click", async e => {
 downloadZip.addEventListener("click", async e => {
 	e.preventDefault();
 	try {
-		const { students } = await getStudents();
+		const students = (await getStudents(downloadZip))?.students;
+		if (!students) return;
 		await createZip(students);
 	} catch (err) {
 		console.log(err);

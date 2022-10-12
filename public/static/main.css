@@ -495,32 +495,29 @@ a:focus {
 .submitContainer {
 	--fs: 1.2rem;
 	position: relative;
-	place-self: center;
 	display: grid;
-	width: max-content;
-	padding-top: 10%;
+	width: 100%;
 	height: 100%;
-	grid-template-rows: 20% 15%;
-	place-items: center;
+	grid-template-rows: 20% max(17.5%, 40px);
+	grid-template-columns: 25%;
+	place-content: center;
 }
 
 .formSubmit {
 	position: relative;
 	grid-row: 2;
-	padding: 0.3rem 1rem;
 	border: 3px solid var(--success-green);
 	border-radius: 10px;
-
 	font-size: var(--fs);
 	font-weight: bold;
+	text-align: center;
 	background-color: transparent;
 	overflow: hidden;
-
 	transition: background-color 200ms ease-out, color 200ms ease-out;
 }
 
-#addRegisterSubmit:hover,
-#addRegisterSubmit:focus {
+.formSubmit:hover,
+.formSubmit:focus {
 	background-color: var(--success-green);
 	color: white;
 }
@@ -528,8 +525,8 @@ a:focus {
 .errorMsg,
 .successMsg {
 	position: absolute;
-	top: calc(40% - 2rem);
-	left: 0px; /*Submit container padding*/
+	top: calc(50% - 2rem);
+	left: calc(50% - 6.5ch);
 	width: max-content;
 	opacity: 0;
 }
@@ -564,7 +561,7 @@ a:focus {
 	}
 }
 
-#addRegisterSubmit:is(.errorSubmit) {
+.formSubmit:is(.errorSubmit) {
 	/*Just to make specificity higher for colors...*/
 	background-color: var(--error-red);
 	border-color: var(--error-red);
@@ -619,12 +616,10 @@ a:focus {
 	--ifs: calc(var(--fs) + 0.5rem);
 	cursor: pointer;
 	opacity: 0;
-
-	top: calc(47.5% - var(--ifs) / 2);
+	top: calc(60% - var(--ifs) / 2);
 	left: calc(50% - var(--ifs) / 2);
 	padding: 0;
 	z-index: -2;
-
 	color: white;
 	font-size: var(--ifs);
 }
@@ -712,7 +707,7 @@ a:focus {
 	background: var(--dk-txt-col-t4);
 }
 
-/* 
+/*
 !============ Admin Stuff ============
 */
 
@@ -733,6 +728,7 @@ a:focus {
 
 #adminForm > .submitContainer > .formSubmit {
 	grid-row: 1;
+	padding: 0.5rem 1rem;
 }
 
 #progressTxt {
