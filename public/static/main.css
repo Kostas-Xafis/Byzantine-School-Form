@@ -360,38 +360,26 @@ a:focus {
 /* 
 !============ Teacher Select ============
 */
-
 #teachersContainer {
-	grid-template-rows: 20% 10% 1fr 1fr 1fr;
+	grid-template-rows: 20% max-content 20% max-content;
 }
 
-#teachersContainer > .formInputContainer {
-	opacity: 0.001;
-	cursor: pointer;
-	grid-template-rows: 80%;
-	column-gap: 0.5rem;
-	transition: 300ms opacity linear;
-}
-
-#teachersContainer > .formInputContainer > select {
-	grid-row: 1;
-}
-
-#teachersContainer .svgContainer {
-	top: calc(0.3rem + (var(--fs) / 2 - 2px)); /*Label height + padding height + half txt font-size to center it*/
-}
-
-#teachersContainer .otherTeacher {
-	grid-row: 1;
+#otherTeacherLabel {
+	--fs: 1.1rem;
+	height: 100%;
+	grid-row: 3;
+	font-size: 1.1rem;
 	opacity: 0.001;
 	transition: 300ms opacity linear;
 }
 
-#teachersContainer > .showTeachers {
-	opacity: 1;
+#otherTeacher {
+	grid-row: 4;
+	opacity: 0.001;
+	transition: 300ms opacity linear;
 }
 
-#teachersContainer .otherTeacherSelected {
+#teachersContainer > .otherTeacherSelected {
 	opacity: 1;
 }
 

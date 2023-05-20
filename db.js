@@ -8,7 +8,7 @@ module.exports = {
 					password: process.env.DB_PWD,
 					database: "railway",
 					host: process.env.DB_HOST,
-					port: 7123,
+					port: process.env.DB_PORT,
 					multipleStatements: false
 				});
 				console.log("Connected to production database");

@@ -1,27 +1,19 @@
 const addRegister = document.getElementById("addRegisterForm");
-const tosCheckbox = document.getElementById("tosfakecheckbox");
+const toscheckbox = document.getElementById("tosfakecheckbox");
 const classCheckboxes = [...document.querySelectorAll(".classSubContainer > .checkbox")];
 const classes = {
 	1: false,
 	2: false,
-	4: false
-};
-const teachers = {
-	1: document.getElementById("teacherByzantini"),
-	2: document.getElementById("teacherParadosiaki"),
-	4: document.getElementById("teacherEuropaiki")
+	3: false
 };
 let countClasses = 0;
 
+document.getElementById("teacher").addEventListener("change", e => e.target.blur());
 document.getElementById("class_year").addEventListener("change", e => e.target.blur());
 document.querySelectorAll(".formSubmit").forEach(el => el.addEventListener("click", () => el.blur()));
 
 addRegister.addEventListener("submit", async e => {
 	e.preventDefault();
-	const getTeachers = (...teachers) =>
-		teachers
-			.map(teacherEl => (teacherEl.value !== "null" ? teacherEl.value : teacherEl.nextElementSibling.value))
-			.filter(teacher => teacher !== "");
 	const {
 		id,
 		last_name,
@@ -36,9 +28,8 @@ addRegister.addEventListener("submit", async e => {
 		phonenumber,
 		email,
 		class_year,
-		teacher1,
-		teacher2,
-		teacher3,
+		teacher,
+		otherTeacher,
 		addRegisterSubmit
 	} = e.target.elements;
 	const data = {
@@ -56,7 +47,7 @@ addRegister.addEventListener("submit", async e => {
 		Email: email.value,
 		RegistrationYear: "2022-2023",
 		ClassYear: class_year.value,
-		Teachers: getTeachers(teacher1, teacher2, teacher3),
+		Teacher: teacher.value !== "null" ? teacher.value : otherTeacher.value,
 		Classes: countClasses,
 		Date: new Date().getTime() + ""
 	};
@@ -87,17 +78,12 @@ addRegister.addEventListener("submit", async e => {
 classCheckboxes.forEach((checkbox, i) => {
 	checkbox.addEventListener("click", e => {
 		classes[i] = !classes[i];
-		const classType = Number(checkbox.getAttribute("data-classType"));
 		if (classes[i]) {
-			countClasses += classType;
+			countClasses += 1 << i;
 			checkbox.classList.add("agree");
-			teachers[classType].parentElement.classList.add("showTeachers");
-			teachers[classType].required = true;
 		} else {
-			countClasses -= classType;
+			countClasses -= 1 << i;
 			checkbox.classList.remove("agree");
-			teachers[classType].parentElement.classList.remove("showTeachers");
-			teachers[classType].required = false;
 		}
 		const inputCheckbox = document.getElementById("class");
 		if (countClasses > 0) inputCheckbox.checked = true;
@@ -107,39 +93,34 @@ classCheckboxes.forEach((checkbox, i) => {
 
 // TOS agreement
 let agree = false;
-tosCheckbox.addEventListener("click", e => {
+toscheckbox.addEventListener("click", e => {
 	const inputCheckbox = document.getElementById("tosCheckbox");
 	agree = !agree;
 	if (agree) {
 		inputCheckbox.checked = true;
-		tosCheckbox.classList.add("agree");
+		toscheckbox.classList.add("agree");
 	} else {
 		inputCheckbox.checked = false;
-		tosCheckbox.classList.remove("agree");
+		toscheckbox.classList.remove("agree");
 	}
 });
 
 //User select a teacher not specified in the list
-let otherTeacherSelected = {
-	1: false,
-	2: false,
-	4: false
-};
-[...document.querySelectorAll(".teachersSelect")].forEach(teacherEl => {
-	teacherEl.addEventListener("change", e => {
-		teacherEl.blur();
-		const classType = Number(teacherEl.getAttribute("data-classType"));
-		const teacher = e.target.value;
-		const input = teacherEl.nextElementSibling;
-		if (teacher !== "null") {
-			if (!otherTeacherSelected[classType]) return;
-			otherTeacherSelected[classType] = false;
-			input.classList.remove("otherTeacherSelected");
-			input.required = false;
-			return;
-		}
-		otherTeacherSelected[classType] = true;
-		input.classList.add("otherTeacherSelected");
+let otherTeacherSelected = false;
+document.getElementById("teacher").addEventListener("change", e => {
+	const teacher = e.target.value;
+	const input = document.getElementById("otherTeacher");
+	const label = document.getElementById("otherTeacherLabel");
+	if (teacher !== "null") {
+		if (!otherTeacherSelected) return;
+		otherTeacherSelected = false;
+		input.classList.remove("otherTeacherSelected");
+		label.classList.remove("otherTeacherSelected");
 		input.required = true;
-	});
+		return;
+	}
+	otherTeacherSelected = true;
+	input.classList.add("otherTeacherSelected");
+	label.classList.add("otherTeacherSelected");
+	input.required = false;
 });

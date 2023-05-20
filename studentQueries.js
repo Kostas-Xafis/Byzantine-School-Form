@@ -1,6 +1,5 @@
-const classes = { 1: "Βυζαντινής Μουσικής", 2: "Παραδοσιακής Μουσικής - Οργάνων", 4: "Ευρωπαϊκής Μουσικής" };
 const storeStudent = async (db, student) => {
-	const query = `INSERT INTO students (AM, LastName, FirstName, FatherName, BirthYear, Road, Number, TK, Region, Telephone, Cellphone, Email, RegistrationYear, ClassYear, Classes, Date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+	const query = `INSERT INTO students (AM, LastName, FirstName, FatherName, BirthYear, Road, Number, TK, Region, Telephone, Cellphone, Email, RegistrationYear, ClassYear, Teacher, Classes, Date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 	const args = [
 		student.AM,
 		student.LastName,
@@ -16,17 +15,16 @@ const storeStudent = async (db, student) => {
 		student.Email,
 		student.RegistrationYear,
 		student.ClassYear,
+		student.Teacher,
 		student.Classes,
 		student.Date
 	];
 	const [{ insertId }] = await db.execute(query, args);
 
-	student.Teachers.forEach(async (teacher, i) => {
-		const query2 = `INSERT INTO lessons (studentId, Teacher, Class) VALUES (?, ?, ?)`;
-		while (!((1 << i) & student.Classes)) i++;
-		student.Classes -= 1 << i; //to avoid 1->2 (6), 2->2 (6) and make it 1->2 (6), 2->4 (4)
-		await db.execute(query2, [insertId, teacher, 1 << i]);
-	});
+	const query2 = `INSERT INTO lessons (studentId, Teacher, Class) VALUES (?, ?, ?)`;
+	if (1 & student.Classes) await db.execute(query2, [insertId, student.Teacher, 1]);
+	if (2 & student.Classes) await db.execute(query2, [insertId, student.Teacher, 2]);
+	if (4 & student.Classes) await db.execute(query2, [insertId, student.Teacher, 4]);
 };
 
 const getStudentsForExcel = async (db, date, classType) => {
@@ -55,7 +53,6 @@ const getStudentsForZip = async (db, date) => {
 				teacherObj => teacherObj.Teacher
 			);
 		}
-		console.log(students.length);
 		return { students };
 	} catch (err) {
 		console.log(err);
