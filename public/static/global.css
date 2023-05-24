@@ -1,0 +1,76 @@
+@font-face {
+	font-weight: bold;
+	font-family: "THOMADAKI1";
+	src: url("/fonts/3-2-2003_THOMADAKIANNA2003.TTF");
+}
+
+@font-face {
+	font-family: "ANAKTORIA";
+	src: url("/fonts/ANAKTORIA.OTF");
+}
+
+:root {
+	--txt-col: hsl(0, 0%, 93%);
+	--dk-txt-col: hsl(0, 0%, 15%);
+	--dk-txt-col-t2: hsla(0, 0%, 15%, 20%);
+	--dk-txt-col-t3: hsla(0, 0%, 15%, 30%);
+	--dk-txt-col-t4: hsla(0, 0%, 15%, 40%);
+	--dk-txt-col-t5: hsl(0, 0%, 45%);
+	--dk-txt-col-t6: hsla(0, 0%, 15%, 60%);
+	--dk-txt-col-t8: hsla(0, 0%, 15%, 80%);
+	--success-green: hsl(144, 100%, 43%);
+	--error-red: hsl(0, 100%, 69%);
+	--info-blue: hsl(196, 77%, 50%);
+}
+
+* {
+	font-family: "Poppins", sans-serif;
+	margin: 0;
+	padding: 0;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+button {
+	all: unset;
+	cursor: pointer;
+}
+input,
+select {
+	width: 25ch;
+	outline: none !important;
+}
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	display: none;
+}
+p {
+	color: var(--dk-txt-col);
+}
+
+a,
+a:hover,
+a:focus {
+	all: unset;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	padding-right: 10px;
+	margin-right: 10px;
+}
+::-webkit-scrollbar-button {
+	display: none;
+}
+::-webkit-scrollbar-thumb {
+	background: var(--dk-txt-col-t8);
+	border-radius: 15px;
+}
+::-webkit-scrollbar-track {
+	border-radius: 15px;
+	background: var(--dk-txt-col-t3);
+}

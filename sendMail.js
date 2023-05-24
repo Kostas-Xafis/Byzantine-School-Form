@@ -3,9 +3,10 @@ sgMail.setApiKey(process.env.EMAIL_API_KEY);
 
 module.exports = {
 	sendMail: async student => {
+		const emailAddress = process.env.EMAIL_ADDRESS;
 		const msg = {
-			from: "koxafis@gmail.com", // Use the email address or domain you verified above
-			to: process.env?.env === "production" ? "byzscholemousikhs@gmail.com" : "koxafis@gmail.com",
+			from: emailAddress, // Use the email address or domain you verified above
+			to: emailAddress,
 			subject: `Νέα Αίτηση του/της ${student.FirstName + " " + student.LastName}`,
 			html: `<strong>Νέα αίτηση του/της ${student.FirstName + " " + student.LastName} με καθηγητή/τρια τον/την ${
 				student.Teacher

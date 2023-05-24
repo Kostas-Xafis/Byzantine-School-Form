@@ -2,11 +2,11 @@ const mysql = require("mysql2/promise");
 module.exports = {
 	getDatabase: async () => {
 		try {
-			if (process.env?.env === "production") {
+			if (process.env.ENV === "production") {
 				const db = await mysql.createConnection({
 					user: "root",
 					password: process.env.DB_PWD,
-					database: "railway",
+					database: process.env.DB_NAME,
 					host: process.env.DB_HOST,
 					port: process.env.DB_PORT,
 					multipleStatements: false

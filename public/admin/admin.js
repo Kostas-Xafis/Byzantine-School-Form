@@ -104,7 +104,7 @@ const createExcel = (students, classType) => {
 // ! PDF utils
 const createpdf = async () => {
 	const fontkit = window.fontkit;
-	const fontBuffer = await getFileBuffer("./fonts/arial.ttf");
+	const fontBuffer = await getFileBuffer("../arial.ttf");
 	const pdfBuffer = new Uint8Array(await getFileBuffer("./dummy.pdf"));
 	const { PDFDocument, rgb } = PDFLib;
 	return async (data, teacher, classType) => {

@@ -1,5 +1,5 @@
 const express = require("express");
-const Router = require("./router");
+const initRouter = require("./router");
 const process = require("process");
 
 process.on("uncaughtException", function (err) {
@@ -14,10 +14,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public/static"));
 app.use("/", express.static("public/home", { index: "index.html" }));
 app.use("/admin", express.static("public/admin", { index: "admin.html" }));
+app.use("/books", express.static("public/books", { index: "books.html" }));
+
 (async function () {
 	try {
-		const router = await Router();
-		app.use("/", router);
+		const Router = await initRouter();
+		app.use("/", Router);
 		app.listen(portNum, () => console.log("Server listening in " + portNum));
 	} catch (err) {
 		console.error(err);

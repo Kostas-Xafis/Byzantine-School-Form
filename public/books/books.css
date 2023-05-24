@@ -1,0 +1,129 @@
+body {
+	display: grid;
+	grid-template-rows: 150px auto 1fr;
+}
+
+p {
+	font-family: "Didact Gothic";
+}
+
+#SchoolName {
+	padding-top: 2rem;
+	display: grid;
+	grid-template-columns: max(740px, 100%);
+	grid-template-rows: repeat(3, auto);
+}
+
+.NameRow {
+	text-align: center;
+}
+
+.SchoolTitle {
+	position: relative;
+	font-display: swap;
+	font-family: "THOMADAKI1", "Poppins";
+	color: hsl(0, 91%, 27%);
+	background-color: transparent;
+}
+
+.SchoolCert {
+	font-weight: bold;
+	font-display: swap;
+	font-family: "ANAKTORIA", "Poppins";
+	color: hsl(0, 0%, 5%);
+}
+#NameRow1 {
+	--fs: 1.3rem;
+	font-size: 1.3rem;
+}
+#NameRow2,
+#NameRow3 {
+	--fs: 1rem;
+	font-size: 1rem;
+}
+
+#NameRow1::before {
+	content: "ΣΧΟΛΗ ΒΥΖΑΝΤΙΝΗΣ ΚΑΙ ΠΑΡΑΔΟΣΙΑΚΗΣ ΜΟΥΣΙΚΗΣ";
+}
+#NameRow2::before {
+	content: "ΙΕΡΟΥ ΝΑΟΥ ΜΕΤΑΜΟΡΦΩΣΕΩΣ ΤΟΥ ΣΩΤΗΡΟΣ";
+}
+#NameRow3::before {
+	content: "ΔΗΜΟΥ ΜΕΤΑΜΟΡΦΩΣΗΣ";
+}
+
+.SchoolTitle::before {
+	position: absolute;
+	top: 0px;
+	left: 2px;
+	bottom: 2px;
+	right: 0px;
+	z-index: -1;
+	color: var(--dk-txt-col-t3);
+	font-size: var(--fs);
+	font-display: swap;
+	font-family: "THOMADAKI1", "Poppins";
+}
+
+#navContainer {
+	position: relative;
+	display: flex;
+	width: 100%;
+	justify-content: start;
+	column-gap: 2.4rem;
+	padding-left: 1.2rem;
+}
+
+#navContainer::before {
+	position: absolute;
+	content: "";
+	inset: 0px;
+	top: 100%;
+	bottom: -2px;
+	background: linear-gradient(to bottom, var(--dk-txt-col-t3), transparent);
+}
+
+.nav {
+	text-align: center;
+	padding: 0.5rem 0px;
+	font-size: 1.4rem;
+}
+
+.nav > p {
+	font-weight: 600;
+}
+
+#mainContainer {
+	display: grid;
+	grid-template-columns: 15ch auto;
+	height: 100%;
+	grid-template-rows: 100%;
+}
+
+#sidebar {
+	--rows: 2;
+	display: grid;
+
+	grid-template-rows: repeat(2, 1fr);
+	row-gap: 1.25rem;
+	padding: calc(1.25rem / 2);
+}
+
+.sideBtn {
+	display: none;
+}
+
+.sideBtn > p {
+	font-size: 1.25rem;
+	text-align: end;
+	color: var(--dk-txt-col);
+}
+
+.showBtn {
+	display: grid;
+}
+
+.clickedBtn {
+	background-color: var(--dk-txt-col-t8);
+	color: var(--txt-col);
+}
