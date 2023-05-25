@@ -1,6 +1,6 @@
 body {
 	display: grid;
-	grid-template-rows: 150px auto 1fr;
+	grid-template-rows: auto auto 1fr;
 }
 
 p {
@@ -8,10 +8,9 @@ p {
 }
 
 #SchoolName {
-	padding-top: 2rem;
+	padding-top: 1.3rem;
 	display: grid;
 	grid-template-columns: max(740px, 100%);
-	grid-template-rows: repeat(3, auto);
 }
 
 .NameRow {
@@ -26,36 +25,19 @@ p {
 	background-color: transparent;
 }
 
-.SchoolCert {
-	font-weight: bold;
-	font-display: swap;
-	font-family: "ANAKTORIA", "Poppins";
-	color: hsl(0, 0%, 5%);
-}
 #NameRow1 {
 	--fs: 1.3rem;
 	font-size: 1.3rem;
-}
-#NameRow2,
-#NameRow3 {
-	--fs: 1rem;
-	font-size: 1rem;
 }
 
 #NameRow1::before {
 	content: "ΣΧΟΛΗ ΒΥΖΑΝΤΙΝΗΣ ΚΑΙ ΠΑΡΑΔΟΣΙΑΚΗΣ ΜΟΥΣΙΚΗΣ";
 }
-#NameRow2::before {
-	content: "ΙΕΡΟΥ ΝΑΟΥ ΜΕΤΑΜΟΡΦΩΣΕΩΣ ΤΟΥ ΣΩΤΗΡΟΣ";
-}
-#NameRow3::before {
-	content: "ΔΗΜΟΥ ΜΕΤΑΜΟΡΦΩΣΗΣ";
-}
 
 .SchoolTitle::before {
 	position: absolute;
 	top: 0px;
-	left: 2px;
+	left: 3px;
 	bottom: 2px;
 	right: 0px;
 	z-index: -1;
@@ -94,36 +76,147 @@ p {
 }
 
 #mainContainer {
+	position: relative;
 	display: grid;
-	grid-template-columns: 15ch auto;
 	height: 100%;
-	grid-template-rows: 100%;
+	padding-top: 5px;
+
+	grid-template-rows: 4rem 1fr;
+	grid-template-columns: 80%;
+	row-gap: 1.2rem;
+	justify-content: center;
 }
 
-#sidebar {
-	--rows: 2;
+#actionsPanel {
 	display: grid;
-
-	grid-template-rows: repeat(2, 1fr);
-	row-gap: 1.25rem;
-	padding: calc(1.25rem / 2);
+	align-self: center;
+	grid-template-columns: auto auto;
 }
 
-.sideBtn {
-	display: none;
-}
-
-.sideBtn > p {
-	font-size: 1.25rem;
-	text-align: end;
-	color: var(--dk-txt-col);
-}
-
-.showBtn {
+.actionsContainer {
 	display: grid;
+	width: min-content;
+	grid-template-columns: repeat(3, 1fr);
+
+	background: var(--success-green);
+	border-radius: 5px;
 }
 
-.clickedBtn {
-	background-color: var(--dk-txt-col-t8);
-	color: var(--txt-col);
+.actionsContainer:last-child {
+	grid-template-columns: auto;
+	justify-self: flex-end;
+}
+
+.actionsContainer > button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.6rem 1.2rem;
+	border-radius: 5px;
+}
+
+#actionsPanel i {
+	font-size: 1.2rem;
+}
+
+#actionsPanel button:hover {
+	background-color: var(--white-t5);
+}
+
+#tableContainer {
+	display: grid;
+	height: 100%;
+	overflow: clip;
+	font-size: 1.1rem;
+	grid-auto-rows: auto;
+}
+
+#tableContainer input {
+	position: relative;
+	appearance: none;
+	width: 1.4rem;
+	height: 1.4rem;
+	background-color: var(--white);
+	border: 2px solid var(--dk-txt-col);
+	border-radius: 6px;
+}
+
+#tableContainer input:checked {
+	border: 2px solid var(--dk-txt-col);
+	background-color: var(--dk-txt-col);
+}
+
+#tableContainer input::after {
+	position: absolute;
+	content: "\f00c";
+	inset: 0px;
+	top: 0.1rem;
+	font: var(--fa-font-solid);
+	text-align: center;
+	font-size: 1rem;
+	color: var(--white);
+}
+
+#tableContainer p {
+	overflow-wrap: anywhere;
+}
+
+@keyframes Fade-in {
+	0% {
+		transform: translate(0px, 50px);
+		opacity: 0;
+	}
+	100% {
+		transform: translate(0px, 0px);
+		opacity: 1;
+	}
+}
+
+.row {
+	--delay: 0s;
+	position: relative;
+	display: grid;
+	width: fit-content;
+	grid-auto-flow: column;
+	grid-template-columns: var(--grid-cols);
+	place-items: center;
+	opacity: 0;
+	animation: Fade-in 0.3s ease-in-out var(--delay) forwards;
+}
+
+.row:first-child::after {
+	position: absolute;
+	content: " ";
+	inset: 0px;
+	border: 2px solid var(--dk-txt-col);
+}
+
+.row:not(:first-child)::after {
+	position: absolute;
+	content: " ";
+	inset: 0px;
+	top: calc(100% - 1px);
+	border-bottom: 1px solid var(--dk-txt-col-t8);
+}
+
+.row:nth-child(even) {
+	background-color: var(--dk-txt-col-t1);
+}
+
+.column:nth-child(even) {
+	background-color: var(--dk-txt-col-t1);
+	width: 100%;
+	height: 100%;
+	display: grid;
+	padding: 0.4rem 0;
+	align-content: center;
+	text-align: center;
+}
+
+.row:has(input:checked) {
+	background-color: var(--success-green);
+}
+
+.row:has(input:checked) .column:nth-child(even) {
+	background-color: var(--success-green);
 }

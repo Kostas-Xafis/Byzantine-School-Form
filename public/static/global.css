@@ -10,15 +10,18 @@
 }
 
 :root {
+	--white: hsl(0, 0%, 100%);
+	--white-t5: hsla(0, 0%, 100%, 50%);
 	--txt-col: hsl(0, 0%, 93%);
-	--dk-txt-col: hsl(0, 0%, 15%);
-	--dk-txt-col-t2: hsla(0, 0%, 15%, 20%);
-	--dk-txt-col-t3: hsla(0, 0%, 15%, 30%);
-	--dk-txt-col-t4: hsla(0, 0%, 15%, 40%);
-	--dk-txt-col-t5: hsl(0, 0%, 45%);
-	--dk-txt-col-t6: hsla(0, 0%, 15%, 60%);
-	--dk-txt-col-t8: hsla(0, 0%, 15%, 80%);
-	--success-green: hsl(144, 100%, 43%);
+	--dk-txt-col: hsl(234, 30%, 15%);
+	--dk-txt-col-t1: hsla(234, 30%, 15%, 5%);
+	--dk-txt-col-t2: hsla(234, 30%, 15%, 20%);
+	--dk-txt-col-t3: hsla(234, 30%, 15%, 30%);
+	--dk-txt-col-t4: hsla(234, 30%, 15%, 40%);
+	--dk-txt-col-t5: hsla(234, 30%, 15%, 50%);
+	--dk-txt-col-t6: hsla(234, 30%, 15%, 60%);
+	--dk-txt-col-t8: hsla(234, 30%, 15%, 80%);
+	--success-green: hsl(144, 77%, 58%);
 	--error-red: hsl(0, 100%, 69%);
 	--info-blue: hsl(196, 77%, 50%);
 }
@@ -36,12 +39,13 @@ button {
 	all: unset;
 	cursor: pointer;
 }
-input,
+input:not([type="checkbox"]),
 select {
 	width: 25ch;
 	outline: none !important;
 }
 input[type="number"] {
+	appearance: textfield;
 	-moz-appearance: textfield;
 }
 input::-webkit-outer-spin-button,

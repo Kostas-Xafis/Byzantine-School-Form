@@ -20,7 +20,7 @@ app.use("/books", express.static("public/books", { index: "books.html" }));
 	try {
 		const Router = await initRouter();
 		app.use("/", Router);
-		app.listen(portNum, () => console.log("Server listening in " + portNum));
+		app.listen(portNum, () => console.log(`Server hosted at: http://localhost:${portNum}`));
 	} catch (err) {
 		console.error(err);
 	}

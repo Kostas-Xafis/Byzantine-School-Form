@@ -9,13 +9,18 @@
 		<link rel="stylesheet" href="./books.css" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" />
 		<link rel="icon" type="image/png" href="/favicon.ico" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+			integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
 		<title>Βιβλία Σχολής</title>
 	</head>
 	<body>
 		<div id="SchoolName">
 			<p class="NameRow SchoolTitle" id="NameRow1">ΣΧΟΛΗ ΒΥΖΑΝΤΙΝΗΣ ΚΑΙ ΠΑΡΑΔΟΣΙΑΚΗΣ ΜΟΥΣΙΚΗΣ</p>
-			<p class="NameRow SchoolTitle" id="NameRow2">ΙΕΡΟΥ ΝΑΟΥ ΜΕΤΑΜΟΡΦΩΣΕΩΣ ΤΟΥ ΣΩΤΗΡΟΣ</p>
-			<p class="NameRow SchoolTitle" id="NameRow3">ΔΗΜΟΥ ΜΕΤΑΜΟΡΦΩΣΗΣ</p>
 		</div>
 		<div id="navContainer">
 			<div class="nav">
@@ -29,31 +34,25 @@
 			</div>
 		</div>
 		<div id="mainContainer">
-			<div id="sidebar">
-				<div class="sideBtn bookBtn showBtn">
-					<p>Αναζήτηση</p>
+			<div id="actionsPanel">
+				<div class="actionsContainer">
+					<button type="button" class="action">
+						<i class="fa-regular fa-plus"></i>
+					</button>
+					<button type="button" class="action">
+						<i class="fa-regular fa-pen-to-square"></i>
+					</button>
+					<button type="button" class="action">
+						<i class="fa-regular fa-trash-can"></i>
+					</button>
 				</div>
-				<div class="sideBtn bookBtn showBtn">
-					<p>Προσθήκη</p>
-				</div>
-				<div class="sideBtn moneyBtn">
-					<p>lorem1</p>
-				</div>
-				<div class="sideBtn moneyBtn">
-					<p>lorem1</p>
-				</div>
-				<div class="sideBtn moneyBtn">
-					<p>lorem1</p>
-				</div>
-				<div class="sideBtn">
-					<p>lorem1</p>
+				<div class="actionsContainer">
+					<button type="button" class="action">
+						<i class="fa-solid fa-filter"></i>
+					</button>
 				</div>
 			</div>
-			<div id="pageContainer">
-				<div class="page"></div>
-				<div class="page"></div>
-				<div class="page"></div>
-			</div>
+			<div id="tableContainer"></div>
 		</div>
 	</body>
 </html>
