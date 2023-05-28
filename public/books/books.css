@@ -158,30 +158,21 @@ p {
 }
 
 #tableContainer p {
+	margin: 0 5px;
+	text-align: center;
 	overflow-wrap: anywhere;
 }
 
-@keyframes Fade-in {
-	0% {
-		transform: translate(0px, 50px);
-		opacity: 0;
-	}
-	100% {
-		transform: translate(0px, 0px);
-		opacity: 1;
-	}
-}
-
 .row {
-	--delay: 0s;
+	cursor: pointer;
 	position: relative;
 	display: grid;
 	width: fit-content;
 	grid-auto-flow: column;
 	grid-template-columns: var(--grid-cols);
 	place-items: center;
-	opacity: 0;
-	animation: Fade-in 0.3s ease-in-out var(--delay) forwards;
+	opacity: 1;
+	transition: transform 0.4s linear, opacity 0.4s linear;
 }
 
 .row:first-child::after {
@@ -210,7 +201,6 @@ p {
 	display: grid;
 	padding: 0.4rem 0;
 	align-content: center;
-	text-align: center;
 }
 
 .row:has(input:checked) {
@@ -219,4 +209,26 @@ p {
 
 .row:has(input:checked) .column:nth-child(even) {
 	background-color: var(--success-green);
+}
+
+@keyframes Fade-in {
+	0% {
+		transform: translate(0px, 50px);
+		opacity: 0;
+	}
+	100% {
+		transform: translate(0px, 0px);
+		opacity: 1;
+	}
+}
+
+.rowFadeIn {
+	--delay: 0s;
+	opacity: 0;
+	animation: Fade-in 0.4s ease-in-out forwards var(--delay);
+}
+
+.delete {
+	transform: translateX(100%);
+	opacity: 0.00001;
 }

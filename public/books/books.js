@@ -1,254 +1,71 @@
-/**
- *
- * @returns {int[]} Array of checked books
- */
 const getCheckedBooks = () => {
 	const checkboxes = document.getElementById("tableContainer").querySelectorAll("input[type=checkbox]:checked");
 	const checkedBooks = [];
 
 	checkboxes.forEach(book => {
-		checkboxes.push(Number(book.getAttribute("data-id")));
+		checkedBooks.push(Number(book.getAttribute("data-id")));
 	});
 	return checkedBooks;
 };
+const sleep = (ms = 1000) => new Promise(res => setTimeout(res, ms));
 
-const deleteBooks = async () => {
-	const checkedBooks = getCheckedBooks();
-	const url = "/books/delete";
-	const data = JSON.stringify(checkedBooks);
-
+let i = 0;
+const deleteBooks = async e => {
+	if (isDisabled("delete")) return;
+	toggle("delete");
 	try {
-		const res = await fetch(url, {
-			method: "POST",
+		const checkedBooks = getCheckedBooks();
+		const res = await fetch("/books/delete", {
+			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: data
+			body: JSON.stringify(checkedBooks)
 		});
-		const result = await res.json();
-		if (result.status === "ok") {
-			location.reload();
+		if (res.status >= 200 && res.status < 300) {
+			document.querySelectorAll(".row:has(input[type=checkbox]:checked)").forEach(row => {
+				row.dispatchEvent(new CustomEvent("delete"));
+			});
 		}
 	} catch (error) {
 		console.error(error);
+	} finally {
+		toggle("delete");
 	}
 };
 
-const editBook = async () => {
+const editBook = async e => {
+	if (isDisabled("edit")) return;
+	toggle("edit");
 	const checkedBooks = getCheckedBooks();
 	if (checkedBooks.length === 1) {
 		// Opens a modal with the book data
-		const url = "/books/getBook?id=" + checkedBooks[0];
+		const url = "/books/get?id=" + checkedBooks[0];
 		try {
 			const res = await fetch(url);
 			const book = await res.json();
+			console.log(book);
 		} catch (error) {
 			console.error(error);
 		}
 	} else {
-		alert("Please select only one book");
+		toggle("edit");
+		if (checkedBooks.length === 0) alert("Please select a book");
+		else alert("Please select only one book");
 	}
 };
 
-const columnNames = {
-	id: "Id",
-	title: "Title",
-	author: "Author",
-	genre: "Genre",
-	price: "Price",
-	retailPrice: "Retail Price",
-	quantity: "Quantity",
-	quantitySold: "Sold",
-	description: "Description"
+//Add book function
+const addBook = async () => {};
+
+// It's pointless to use button.disabled = true/false
+// because the click event is triggered nonetheless
+const toggleButton = { add: false, edit: false, delete: false };
+const toggle = type => {
+	toggleButton[type] = !toggleButton[type];
 };
+const isDisabled = type => toggleButton[type];
 
-//Write a function that fills the table with the books from the database
-const fillTable = async () => {
-	const url = "/books/getBooks";
-	try {
-		// const res = await fetch(url);
-		// const books = await res.json();
-		const books = dummyBooks;
-		const table = document.getElementById("tableContainer");
-		setCustomCSSProp(
-			"--grid-cols",
-			Object.keys(columnNames)
-				.map(key => columnNames[key].length + 4 + "ch")
-				.join(" "),
-			table
-		);
-		table.appendChild(createRow(columnNames, false));
-		let i = -1;
-		books.forEach(book => {
-			table.appendChild(setCustomCSSProp("--delay", ++i * 50 + "ms", createRow(book)));
-		});
-	} catch (error) {
-		console.error(error);
-	}
-};
-
-//create a function that makes a row from a given book without innerHTML
-const createRow = (book, setCheckbox = true) => {
-	const className = "column";
-	const row = createEl({ className: "row" });
-	if (setCheckbox) row.appendChild(createEl({ type: "checkbox", "data-id": book.id }, "input"));
-	else row.appendChild(createEl({ className }));
-	delete book.id;
-	// Row append child ->      Column append child ->      Paragraph
-	for (const bookAttribute in book)
-		row.appendChild(createEl({ className })).appendChild(createEl({ innerText: book[bookAttribute] }, "p"));
-
-	return row;
-};
-
-//Write a function that creates a <div> element with a given class
-const createEl = (attributes = {}, element = "div") => {
-	const div = document.createElement(element);
-	for (const attribute in attributes) {
-		const value = attributes[attribute];
-		if (attribute === "" || attribute === null || attribute === undefined || typeof attribute !== "string") continue;
-		if (
-			value === "" ||
-			value === null ||
-			value === undefined ||
-			(typeof value !== "string" && typeof value !== "number" && typeof value !== "boolean")
-		)
-			continue;
-		if (attribute === "className") div.classList.add(value);
-		else if (attribute.startsWith("--")) setCustomCSSProp(attribute, value, div);
-		else if (attribute in div) div[attribute] = value;
-		else div.setAttribute(attribute, value);
-	}
-	return div;
-};
-
-const setCustomCSSProp = (property, value, el) => {
-	el.style.setProperty(property, value);
-	return el;
-};
-
-const dummyBooks = [
-	{
-		id: 1,
-		title: "Assumenda!",
-		author: "Autem.",
-		genre: "Alias.",
-		price: "Facere.",
-		retailPrice: "Distinctio.",
-		quantity: "Exercitationem.",
-		quantitySold: "Velit!",
-		description: "Rerum?"
-	},
-	{
-		id: 2,
-		title: "Deleniti?",
-		author: "Quo!",
-		genre: "Aperiam.",
-		price: "Dolorem?",
-		retailPrice: "Iure?",
-		quantity: "Sequi!",
-		quantitySold: "Repellendus!",
-		description: "Nam."
-	},
-	{
-		id: 3,
-		title: "Odit!",
-		author: "Voluptatum.",
-		genre: "Quia?",
-		price: "Voluptates?",
-		retailPrice: "Dolor!",
-		quantity: "Eveniet!",
-		quantitySold: "Optio!",
-		description: "Accusamus!"
-	},
-	{
-		id: 4,
-		title: "Quasi.",
-		author: "Minus.",
-		genre: "Dolorem.",
-		price: "Veritatis.",
-		retailPrice: "Adipisci.",
-		quantity: "Quas!",
-		quantitySold: "Molestiae?",
-		description: "Labore!"
-	},
-	{
-		id: 5,
-		title: "Recusandae?",
-		author: "Natus?",
-		genre: "Natus.",
-		price: "Illo.",
-		retailPrice: "Dolorum.",
-		quantity: "Aperiam.",
-		quantitySold: "Totam!",
-		description: "Magnam!"
-	},
-	{
-		id: 6,
-		title: "Ipsum?",
-		author: "Provident!",
-		genre: "Sunt.",
-		price: "Pariatur!",
-		retailPrice: "Nihil!",
-		quantity: "Animi?",
-		quantitySold: "Quidem.",
-		description: "Placeat."
-	},
-	{
-		id: 7,
-		title: "Cupiditate!",
-		author: "Necessitatibus?",
-		genre: "Tenetur?",
-		price: "Quod?",
-		retailPrice: "Culpa?",
-		quantity: "Neque.",
-		quantitySold: "Magni?",
-		description: "Nemo."
-	},
-	{
-		id: 8,
-		title: "Molestias.",
-		author: "Magnam.",
-		genre: "Maiores?",
-		price: "Dolores?",
-		retailPrice: "Molestiae?",
-		quantity: "Odio.",
-		quantitySold: "Nostrum.",
-		description: "Ipsum?"
-	},
-	{
-		id: 9,
-		title: "Temporibus!",
-		author: "Ullam.",
-		genre: "Laboriosam?",
-		price: "Unde!",
-		retailPrice: "Praesentium!",
-		quantity: "Quaerat.",
-		quantitySold: "Modi!",
-		description: "Eius."
-	},
-	{
-		id: 1,
-		title: "Placeat.",
-		author: "Corrupti!",
-		genre: "Veniam?",
-		price: "Blanditiis.",
-		retailPrice: "Delectus!",
-		quantity: "Saepe.",
-		quantitySold: "Reprehenderit.",
-		description: "Repudiandae."
-	},
-	{
-		id: 1,
-		title: "Delectus.",
-		author: "Error!",
-		genre: "Porro!",
-		price: "Odit.",
-		retailPrice: "Beatae.",
-		quantity: "Alias!",
-		quantitySold: "Non!",
-		description: "Corporis."
-	}
-];
-
-fillTable();
+document.getElementById("deleteBookButton").addEventListener("click", deleteBooks);
+document.getElementById("editBookButton").addEventListener("click", editBook);
+document.getElementById("addBookButton").addEventListener("click", addBook);

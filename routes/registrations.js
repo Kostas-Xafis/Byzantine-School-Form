@@ -1,27 +1,15 @@
+const { scryptSync } = require("crypto");
+const { sendRegistrationMail } = require("../mailService");
+const { questionMarks } = require("../utils");
+
 const storeStudent = async (db, student) => {
-	const query = `INSERT INTO students (AM, LastName, FirstName, FatherName, BirthYear, Road, Number, TK, Region, Telephone, Cellphone, Email, RegistrationYear, ClassYear, Teacher, Classes, Date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-	const args = [
-		student.AM,
-		student.LastName,
-		student.FirstName,
-		student.FatherName,
-		student.BirthYear,
-		student.Road,
-		student.Number,
-		student.TK,
-		student.Region,
-		student.Telephone,
-		student.Cellphone,
-		student.Email,
-		student.RegistrationYear,
-		student.ClassYear,
-		student.Teacher,
-		student.Classes,
-		student.Date
-	];
+	const args = Object.values(student);
+	const query = `INSERT INTO students (AM, LastName, FirstName, FatherName, BirthYear, Road, Number, TK, Region, Telephone, Cellphone, Email, RegistrationYear, ClassYear, Teacher, Classes, Date) VALUES (${questionMarks(
+		args.length
+	)})`;
 	const [{ insertId }] = await db.execute(query, args);
 
-	const query2 = `INSERT INTO lessons (studentId, Teacher, Class) VALUES (?, ?, ?)`;
+	const query2 = `INSERT INTO lessons (studentId, Teacher, Class) VALUES (${questionMarks(3)})`;
 	if (1 & student.Classes) await db.execute(query2, [insertId, student.Teacher, 1]);
 	if (2 & student.Classes) await db.execute(query2, [insertId, student.Teacher, 2]);
 	if (4 & student.Classes) await db.execute(query2, [insertId, student.Teacher, 4]);
@@ -59,8 +47,6 @@ const getStudentsForZip = async (db, date) => {
 	}
 };
 
-module.exports = { storeStudent, getStudentsForZip, getStudentsForExcel };
-
 const studentQuery = date => {
 	let query = "SELECT * FROM students ";
 	let args = [];
@@ -69,4 +55,38 @@ const studentQuery = date => {
 		args = [date.start, date.end];
 	}
 	return { query, args };
+};
+
+module.exports = {
+	get: {
+		method: "get",
+		path: "/registrations/get_students",
+		func: db => {
+			return async (req, res) => {
+				const hashedPwd = process.env.HASH;
+				const { pwd, date, classType } = req.body;
+				const [pwdHash, salt] = hashedPwd.split(":");
+				const newHash = scryptSync(pwd, salt, 128).toString("hex");
+				if (newHash !== pwdHash) return res.status(400).send();
+				if (classType) res.json(await getStudentsForExcel(db, date, classType));
+				else res.json(await getStudentsForZip(db, date));
+			};
+		}
+	},
+	post: {
+		method: "post",
+		path: "/registrations/post_student",
+		func: db => {
+			return async (req, res) => {
+				try {
+					await storeStudent(db, req.body);
+					res.status(200).send();
+					if (process.env.ENV === "production") sendRegistrationMail(req.body);
+				} catch (error) {
+					console.log(error);
+					res.status(400).send();
+				}
+			};
+		}
+	}
 };

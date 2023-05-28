@@ -2,7 +2,7 @@ const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.EMAIL_API_KEY);
 
 module.exports = {
-	sendMail: async student => {
+	sendRegistrationMail: async student => {
 		const emailAddress = process.env.EMAIL_ADDRESS;
 		const msg = {
 			from: emailAddress, // Use the email address or domain you verified above
