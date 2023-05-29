@@ -52,7 +52,11 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
 	display: none;
 }
-p {
+p,
+h1,
+h2,
+h3,
+h4 {
 	color: var(--dk-txt-col);
 }
 

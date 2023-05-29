@@ -3,8 +3,16 @@ body {
 	grid-template-rows: auto auto 1fr;
 }
 
-p {
+p,
+h1,
+h2,
+h3,
+h4,
+label,
+input,
+button {
 	font-family: "Didact Gothic";
+	color: var(--dk-txt-col);
 }
 
 #SchoolName {
@@ -225,10 +233,107 @@ p {
 .rowFadeIn {
 	--delay: 0s;
 	opacity: 0;
-	animation: Fade-in 0.4s ease-in-out forwards var(--delay);
+	animation: Fade-in 0.6s ease-in-out forwards var(--delay);
 }
 
 .delete {
-	transform: translateX(100%);
+	transform: translateX(50%);
 	opacity: 0.00001;
+}
+
+/*!----------------
+    Add book dialog
+   ----------------*/
+
+dialog {
+	border: unset;
+	position: fixed;
+	inset: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+
+	background-color: var(--dk-txt-col-t3);
+
+	display: none;
+	align-content: center;
+	justify-items: center;
+}
+
+.dialogContainer {
+	position: relative;
+	padding: 2.4rem;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	row-gap: 1.2rem;
+
+	background: var(--white);
+	box-shadow: 0px 0px 5px 3px var(--dk-txt-col-t5);
+	border-radius: 15px;
+}
+
+.dialogContainer > p {
+	text-align: center;
+	font-size: 1.6rem;
+}
+
+#bookFormContainer {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-auto-rows: auto;
+	gap: 1.2rem 0.6rem;
+}
+
+#bookFormContainer > .inputContainer {
+	display: grid;
+	row-gap: 0.4rem;
+}
+
+.inputContainer > label {
+	grid-row: 1 / 2;
+	font-size: 1.2rem;
+}
+
+.inputContainer > input {
+	border-radius: 8px;
+	border: 2px solid var(--dk-txt-col);
+	padding: 0.3rem;
+	font-size: 1.2rem;
+}
+
+.inputContainer:has(> input:disabled) {
+	opacity: 0.5;
+	filter: blur(1px);
+}
+
+#addButton {
+	grid-column: 1 / -1;
+	place-self: center;
+	padding: 0.6rem 1.2rem;
+	font-size: 1.2rem;
+	border-radius: 5px;
+	background-color: var(--success-green);
+}
+
+#addButton:hover {
+	box-shadow: inset 0px 0px 1px 1px var(--dk-txt-col);
+}
+
+.closeDialog {
+	cursor: pointer;
+	position: absolute;
+	display: grid;
+	top: 1rem;
+	right: 1rem;
+	width: 1.7rem;
+	height: 1.7rem;
+	align-content: center;
+	justify-items: center;
+
+	font-size: 1.6rem;
+	border-radius: 50%;
+}
+
+.closeDialog:hover {
+	background-color: var(--dk-txt-col-t2);
 }

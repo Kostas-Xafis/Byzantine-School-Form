@@ -6,8 +6,7 @@ const columnNames = {
 	wholesalePrice: "Χονδρική Τιμή",
 	price: "Λιανική Τιμή",
 	quantity: "Ποσότητα",
-	quantitySold: "Πωλήσεις",
-	description: "Περιγραφή"
+	quantitySold: "Πωλήσεις"
 };
 
 //Write a function that fills the table with the books from the database
@@ -28,6 +27,8 @@ const fillTable = async () => {
 		table.appendChild(createRow(columnNames, false));
 		let i = -1;
 		books.forEach(book => {
+			book.wholesalePrice += "€";
+			book.price += "€";
 			table.appendChild(setCustomCSSProp("--delay", ++i * 50 + "ms", createRow(book)));
 		});
 		//remove the rowFadeIn class from the rows after the animation is done
@@ -58,7 +59,7 @@ const createRow = (book, setCheckbox = true) => {
 	row.addEventListener("delete", e => {
 		const row = e.currentTarget;
 		row.classList.add("delete");
-		sleep(400).then(() => row.remove());
+		sleep(650).then(() => row.remove());
 	});
 	return row;
 };

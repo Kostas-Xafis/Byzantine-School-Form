@@ -38,7 +38,7 @@ module.exports = {
 				try {
 					const args = Object.values(req.body);
 					await db.execute(
-						`INSERT INTO books (title, author, genre, wholesalePrice, price, quantity, quantitySold, description) VALUES (${questionMarks(
+						`INSERT INTO books (title, author, genre, wholesalePrice, price, quantity, quantitySold) VALUES (${questionMarks(
 							args.length
 						)})`,
 						args
@@ -61,7 +61,7 @@ module.exports = {
 					const args = Object.values(req.body).slice(1);
 					args.push(req.body.id);
 					await db.execute(
-						`UPDATE books SET title = ?, author = ?, genre = ?, wholesalePrice = ?, price = ?, quantity = ?, quantitySold = ?, description = ? WHERE id = ?`,
+						`UPDATE books SET title = ?, author = ?, genre = ?, wholesalePrice = ?, price = ?, quantity = ?, quantitySold = ? WHERE id = ?`,
 						args
 					);
 					res.status(200).send();
