@@ -60,7 +60,7 @@ const studentQuery = date => {
 module.exports = {
 	get: {
 		method: "get",
-		path: "/registrations/get_students",
+		path: "/registrations/get",
 		func: db => {
 			return async (req, res) => {
 				const hashedPwd = process.env.HASH;
@@ -75,7 +75,7 @@ module.exports = {
 	},
 	post: {
 		method: "post",
-		path: "/registrations/post_student",
+		path: "/registrations/post",
 		func: db => {
 			return async (req, res) => {
 				try {

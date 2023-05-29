@@ -103,9 +103,6 @@ const addBook = async e => {
 	}
 };
 
-// Close dialog modals if
-// the user clicks outside of them || presses ESC
-// || clicks cancel || user submits the form
 document.querySelectorAll("dialog").forEach(dialog => {
 	const closeDialog = () => dialog.dispatchEvent(new Event("close"));
 	const toggleInputs = (inputNames = [], toggleOn = true, fill) => {
@@ -134,6 +131,14 @@ document.querySelectorAll("dialog").forEach(dialog => {
 
 		toggleInputs(inputs, true, book);
 	});
+	dialog.querySelector("form").addEventListener("submit", async e => {
+		e.preventDefault();
+		dialog.getAttribute("data-action") === "add" ? await addBook(e) : await editBook(e);
+		closeDialog();
+	});
+	// Close dialog modals if
+	// the user clicks outside of them || presses ESC
+	// || clicks cancel || user submits the form
 	dialog.addEventListener("click", e => {
 		if (e.target.tagName === "DIALOG") closeDialog();
 	});
@@ -144,11 +149,6 @@ document.querySelectorAll("dialog").forEach(dialog => {
 	});
 	dialog.addEventListener("keydown", e => {
 		if (e.key === "Escape") closeDialog();
-	});
-	dialog.querySelector("form").addEventListener("submit", async e => {
-		e.preventDefault();
-		dialog.getAttribute("data-action") === "add" ? await addBook(e) : await editBook(e);
-		closeDialog();
 	});
 });
 

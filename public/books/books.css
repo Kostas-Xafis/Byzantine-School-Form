@@ -272,11 +272,6 @@ dialog {
 	border-radius: 15px;
 }
 
-.dialogContainer > p {
-	text-align: center;
-	font-size: 1.6rem;
-}
-
 #bookFormContainer {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;

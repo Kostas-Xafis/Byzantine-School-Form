@@ -14,45 +14,28 @@ document.querySelectorAll(".formSubmit").forEach(el => el.addEventListener("clic
 
 addRegister.addEventListener("submit", async e => {
 	e.preventDefault();
-	const {
-		id,
-		last_name,
-		name,
-		father_name,
-		birth_year,
-		road,
-		number,
-		TK,
-		region,
-		telephone,
-		phonenumber,
-		email,
-		class_year,
-		teacher,
-		otherTeacher,
-		addRegisterSubmit
-	} = e.target.elements;
+	const form = e.target.elements;
 	const data = {
-		AM: id.value,
-		LastName: last_name.value.replaceAll(" ", ""),
-		FirstName: name.value.replaceAll(" ", ""),
-		FatherName: father_name.value.replaceAll(" ", ""),
-		BirthYear: birth_year.value,
-		Road: road.value,
-		Number: number.value,
-		TK: TK.value,
-		Region: region.value,
-		Telephone: telephone.value || "-",
-		Cellphone: phonenumber.value,
-		Email: email.value,
+		AM: form.id.value,
+		LastName: form.last_name.value.replaceAll(" ", ""),
+		FirstName: form.name.value.replaceAll(" ", ""),
+		FatherName: form.father_name.value.replaceAll(" ", ""),
+		BirthYear: form.birth_year.value,
+		Road: form.road.value,
+		Number: form.number.value,
+		TK: form.TK.value,
+		Region: form.region.value,
+		Telephone: form.telephone.value || "-",
+		Cellphone: form.phonenumber.value,
+		Email: form.email.value,
 		RegistrationYear: "2022-2023",
-		ClassYear: class_year.value,
-		Teacher: teacher.value !== "null" ? teacher.value : otherTeacher.value,
+		ClassYear: form.class_year.value,
+		Teacher: form.teacher.value !== "null" ? form.teacher.value : form.otherTeacher.value,
 		Classes: countClasses,
 		Date: new Date().getTime() + ""
 	};
 	try {
-		const res = await fetch("/post_registration", {
+		const res = await fetch("/registrations/post", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(data)

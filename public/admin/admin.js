@@ -27,7 +27,7 @@ const getStudents = async submitButton => {
 		const pwd = document.getElementById("pwd").value;
 		const classType = Number(submitButton.getAttribute("data-classType")) || null;
 
-		const res = await fetch("/get_registrations", {
+		const res = await fetch("/registrations/get", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ pwd, classType, date })
