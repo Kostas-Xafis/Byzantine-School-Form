@@ -71,21 +71,5 @@ module.exports = {
 				}
 			};
 		}
-	},
-	deleteBook: {
-		method: "delete",
-		path: "/books/delete",
-		func: db => {
-			return async (req, res) => {
-				try {
-					if (req.body.length === 1) await db.execute(`DELETE FROM books WHERE id = ?`, req.body);
-					else await db.execute(`DELETE FROM books WHERE id IN (${questionMarks(req.body.length)})`, req.body);
-					res.status(200).send();
-				} catch (error) {
-					console.error(error);
-					res.status(500).send("Internal Server Error");
-				}
-			};
-		}
 	}
 };

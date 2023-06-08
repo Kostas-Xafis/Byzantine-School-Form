@@ -15,6 +15,7 @@ app.use(express.static("public/static"));
 app.use("/", express.static("public/home", { index: "index.html" }));
 app.use("/admin", express.static("public/admin", { index: "admin.html" }));
 app.use("/books", express.static("public/books", { index: "books.html" }));
+app.use("/login", express.static("public/login", { index: "login.html" }));
 
 (async function () {
 	try {

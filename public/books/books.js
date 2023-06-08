@@ -10,14 +10,12 @@ const getCheckedBooks = () => {
 const sleep = (ms = 1000) => new Promise(res => setTimeout(res, ms));
 
 let i = 0;
-const deleteBooks = async e => {
-	if (isDisabled("delete")) return;
-	toggle("delete");
+const deleteBook = async e => {
 	try {
-		const checkedBooks = getCheckedBooks();
+		let checkedBooks = getCheckedBooks();
+		checkedBooks = checkedBooks.map(book => book.id);
 		if (checkedBooks.length === 0) {
 			alert("Επιλέξτε τουλάχιστον ένα βιβλίο για διαγραφή");
-			toggle("delete");
 			return;
 		}
 		const res = await fetch("/books/delete", {
@@ -34,8 +32,6 @@ const deleteBooks = async e => {
 		}
 	} catch (error) {
 		console.error(error);
-	} finally {
-		toggle("delete");
 	}
 };
 
@@ -103,6 +99,12 @@ const addBook = async e => {
 	}
 };
 
+const bookActions = {
+	add: addBook,
+	edit: editBook,
+	delete: deleteBook
+};
+
 document.querySelectorAll("dialog").forEach(dialog => {
 	const closeDialog = () => dialog.dispatchEvent(new Event("close"));
 	const toggleInputs = (inputNames = [], toggleOn = true, fill) => {
@@ -114,10 +116,11 @@ document.querySelectorAll("dialog").forEach(dialog => {
 		});
 	};
 	dialog.addEventListener("close", e => {
-		dialog.style.display = "none";
 		toggleInputs([], false, {});
 		const action = dialog.getAttribute("data-action");
 		toggle(action);
+		toggleHide("dialog");
+		if (action === "delete") toggleHide("#bookFormContainer");
 	});
 	dialog.addEventListener("show", e => {
 		const { action, inputs, book } = e.detail;
@@ -125,15 +128,15 @@ document.querySelectorAll("dialog").forEach(dialog => {
 		toggle(action);
 
 		textSetup[action]();
-		dialog.style.display = "grid";
+		toggleHide("dialog");
 		dialog.setAttribute("data-action", action);
 		if (action === "edit") dialog.setAttribute("data-book-id", book.id);
-
+		if (action === "delete") toggleHide("#bookFormContainer");
 		toggleInputs(inputs, true, book);
 	});
 	dialog.querySelector("form").addEventListener("submit", async e => {
 		e.preventDefault();
-		dialog.getAttribute("data-action") === "add" ? await addBook(e) : await editBook(e);
+		await bookActions[dialog.getAttribute("data-action")](e);
 		closeDialog();
 	});
 	// Close dialog modals if
@@ -160,7 +163,12 @@ const toggle = type => {
 };
 const isDisabled = type => toggleButton[type];
 
-document.getElementById("deleteBookButton").addEventListener("click", deleteBooks);
+document.getElementById("deleteBookButton").addEventListener("click", e => {
+	const checkedBooks = getCheckedBooks();
+	if (checkedBooks.length === 0) return alert("Please select a book");
+	document.getElementById("bookDialog").dispatchEvent(new CustomEvent("show", { detail: { action: "delete" } }));
+});
+
 document.getElementById("addBookButton").addEventListener("click", e => {
 	document.getElementById("bookDialog").dispatchEvent(
 		new CustomEvent("show", {
@@ -188,7 +196,17 @@ const textSetup = {
 	},
 	edit: () => {
 		const dialog = document.getElementById("bookDialog");
-		dialog.querySelector("h1").innerText = "Ενημέρωση νέου βιβλίου";
+		dialog.querySelector("h1").innerText = "Ενημέρωση βιβλίου";
 		dialog.querySelector("button").innerText = "Ενημέρωση";
+	},
+	delete: () => {
+		const dialog = document.getElementById("bookDialog");
+		dialog.querySelector("h1").innerText = "Είστε σίγουροι για τη διαγραφή των επιλεγμένων βιβλίων;";
+		dialog.querySelector("button").innerText = "Διαγραφή";
 	}
+};
+
+const toggleHide = selector => {
+	const element = document.querySelector(selector);
+	element.classList.toggle("hidden");
 };

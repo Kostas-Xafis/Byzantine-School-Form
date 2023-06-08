@@ -11,8 +11,10 @@ const { readFile } = require("fs/promises");
 	if (argv[3] === "--file") {
 		let file = argv[4];
 		if (!file) return console.log("No file specified");
-		const fileString = await readFile(file, { encoding: "utf8" });
-		const queries = argv[5] === "--single" ? [fileString.replace("\n", "")] : fileString.split("\n");
+		let fileString = await readFile(file, { encoding: "utf8" });
+		fileString = fileString.replace(/\r\n/g, "");
+		console.log({ fileString });
+		const queries = argv[5] === "--single" ? [fileString] : fileString.split(";");
 		let i = 0;
 		for (const query of queries) {
 			if (query === "") break;

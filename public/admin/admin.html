@@ -5,6 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Συλλογή Στοιχείων Μαθητών</title>
+		<script src="/auth.js"></script>
 		<script defer src="admin.js"></script>
 		<script
 			defer
@@ -36,7 +37,13 @@
 		<link rel="stylesheet" href="/main.css" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins" />
 		<link rel="icon" type="image/png" href="../favicon.ico" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+			integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
 	</head>
 	<body>
 		<div id="SchoolName">
@@ -69,13 +76,13 @@
 					<label for="dateEnd">Έως:</label>
 				</div>
 				<div id="excelDownload" class="submitContainer">
-					<button type="submit" data-classType=1 id="getExcelByzantini" class="formSubmit">Λήψη Excel Βυζαντινής</button>
-					<button type="submit" data-classType=2 id="getExcelParadosiaki" class="formSubmit">Λήψη Excel Παραδοσιακής</button>
-					<button type="submit" data-classType=4 id="getExcelEuropaiki" class="formSubmit">Λήψη Excel Ευρωπαϊκής</button>
+					<button type="submit" data-classType="1" id="getExcelByzantini" class="formSubmit">Λήψη Excel Βυζαντινής</button>
+					<button type="submit" data-classType="2" id="getExcelParadosiaki" class="formSubmit">Λήψη Excel Παραδοσιακής</button>
+					<button type="submit" data-classType="4" id="getExcelEuropaiki" class="formSubmit">Λήψη Excel Ευρωπαϊκής</button>
 				</div>
 				<div class="submitContainer">
 					<button type="submit" id="getZip" class="formSubmit">Λήψη Zip</button>
-                    <p id="progressTxt"></p>
+					<p id="progressTxt"></p>
 				</div>
 			</form>
 		</div>

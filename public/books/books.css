@@ -255,12 +255,12 @@ dialog {
 
 	background-color: var(--dk-txt-col-t3);
 
-	display: none;
+	display: grid;
 	align-content: center;
 	justify-items: center;
 }
 
-.dialogContainer {
+#bookForm {
 	position: relative;
 	padding: 2.4rem;
 	display: grid;
@@ -331,4 +331,8 @@ dialog {
 
 .closeDialog:hover {
 	background-color: var(--dk-txt-col-t2);
+}
+
+.hidden {
+	display: none !important;
 }
