@@ -16,6 +16,7 @@ app.use("/", express.static("public/home", { index: "index.html" }));
 app.use("/admin", express.static("public/admin", { index: "admin.html" }));
 app.use("/books", express.static("public/books", { index: "books.html" }));
 app.use("/login", express.static("public/login", { index: "login.html" }));
+app.use("/payments", express.static("public/payments", { index: "payments.html" }));
 
 (async function () {
 	try {

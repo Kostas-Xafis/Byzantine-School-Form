@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="/global.css" />
-		<link rel="stylesheet" href="./books.css" />
+		<link rel="stylesheet" href="./payments.css" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" />
 		<link rel="icon" type="image/png" href="/favicon.ico" />
 		<link
@@ -21,10 +21,10 @@
 	<body>
 		<div id="navContainer">
 			<img id="logo" src="/logo.webp" alt="Λογότυπο Σχολής Βυζαντινής και Παραδοσιακής Μουσικής" />
-			<a class="nav currentPage" href="/books/">
+			<a class="nav" href="/books/">
 				<p>Βιβλία</p>
 			</a>
-			<a class="nav" href="/payments/">
+			<a class="nav currentPage" href="/payments/">
 				<p>Πληρωμές</p>
 			</a>
 		</div>
@@ -32,38 +32,30 @@
 			<div id="totalsTableContainer" class="dataTable"></div>
 			<div id="actionsPanel">
 				<div class="actionsContainer">
-					<button id="addBookButton" type="button" class="action">
+					<button id="addPaymentButton" type="button" class="action">
 						<i class="fa-regular fa-plus"></i>
 					</button>
-					<button id="editBookButton" type="button" class="action">
+					<button id="editPaymentButton" type="button" class="action">
 						<i class="fa-regular fa-pen-to-square"></i>
 					</button>
-					<button id="deleteBookButton" type="button" class="action">
-						<i class="fa-regular fa-trash-can"></i>
+					<button id="completePaymentButton" type="button" class="action">
+						<i class="fa-solid fa-check"></i>
 					</button>
 				</div>
 			</div>
 			<div id="tableContainer" class="dataTable"></div>
 		</div>
-		<dialog id="bookDialog" class="hidden" open>
-			<form id="bookForm" name="bookForm">
+		<dialog id="paymentDialog" class="hidden" open>
+			<form id="paymentForm" name="paymentForm">
 				<h1></h1>
-				<div id="bookFormContainer">
-					<div class="inputContainer"><input name="title" type="text" /><label for="title">Τίτλος</label></div>
-					<div class="inputContainer"><input name="wholesaler" type="text" /><label for="wholesaler">Χονδρέμπορος</label></div>
-					<div class="inputContainer"><input name="genre" type="text" /><label for="genre">Είδος</label></div>
+				<div id="paymentFormContainer">
+					<div class="inputContainer"><input name="studentName" type="text" /><label for="studentName">Μαθητής</label></div>
 					<div class="inputContainer">
-						<input name="wholesalePrice" type="number" inputmode="numeric" /><label for="wholesalePrice">Χονδρική Τιμή</label>
+						<select name="title"></select>
+						<label for="title">Βιβλίο</label>
 					</div>
-					<div class="inputContainer">
-						<input name="price" type="number" inputmode="numeric" /><label for="price">Λιανική Τιμή</label>
-					</div>
-					<div class="inputContainer">
-						<input name="quantity" type="number" inputmode="numeric" /><label for="quantity">Ποσότητα</label>
-					</div>
-					<div class="inputContainer">
-						<input name="quantitySold" type="number" inputmode="numeric" /><label for="quantitySold">Πωλήσεις</label>
-					</div>
+					<div class="inputContainer"><input name="amount" type="number" /><label for="amount">Οφειλή</label></div>
+					<div class="inputContainer"><input name="date" type="date" /><label for="date">Ημερομηνία</label></div>
 				</div>
 				<button id="addButton" class="submitButton">Προσθήκη</button>
 				<button class="closeDialog">
@@ -71,7 +63,7 @@
 				</button>
 			</form>
 		</dialog>
-		<script defer src="./books.js"></script>
-		<script defer src="./bookTableFill.js"></script>
+		<script defer src="./payments.js"></script>
+		<script defer src="./paymentsTableFill.js"></script>
 	</body>
 </html>

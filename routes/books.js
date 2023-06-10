@@ -6,7 +6,12 @@ module.exports = {
 		func: db => {
 			return async (req, res) => {
 				try {
-					const [books] = await db.execute("SELECT * FROM books");
+					const [books] = await db.execute("SELECT * FROM books LEFT JOIN wholesalers ON books.wholesalerId = wholesalers.id");
+					//rename name to wholesaler in a simple for loop
+					for (let i = 0; i < books.length; i++) {
+						books[i].wholesaler = books[i].name;
+						delete books[i].name;
+					}
 					res.json(books);
 				} catch (error) {
 					console.error(error);
@@ -38,7 +43,7 @@ module.exports = {
 				try {
 					const args = Object.values(req.body);
 					await db.execute(
-						`INSERT INTO books (title, author, genre, wholesalePrice, price, quantity, quantitySold) VALUES (${questionMarks(
+						`INSERT INTO books (title, wholesalerId, genre, wholesalePrice, price, quantity, quantitySold) VALUES (${questionMarks(
 							args.length
 						)})`,
 						args
@@ -51,19 +56,35 @@ module.exports = {
 			};
 		}
 	},
-	update: {
+	// update: {
+	// 	method: "put",
+	// 	path: "/books/update",
+	// 	func: db => {
+	// 		return async (req, res) => {
+	// 			try {
+	// 				//Move id to the end of the args array
+	// 				const args = Object.values(req.body).slice(1);
+	// 				args.push(req.body.id);
+	// 				await db.execute(
+	// 					`UPDATE books SET title = ?, author = ?, genre = ?, wholesalePrice = ?, price = ?, quantity = ?, quantitySold = ? WHERE id = ?`,
+	// 					args
+	// 				);
+	// 				res.status(200).send();
+	// 			} catch (error) {
+	// 				console.error(error);
+	// 				res.status(500).send("Internal Server Error");
+	// 			}
+	// 		};
+	// 	}
+	// },
+	updateQuantity: {
 		method: "put",
-		path: "/books/update",
+		path: "/books/updateQuantity",
 		func: db => {
 			return async (req, res) => {
 				try {
-					//Move id to the end of the args array
-					const args = Object.values(req.body).slice(1);
-					args.push(req.body.id);
-					await db.execute(
-						`UPDATE books SET title = ?, author = ?, genre = ?, wholesalePrice = ?, price = ?, quantity = ?, quantitySold = ? WHERE id = ?`,
-						args
-					);
+					const args = Object.values(req.body);
+					await db.execute(`UPDATE books SET quantity = ? WHERE id = ?`, args);
 					res.status(200).send();
 				} catch (error) {
 					console.error(error);

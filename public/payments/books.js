@@ -29,7 +29,7 @@ const deleteBook = async e => {
 			document.querySelectorAll(".row:has(input[type=checkbox]:checked)").forEach(row => {
 				row.dispatchEvent(new Event("delete"));
 			});
-		} else alert("Αποτυχία διαγραφής");
+		}
 	} catch (error) {
 		console.error(error);
 	}
@@ -38,18 +38,22 @@ const deleteBook = async e => {
 const editBook = async e => {
 	const form = document.forms.bookForm.elements;
 	const book = {
+		id: Number(document.getElementById("bookDialog").getAttribute("data-book-id")),
+		title: form.title.value,
+		author: form.author.value,
+		genre: form.genre.value,
+		wholesalePrice: Number(form.wholesalePrice.value),
+		price: Number(form.price.value),
 		quantity: Number(form.quantity.value),
-		id: Number(document.getElementById("bookDialog").getAttribute("data-book-id"))
+		quantitySold: Number(form.quantitySold.value) // Not ideal, change the database to accept null values
 	};
 	try {
-		const res = await fetch("/books/updateQuantity", {
+		const res = await fetch("/books/update", {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(book)
 		});
-		if (res.status >= 200 && res.status < 300) {
-			document.querySelector(`.row:has(input[data-id="${book.id}"])`).dispatchEvent(new CustomEvent("update", { detail: { book } }));
-		}
+		if (res.status >= 200 && res.status < 300) console.log("Book updated successfully");
 	} catch (error) {
 		console.error(error);
 	}
@@ -88,7 +92,7 @@ const addBook = async e => {
 			body: JSON.stringify(book)
 		});
 		if (res.status >= 200 && res.status < 300) {
-			document.dispatchEvent(new CustomEvent("add", { detail: { book } }));
+			//close dialog and insert the new book in the table
 		}
 	} catch (error) {
 		console.error(error);
@@ -103,13 +107,12 @@ const bookActions = {
 
 document.querySelectorAll("dialog").forEach(dialog => {
 	const closeDialog = () => dialog.dispatchEvent(new Event("close"));
-	const toggleInputs = (enabledInputs = [], toggleOn = true, fill) => {
+	const toggleInputs = (inputNames = [], toggleOn = true, fill) => {
 		const inputs = dialog.querySelectorAll("input");
 		inputs.forEach(input => {
-			if (toggleOn) input.disabled = enabledInputs.includes(input.name) ? false : true;
+			if (toggleOn) input.disabled = inputNames.includes(input.name) ? false : true;
 			else input.disabled = true;
-			if (Object.values(fill)?.length && toggleOn) input.value = fill[input.name];
-			else input.value = "";
+			if (fill && toggleOn) input.value = fill[input.name];
 		});
 	};
 	dialog.addEventListener("close", e => {
@@ -120,7 +123,7 @@ document.querySelectorAll("dialog").forEach(dialog => {
 		if (action === "delete") toggleHide("#bookFormContainer");
 	});
 	dialog.addEventListener("show", e => {
-		const { action, enabledInputs, book } = e.detail;
+		const { action, inputs, book } = e.detail;
 		if (isDisabled(action)) return;
 		toggle(action);
 
@@ -129,7 +132,7 @@ document.querySelectorAll("dialog").forEach(dialog => {
 		dialog.setAttribute("data-action", action);
 		if (action === "edit") dialog.setAttribute("data-book-id", book.id);
 		if (action === "delete") toggleHide("#bookFormContainer");
-		toggleInputs(enabledInputs, true, book);
+		toggleInputs(inputs, true, book);
 	});
 	dialog.querySelector("form").addEventListener("submit", async e => {
 		e.preventDefault();
@@ -163,13 +166,13 @@ const isDisabled = type => toggleButton[type];
 document.getElementById("deleteBookButton").addEventListener("click", e => {
 	const checkedBooks = getCheckedBooks();
 	if (checkedBooks.length === 0) return alert("Please select a book");
-	document.getElementById("bookDialog").dispatchEvent(new CustomEvent("show", { detail: { action: "delete", book: {} } }));
+	document.getElementById("bookDialog").dispatchEvent(new CustomEvent("show", { detail: { action: "delete" } }));
 });
 
 document.getElementById("addBookButton").addEventListener("click", e => {
 	document.getElementById("bookDialog").dispatchEvent(
 		new CustomEvent("show", {
-			detail: { action: "add", enabledInputs: ["title", "wholesaler", "genre", "wholesalePrice", "price", "quantity"], book: {} }
+			detail: { action: "add", inputs: ["title", "author", "genre", "wholesalePrice", "price", "quantity"] }
 		})
 	);
 });
@@ -178,7 +181,7 @@ document.getElementById("editBookButton").addEventListener("click", e => {
 	if (checkedBooks.length === 1)
 		return document.getElementById("bookDialog").dispatchEvent(
 			new CustomEvent("show", {
-				detail: { action: "edit", enabledInputs: ["quantity"], book: checkedBooks[0] }
+				detail: { action: "edit", inputs: ["quantity", "quantitySold"], book: checkedBooks[0] }
 			})
 		);
 	if (checkedBooks.length === 0) return alert("Please select a book");

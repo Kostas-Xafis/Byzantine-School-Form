@@ -63,7 +63,7 @@ h4 {
 a,
 a:hover,
 a:focus {
-	all: unset;
+	text-decoration: unset;
 }
 
 ::-webkit-scrollbar {

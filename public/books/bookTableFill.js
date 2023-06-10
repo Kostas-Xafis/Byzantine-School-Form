@@ -1,56 +1,92 @@
 const columnNames = {
 	id: "Id",
 	title: "Τίτλος",
-	author: "Συγγραφέας",
+	wholesaler: "Χονδρέμπορος",
 	genre: "Είδος",
 	wholesalePrice: "Χονδρική Τιμή",
 	price: "Λιανική Τιμή",
 	quantity: "Ποσότητα",
-	quantitySold: "Πωλήσεις"
+	quantitySold: "Πωλήσεις",
+	reserved: "Απόθεμα"
+};
+
+const totalsColumnNames = {
+	quantity: "Σύνολο Ποσότητας",
+	quantitySold: "Σύνολο Πωλήσεων",
+	reserved: "Σύνολο Αποθέματος",
+	profit: "Σύνολο Κέρδους",
+	repayment: "Σύνολο Εξόφλησης"
 };
 
 //Write a function that fills the table with the books from the database
 let bookList = [];
-const fillTable = async () => {
-	const url = "/books/get";
-	try {
-		const books = await (await fetch(url)).json();
-		bookList = JSON.parse(JSON.stringify(books));
-		const table = document.getElementById("tableContainer");
-		setCustomCSSProp(
-			"--grid-cols",
-			Object.keys(columnNames)
-				.map(key => columnNames[key].length + 4 + "ch")
-				.join(" "),
-			table
-		);
-		table.appendChild(createRow(columnNames, false));
-		let i = -1;
-		books.forEach(book => {
-			book.wholesalePrice += "€";
-			book.price += "€";
-			table.appendChild(setCustomCSSProp("--delay", ++i * 50 + "ms", createRow(book)));
-		});
-		//remove the rowFadeIn class from the rows after the animation is done
-		await sleep(400 + i * 50);
-		document.querySelectorAll(".row").forEach(row => {
-			row.classList.remove("rowFadeIn");
-		});
-	} catch (error) {
-		console.error(error);
-	}
+const fillBooksTable = async () => {
+	const table = document.getElementById("tableContainer");
+	setCustomCSSProp(
+		"--grid-cols",
+		Object.keys(columnNames)
+			.map(key => columnNames[key].length + 4 + "ch")
+			.join(" "),
+		table
+	);
+	table.appendChild(createRow(columnNames, columnNames, false));
+	let i = -1;
+	bookList.forEach(book => {
+		const bookCopy = Object.assign({}, book);
+		bookCopy.wholesalePrice += "€";
+		bookCopy.price += "€";
+		table.appendChild(setCustomCSSProp("--delay", ++i * 50 + "ms", createRow(bookCopy, columnNames)));
+	});
+	//remove the rowFadeIn class from the rows after the animation is done
+	await sleep(400 + i * 50);
+	document.querySelectorAll(".row").forEach(row => {
+		row.classList.remove("rowFadeIn");
+	});
 };
 
+const fillTotalsTable = () => {
+	const table = document.getElementById("totalsTableContainer");
+	setCustomCSSProp(
+		"--grid-cols",
+		Object.keys(totalsColumnNames)
+			.map(key => totalsColumnNames[key].length + 4 + "ch")
+			.join(" "),
+		table
+	);
+	table.appendChild(createRow(totalsColumnNames, totalsColumnNames, false));
+	const totals = {
+		quantity: 0,
+		quantitySold: 0,
+		reserved: 0,
+		profit: 0,
+		repayment: 0
+	};
+	for (let i = 0; i < bookList.length; i++) {
+		const book = bookList[i];
+		totals.quantity += book.quantity;
+		totals.quantitySold += book.quantitySold;
+		totals.reserved += book.reserved;
+		totals.profit += book.quantitySold * (book.price - book.wholesalePrice);
+		totals.repayment += book.reserved * book.wholesalePrice;
+	}
+
+	table.appendChild(createRow(totals, totalsColumnNames, false));
+	table.querySelectorAll(".column:first-child").forEach(column => {
+		column.remove();
+	});
+};
 //create a function that makes a row from a given book without innerHTML
-const createRow = (book, setCheckbox = true) => {
+const createRow = (data, columns, setCheckbox = true) => {
 	const className = "column";
 	const row = createEl({ className: ["row", setCheckbox ? "rowFadeIn" : "noFadeIn"] });
-	if (setCheckbox) row.appendChild(createEl({ type: "checkbox", "data-id": book.id }, "input"));
+	if (setCheckbox) row.appendChild(createEl({ type: "checkbox", "data-id": data.id }, "input"));
 	else row.appendChild(createEl({ className }));
-	delete book.id;
 	// Row append child ->      Column append child ->      Paragraph
-	for (const bookAttribute in book)
-		row.appendChild(createEl({ className })).appendChild(createEl({ innerText: book[bookAttribute] }, "p"));
+	for (const dataAttribute in columns)
+		if (dataAttribute !== "id")
+			row.appendChild(createEl({ className, "data-name": dataAttribute })).appendChild(
+				createEl({ innerText: data[dataAttribute] }, "p")
+			);
 
 	row.addEventListener("click", e => {
 		const checked = row.querySelector("input[type=checkbox]");
@@ -60,6 +96,14 @@ const createRow = (book, setCheckbox = true) => {
 		const row = e.currentTarget;
 		row.classList.add("delete");
 		sleep(650).then(() => row.remove());
+	});
+	row.addEventListener("update", e => {
+		const { book } = e.detail;
+		row.querySelectorAll(".column").forEach(column => {
+			const dataName = column.dataset.name;
+			if (dataName === "id" || !(dataName in book)) return;
+			column.querySelector("p").innerText = book[dataName];
+		});
 	});
 	return row;
 };
@@ -90,5 +134,17 @@ const setCustomCSSProp = (property, value, el) => {
 	el.style.setProperty(property, value);
 	return el;
 };
-
-fillTable();
+(async () => {
+	try {
+		const books = await (await fetch("/books/get")).json();
+		// Add a reserved property to each book
+		books.forEach(book => {
+			book.reserved = book.quantity - book.quantitySold;
+		});
+		bookList = JSON.parse(JSON.stringify(books));
+		fillBooksTable();
+		fillTotalsTable();
+	} catch (error) {
+		console.error(error);
+	}
+})();
