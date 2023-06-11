@@ -260,6 +260,7 @@ dialog {
 	font-size: 1.2rem;
 }
 
+.inputContainer > select,
 .inputContainer > input {
 	border-radius: 8px;
 	border: 2px solid var(--dk-txt-col);
@@ -271,14 +272,6 @@ dialog {
 .inputContainer:has(select:disabled) {
 	opacity: 0.5;
 	filter: blur(1px);
-}
-
-.inputContainer > select {
-	border-radius: 8px;
-	border: 2px solid var(--dk-txt-col);
-	padding: 0.3rem;
-	font-size: 1.2rem;
-	font-weight: 500;
 }
 
 dialog[data-action="edit"] .inputContainer:has(select),

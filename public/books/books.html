@@ -42,15 +42,23 @@
 						<i class="fa-regular fa-trash-can"></i>
 					</button>
 				</div>
+				<div class="actionsContainer">
+					<button id="addWholesalerButton" type="button" class="action">
+						<i class="fa-solid fa-user-plus"></i>
+					</button>
+				</div>
 			</div>
 			<div id="tableContainer" class="dataTable"></div>
 		</div>
 		<dialog id="bookDialog" class="hidden" open>
-			<form id="bookForm" name="bookForm">
+			<form id="bookForm" class="dialogForm" name="bookForm">
 				<h1></h1>
-				<div id="bookFormContainer">
+				<div id="bookFormContainer" class="dialogFormContainer">
 					<div class="inputContainer"><input name="title" type="text" /><label for="title">Τίτλος</label></div>
-					<div class="inputContainer"><input name="wholesaler" type="text" /><label for="wholesaler">Χονδρέμπορος</label></div>
+					<div class="inputContainer">
+						<select name="wholesaler"></select>
+						<label for="wholesaler">Χονδρέμπορος</label>
+					</div>
 					<div class="inputContainer"><input name="genre" type="text" /><label for="genre">Είδος</label></div>
 					<div class="inputContainer">
 						<input name="wholesalePrice" type="number" inputmode="numeric" /><label for="wholesalePrice">Χονδρική Τιμή</label>
@@ -64,6 +72,18 @@
 					<div class="inputContainer">
 						<input name="quantitySold" type="number" inputmode="numeric" /><label for="quantitySold">Πωλήσεις</label>
 					</div>
+				</div>
+				<button id="addButton" class="submitButton">Προσθήκη</button>
+				<button class="closeDialog">
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+			</form>
+		</dialog>
+		<dialog id="wholesalerDialog" class="hidden" open>
+			<form id="wholesalerForm" class="dialogForm" name="wholesalerForm">
+				<h1></h1>
+				<div id="wholesalerFormContainer" class="dialogFormContainer">
+					<div class="inputContainer"><input name="name" type="text" /><label for="name">Χονδρέμπορος</label></div>
 				</div>
 				<button id="addButton" class="submitButton">Προσθήκη</button>
 				<button class="closeDialog">

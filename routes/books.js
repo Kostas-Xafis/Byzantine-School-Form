@@ -6,7 +6,9 @@ module.exports = {
 		func: db => {
 			return async (req, res) => {
 				try {
-					const [books] = await db.execute("SELECT * FROM books LEFT JOIN wholesalers ON books.wholesalerId = wholesalers.id");
+					const [books] = await db.execute(
+						"SELECT * FROM books LEFT JOIN wholesalers ON books.wholesalerId = wholesalers.id ORDER BY books.id DESC"
+					);
 					//rename name to wholesaler in a simple for loop
 					for (let i = 0; i < books.length; i++) {
 						books[i].wholesaler = books[i].name;
@@ -42,13 +44,14 @@ module.exports = {
 			return async (req, res) => {
 				try {
 					const args = Object.values(req.body);
-					await db.execute(
+					const [result] = await db.execute(
 						`INSERT INTO books (title, wholesalerId, genre, wholesalePrice, price, quantity, quantitySold) VALUES (${questionMarks(
 							args.length
 						)})`,
 						args
 					);
-					res.status(200).send();
+					const [[book]] = await db.execute("SELECT * FROM books WHERE id = ? LIMIT 1", [result.insertId]);
+					res.status(200).json(book);
 				} catch (error) {
 					console.error(error);
 					res.status(500).send("Internal Server Error");

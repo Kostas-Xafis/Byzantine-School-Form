@@ -10,7 +10,8 @@ h3,
 h4,
 label,
 input,
-button {
+button,
+select {
 	font-family: "Didact Gothic";
 	color: var(--dk-txt-col);
 }
@@ -83,6 +84,10 @@ button {
 
 	background: var(--success-green);
 	border-radius: 5px;
+}
+
+.actionsContainer:last-of-type {
+	grid-template-columns: 1fr;
 }
 
 .actionsContainer > button {
@@ -230,7 +235,7 @@ dialog {
 	justify-items: center;
 }
 
-#bookForm {
+.dialogForm {
 	position: relative;
 	padding: 2.4rem;
 	display: grid;
@@ -242,14 +247,14 @@ dialog {
 	border-radius: 15px;
 }
 
-#bookFormContainer {
+.dialogFormContainer {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-auto-rows: auto;
 	gap: 1.2rem 0.6rem;
 }
 
-#bookFormContainer > .inputContainer {
+.dialogFormContainer > .inputContainer {
 	display: grid;
 	row-gap: 0.4rem;
 }
@@ -259,6 +264,7 @@ dialog {
 	font-size: 1.2rem;
 }
 
+.inputContainer > select,
 .inputContainer > input {
 	border-radius: 8px;
 	border: 2px solid var(--dk-txt-col);
@@ -266,7 +272,8 @@ dialog {
 	font-size: 1.2rem;
 }
 
-.inputContainer:has(> input:disabled) {
+.inputContainer:has(input:disabled),
+.inputContainer:has(select:disabled) {
 	opacity: 0.5;
 	filter: blur(1px);
 }

@@ -20,6 +20,7 @@ const totalsColumnNames = {
 
 //Write a function that fills the table with the books from the database
 let bookList = [];
+let wholesalerList = [];
 const fillBooksTable = async () => {
 	const table = document.getElementById("tableContainer");
 	setCustomCSSProp(
@@ -107,6 +108,30 @@ const createRow = (data, columns, setCheckbox = true) => {
 	});
 	return row;
 };
+document.addEventListener("add", e => {
+	const { book } = e.detail;
+	book.wholesaler = wholesalerList.find(wholesaler => wholesaler.id === book.wholesalerId).name;
+	book.reserved = book.quantity - book.quantitySold;
+	bookList.push(book);
+
+	const bookCopy = Object.assign({}, book);
+	bookCopy.wholesalePrice += "€";
+	bookCopy.price += "€";
+	const table = document.getElementById("tableContainer");
+	const row = createRow(book, columnNames);
+	if (table.children.length === 1) table.appendChild(row);
+	else table.insertBefore(row, table.children.item(1));
+});
+
+document.addEventListener("addWholesaler", e => {
+	const { wholesaler } = e.detail;
+	wholesalerList.push(wholesaler);
+	console.log(wholesalerList);
+
+	const select = document.querySelector("select");
+	const option = createEl({ value: wholesaler.id, innerText: wholesaler.name }, "option");
+	select.appendChild(option);
+});
 
 //Write a function that creates a <div> element with a given class
 const createEl = (attributes = {}, element = "div") => {
@@ -134,9 +159,20 @@ const setCustomCSSProp = (property, value, el) => {
 	el.style.setProperty(property, value);
 	return el;
 };
+
+const fillWholesalersSelect = () => {
+	const select = document.querySelector("select");
+	wholesalerList.forEach(wholesaler => {
+		const option = createEl({ value: wholesaler.id }, "option");
+		option.innerText = wholesaler.name;
+		select.appendChild(option);
+	});
+};
+
 (async () => {
 	try {
-		const books = await (await fetch("/books/get")).json();
+		const [res1, res2] = await Promise.all([fetch("/books/get"), fetch("/wholesalers/get")]);
+		const [books, wholesalers] = await Promise.all([res1.json(), res2.json()]);
 		// Add a reserved property to each book
 		books.forEach(book => {
 			book.reserved = book.quantity - book.quantitySold;
@@ -144,6 +180,8 @@ const setCustomCSSProp = (property, value, el) => {
 		bookList = JSON.parse(JSON.stringify(books));
 		fillBooksTable();
 		fillTotalsTable();
+		wholesalerList = JSON.parse(JSON.stringify(wholesalers));
+		fillWholesalersSelect();
 	} catch (error) {
 		console.error(error);
 	}

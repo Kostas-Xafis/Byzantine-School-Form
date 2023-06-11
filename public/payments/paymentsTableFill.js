@@ -106,9 +106,10 @@ const createRow = (data, columns, setCheckbox = true) => {
 };
 document.addEventListener("add", e => {
 	const { payment } = e.detail;
-	console.log(payment);
 	const date = new Date(payment.date);
 	payment.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+	paymentList.push(payment);
+
 	const table = document.getElementById("tableContainer");
 	const row = createRow(payment, columnNames);
 	if (table.children.length === 1) table.appendChild(row);
