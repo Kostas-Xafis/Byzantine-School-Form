@@ -1,6 +1,7 @@
 const { questionMarks } = require("../utils");
 module.exports = {
 	get: {
+		authenticate: true,
 		method: "get",
 		path: "/payments/get",
 		func: db => {
@@ -17,26 +18,25 @@ module.exports = {
 		}
 	},
 	post: {
+		authenticate: true,
 		method: "post",
 		path: "/payments/post",
 		func: db => {
 			return async (req, res) => {
 				try {
 					await db.beginTransaction();
-					const { bookId, studentName } = req.body;
+					const { bookId, student_name } = req.body;
 					const [[book]] = await db.execute("SELECT * FROM books WHERE id = ? LIMIT 1", [bookId]);
 					if (book.length === 0) return res.status(400).json({ message: "Book not found" });
-					if (book.quantity - book.quantitySold === 0) return res.status(400).json({ message: "Book is out of stock" });
+					if (book.quantity - book.sold === 0) return res.status(400).json({ message: "Book is out of stock" });
 
 					const [result1, result2] = await Promise.allSettled([
-						db.execute(`INSERT INTO payments (studentName, amount, date) VALUES (${questionMarks(3)})`, [
-							studentName,
+						db.execute(`INSERT INTO payments (student_name, amount, date) VALUES (${questionMarks(3)})`, [
+							student_name,
 							book.price,
 							Date.now()
 						]),
-						db.execute("UPDATE books SET quantitySold = quantitySold + 1 WHERE id = ? AND quantitySold < quantity LIMIT 1", [
-							bookId
-						])
+						db.execute("UPDATE books SET sold = sold + 1 WHERE id = ? AND sold < quantity LIMIT 1", [bookId])
 					]);
 					if (result1.status === "rejected" || result2.status === "rejected") {
 						res.status(400).json({ message: "Failed database insertion and/or update" });
@@ -55,6 +55,7 @@ module.exports = {
 		}
 	},
 	updatePayment: {
+		authenticate: true,
 		method: "put",
 		path: "/payments/updatePayment",
 		func: db => {
@@ -80,6 +81,7 @@ module.exports = {
 		}
 	},
 	complete: {
+		authenticate: true,
 		method: "delete",
 		path: "/payments/complete",
 		func: db => {

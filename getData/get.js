@@ -5,7 +5,7 @@ const { getDatabase } = require("../db.js");
 const { appendFile } = require("fs");
 
 const sqlQuery = data => {
-	return `INSERT INTO books (title, author, price, quantity, quantitySold, date) VALUES (${Object.values(data)
+	return `INSERT INTO books (title, author, price, quantity, sold, date) VALUES (${Object.values(data)
 		.map(val => (typeof val === "string" ? '"' + val + '"' : val))
 		.join(", ")})`;
 	// let query = "";
@@ -28,6 +28,5 @@ const sqlQuery = data => {
 		fullTxt += sqlQuery(student) + "\n";
 	});
 	appendFile("./sqlQuery.txt", fullTxt, () => {});
-	console.log("Done");
-	return;
+	return db.end();
 })();

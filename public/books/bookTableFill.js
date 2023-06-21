@@ -3,19 +3,11 @@ const columnNames = {
 	title: "Τίτλος",
 	wholesaler: "Χονδρέμπορος",
 	genre: "Είδος",
-	wholesalePrice: "Χονδρική Τιμή",
+	wholesale_price: "Χονδρική Τιμή",
 	price: "Λιανική Τιμή",
 	quantity: "Ποσότητα",
-	quantitySold: "Πωλήσεις",
+	sold: "Πωλήσεις",
 	reserved: "Απόθεμα"
-};
-
-const totalsColumnNames = {
-	quantity: "Σύνολο Ποσότητας",
-	quantitySold: "Σύνολο Πωλήσεων",
-	reserved: "Σύνολο Αποθέματος",
-	profit: "Σύνολο Κέρδους",
-	repayment: "Σύνολο Εξόφλησης"
 };
 
 //Write a function that fills the table with the books from the database
@@ -25,8 +17,8 @@ const fillBooksTable = async () => {
 	const table = document.getElementById("tableContainer");
 	setCustomCSSProp(
 		"--grid-cols",
-		Object.keys(columnNames)
-			.map(key => columnNames[key].length + 4 + "ch")
+		Object.values(columnNames)
+			.map(key => key.length + 4 + "ch")
 			.join(" "),
 		table
 	);
@@ -34,7 +26,7 @@ const fillBooksTable = async () => {
 	let i = -1;
 	bookList.forEach(book => {
 		const bookCopy = Object.assign({}, book);
-		bookCopy.wholesalePrice += "€";
+		bookCopy.wholesale_price += "€";
 		bookCopy.price += "€";
 		table.appendChild(setCustomCSSProp("--delay", ++i * 50 + "ms", createRow(bookCopy, columnNames)));
 	});
@@ -46,29 +38,37 @@ const fillBooksTable = async () => {
 };
 
 const fillTotalsTable = () => {
+	const totalsColumnNames = {
+		quantity: "Σύνολο Ποσότητας",
+		sold: "Σύνολο Πωλήσεων",
+		reserved: "Συνολικό Αποθέματος",
+		profit: "Συνολικό Κέρδος",
+		repayment: "Σύνολο Εξόφλησης"
+	};
+
 	const table = document.getElementById("totalsTableContainer");
+	if (table.children.length > 1) table.querySelectorAll(".row").forEach(row => row.remove());
 	setCustomCSSProp(
 		"--grid-cols",
-		Object.keys(totalsColumnNames)
-			.map(key => totalsColumnNames[key].length + 4 + "ch")
+		Object.value(totalsColumnNames)
+			.map(key => key.length + 4 + "ch")
 			.join(" "),
 		table
 	);
 	table.appendChild(createRow(totalsColumnNames, totalsColumnNames, false));
 	const totals = {
 		quantity: 0,
-		quantitySold: 0,
+		sold: 0,
 		reserved: 0,
 		profit: 0,
 		repayment: 0
 	};
 	for (let i = 0; i < bookList.length; i++) {
-		const book = bookList[i];
-		totals.quantity += book.quantity;
-		totals.quantitySold += book.quantitySold;
-		totals.reserved += book.reserved;
-		totals.profit += book.quantitySold * (book.price - book.wholesalePrice);
-		totals.repayment += book.reserved * book.wholesalePrice;
+		totals.quantity += bookList[i].quantity;
+		totals.sold += bookList[i].sold;
+		totals.reserved += bookList[i].reserved;
+		totals.profit += bookList[i].sold * (bookList[i].price - bookList[i].wholesale_price);
+		totals.repayment += bookList[i].reserved * bookList[i].wholesale_price;
 	}
 
 	table.appendChild(createRow(totals, totalsColumnNames, false));
@@ -110,23 +110,23 @@ const createRow = (data, columns, setCheckbox = true) => {
 };
 document.addEventListener("add", e => {
 	const { book } = e.detail;
-	book.wholesaler = wholesalerList.find(wholesaler => wholesaler.id === book.wholesalerId).name;
-	book.reserved = book.quantity - book.quantitySold;
+	book.wholesaler = wholesalerList.find(wholesaler => wholesaler.id === book.wholesaler_id).name;
+	book.reserved = book.quantity - book.sold;
 	bookList.push(book);
 
 	const bookCopy = Object.assign({}, book);
-	bookCopy.wholesalePrice += "€";
+	bookCopy.wholesale_price += "€";
 	bookCopy.price += "€";
 	const table = document.getElementById("tableContainer");
 	const row = createRow(book, columnNames);
 	if (table.children.length === 1) table.appendChild(row);
 	else table.insertBefore(row, table.children.item(1));
+	fillTotalsTable();
 });
 
 document.addEventListener("addWholesaler", e => {
 	const { wholesaler } = e.detail;
 	wholesalerList.push(wholesaler);
-	console.log(wholesalerList);
 
 	const select = document.querySelector("select");
 	const option = createEl({ value: wholesaler.id, innerText: wholesaler.name }, "option");
@@ -175,7 +175,7 @@ const fillWholesalersSelect = () => {
 		const [books, wholesalers] = await Promise.all([res1.json(), res2.json()]);
 		// Add a reserved property to each book
 		books.forEach(book => {
-			book.reserved = book.quantity - book.quantitySold;
+			book.reserved = book.quantity - book.sold;
 		});
 		bookList = JSON.parse(JSON.stringify(books));
 		fillBooksTable();

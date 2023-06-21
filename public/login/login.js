@@ -17,6 +17,7 @@ document.querySelector("form").addEventListener("submit", async e => {
 		const { isValid, session_id } = await res.json();
 		if (!isValid) return alert("Αποτυχία σύνδεσης");
 		sessionStorage.setItem("sid", session_id);
+		cookieStore.set("sid", session_id);
 		window.history.back();
 	} catch (error) {
 		console.error(error);

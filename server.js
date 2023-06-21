@@ -1,6 +1,7 @@
 const express = require("express");
 const initRouter = require("./router");
 const process = require("process");
+const cookieParser = require("cookie-parser");
 
 process.on("uncaughtException", function (err) {
 	console.log(err);
@@ -10,6 +11,7 @@ const app = express();
 const portNum = process.env.PORT || 5000;
 
 app.use(express.json({ limit: "100mb" }));
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public/static"));
 app.use("/", express.static("public/home", { index: "index.html" }));

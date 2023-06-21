@@ -42,22 +42,46 @@
 						<i class="fa-solid fa-check"></i>
 					</button>
 				</div>
+				<div class="actionsContainer">
+					<button id="editPayoffButton" type="button" class="action">
+						<i class="fa-regular fa-pen-to-square"></i>
+					</button>
+					<button id="completePayoffButton" type="button" class="action">
+						<i class="fa-solid fa-check"></i>
+					</button>
+				</div>
 			</div>
-			<div id="tableContainer" class="dataTable"></div>
+			<div id="tablesContainer">
+				<div id="paymentsTableContainer" class="dataTable"></div>
+				<div id="payoffsTableContainer" class="dataTable"></div>
+			</div>
 		</div>
 		<dialog id="paymentDialog" class="hidden" open>
-			<form id="paymentForm" name="paymentForm">
+			<form id="paymentForm" class="dialogForm" name="paymentForm">
 				<h1></h1>
-				<div id="paymentFormContainer">
-					<div class="inputContainer"><input name="studentName" type="text" /><label for="studentName">Μαθητής</label></div>
+				<div id="paymentFormContainer" class="dialogFormContainer">
+					<div class="inputContainer"><input name="student_name" type="text" /><label for="student_name">Μαθητής</label></div>
 					<div class="inputContainer">
-						<select name="title"></select>
-						<label for="title">Βιβλίο</label>
+						<select name="book"></select>
+						<label for="book">Βιβλίο</label>
 					</div>
 					<div class="inputContainer"><input name="amount" type="number" /><label for="amount">Οφειλή</label></div>
 					<div class="inputContainer"><input name="date" type="date" /><label for="date">Ημερομηνία</label></div>
 				</div>
-				<button id="addButton" class="submitButton">Προσθήκη</button>
+				<button class="addButton submitButton">Προσθήκη</button>
+				<button class="closeDialog">
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+			</form>
+		</dialog>
+		<dialog id="payoffDialog" class="hidden" open>
+			<form id="payoffForm" class="dialogForm" name="payoffForm">
+				<h1></h1>
+				<div id="payoffFormContainer" class="dialogFormContainer">
+					<div class="inputContainer"><input name="wholesaler" type="text" /><label for="wholesaler">Χονδρέμπορος</label></div>
+					<div class="inputContainer"><input name="amount" type="number" /><label for="amount">Οφειλή</label></div>
+				</div>
+				<button class="addButton submitButton">Προσθήκη</button>
 				<button class="closeDialog">
 					<i class="fa-solid fa-xmark"></i>
 				</button>

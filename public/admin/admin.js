@@ -177,7 +177,7 @@ const getClassesArray = student => {
 const createZip = async students => {
 	const createPDF = await createpdf();
 	const zip = new JSZip();
-	const studentNames = {};
+	const student_names = {};
 	const prog = document.getElementById("progressTxt");
 	let totalPdfs = 0;
 	students.forEach(student => (totalPdfs += getStudentClasses(student)));
@@ -185,8 +185,8 @@ const createZip = async students => {
 	let currentFilesCounter = 0;
 	for (let i = 0; i < students.length; i++) {
 		let fullname = students[i].FirstName + " " + students[i].LastName;
-		if (!(fullname in studentNames)) {
-			studentNames[fullname] = true;
+		if (!(fullname in student_names)) {
+			student_names[fullname] = true;
 		} else fullname = fullname + i;
 		//Need a more understandable way to write this
 		const classesCount = getClassesArray(students[i]);

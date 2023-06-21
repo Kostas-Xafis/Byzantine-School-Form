@@ -59,6 +59,7 @@ const studentQuery = date => {
 
 module.exports = {
 	get: {
+		authenticate: true,
 		method: "get",
 		path: "/registrations/get",
 		func: db => {

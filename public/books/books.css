@@ -74,7 +74,8 @@ select {
 #actionsPanel {
 	display: grid;
 	align-self: center;
-	grid-template-columns: auto;
+	grid-auto-flow: column;
+	justify-content: space-around;
 }
 
 .actionsContainer {
@@ -112,6 +113,7 @@ select {
 	overflow: clip;
 	font-size: 1.1rem;
 	grid-auto-rows: auto;
+	justify-self: center;
 }
 
 .dataTable input {
@@ -278,7 +280,7 @@ dialog {
 	filter: blur(1px);
 }
 
-#addButton {
+.addButton {
 	grid-column: 1 / -1;
 	place-self: center;
 	padding: 0.6rem 1.2rem;
@@ -287,7 +289,7 @@ dialog {
 	background-color: var(--success-green);
 }
 
-#addButton:hover {
+.addButton:hover {
 	box-shadow: inset 0px 0px 1px 1px var(--dk-txt-col);
 }
 

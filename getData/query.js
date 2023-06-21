@@ -19,11 +19,18 @@ const filterComments = queries => {
 };
 
 const executeQueries = async (queries, db) => {
-	for (let i = 0; i < queries.length; i++) {
-		const query = queries[i];
-		if (query === "") break;
-		await db.execute(query);
-		console.log(`Executed query: ${query}`);
+	try {
+		await db.beginTransaction();
+		for (let i = 0; i < queries.length; i++) {
+			const query = queries[i];
+			if (query === "") break;
+			await db.execute(query);
+			console.log(`Executed query: ${query}`);
+		}
+		await db.commit();
+	} catch (error) {
+		await db.rollback();
+		console.error(error);
 	}
 };
 
@@ -45,12 +52,12 @@ const asyncEscape = msg => {
 		queries = filterComments(queries);
 		console.log({ queries });
 		await executeQueries(queries, db);
-		asyncEscape("Completed");
+	} else {
+		// If there is no specified file, then the query is the third argument
+		const query = argv[3];
+		if (!query) asyncEscape("No query specified");
+		const [data] = await db.execute(query);
+		console.log(JSON.stringify({ data }, null, 4));
 	}
-	// If there is no specified file, then the query is the third argument
-	const query = argv[3];
-	if (!query) asyncEscape("No query specified");
-	const [data] = await db.execute(query);
-	console.log(JSON.stringify({ data }, null, 4));
-	asyncEscape("Completed");
+	await db.end();
 })();

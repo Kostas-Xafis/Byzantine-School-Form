@@ -7,7 +7,7 @@ const getCheckedBooks = () => {
 	});
 	return checkedBooks.map(id => {
 		const book = bookList.find(book => book.id === id);
-		book.wholesaler = book.wholesalerId;
+		if (book) book.wholesaler = book.wholesaler_id;
 		return book;
 	});
 };
@@ -33,6 +33,9 @@ const deleteBook = async e => {
 			document.querySelectorAll(".row:has(input[type=checkbox]:checked)").forEach(row => {
 				row.dispatchEvent(new Event("delete"));
 			});
+			await sleep(1500);
+			bookList = bookList.filter(book => !checkedBooks.includes(b => b.id === book.id));
+			fillTotalsTable();
 		} else alert("Αποτυχία διαγραφής");
 	} catch (error) {
 		console.error(error);
@@ -53,7 +56,13 @@ const editBook = async e => {
 			body: JSON.stringify(book)
 		});
 		if (res.status >= 200 && res.status < 300) {
-			document.querySelector(`.row:has(input[data-id="${book.id}"])`).dispatchEvent(new CustomEvent("update", { detail: { book } }));
+			document.querySelector(`.row:has(input[data-id='${book.id}'])`).dispatchEvent(new CustomEvent("update", { detail: { book } }));
+			await sleep(1500);
+			bookList = bookList.map(b => {
+				if (b.id === book.id) return Object.assign(b, book);
+				return b;
+			});
+			fillTotalsTable();
 		} else alert("Αποτυχία ενημέρωσης");
 	} catch (error) {
 		console.error(error);
@@ -68,10 +77,10 @@ const addBook = async e => {
 		title: form.title.value,
 		wholesaler: Number(form.wholesaler.value),
 		genre: form.genre.value,
-		wholesalePrice: Number(form.wholesalePrice.value),
+		wholesale_price: Number(form.wholesale_price.value),
 		price: Number(form.price.value),
 		quantity: Number(form.quantity.value),
-		quantitySold: 0 // Not ideal, change the database to accept null values
+		sold: 0 // Not ideal, change the database to accept null values
 	};
 	try {
 		// validate book
@@ -79,7 +88,7 @@ const addBook = async e => {
 			book.title === "" ||
 			book.genre === "" ||
 			isNaN(book.wholesaler) ||
-			isNaN(book.wholesalePrice) ||
+			isNaN(book.wholesale_price) ||
 			isNaN(book.price) ||
 			isNaN(book.quantity)
 		)
@@ -94,7 +103,6 @@ const addBook = async e => {
 		});
 		if (res.status >= 200 && res.status < 300) {
 			const book = await res.json();
-			console.log(book);
 			document.dispatchEvent(new CustomEvent("add", { detail: { book } }));
 		}
 	} catch (error) {
@@ -123,7 +131,6 @@ const addWholesaler = async e => {
 		});
 		if (res.status >= 200 && res.status < 300) {
 			const wholesaler = await res.json();
-			console.log(wholesaler);
 			document.dispatchEvent(new CustomEvent("addWholesaler", { detail: { wholesaler } }));
 		} else alert("Αποτυχία προσθήκης χονδρέμπορου");
 	} catch (error) {
@@ -220,12 +227,14 @@ document.getElementById("deleteBookButton").addEventListener("click", e => {
 document.getElementById("addBookButton").addEventListener("click", e => {
 	document.getElementById("bookDialog").dispatchEvent(
 		new CustomEvent("show", {
-			detail: { action: "add", enabledInputs: ["title", "wholesaler", "genre", "wholesalePrice", "price", "quantity"], book: {} }
+			detail: { action: "add", enabledInputs: ["title", "wholesaler", "genre", "wholesale_price", "price", "quantity"], book: {} }
 		})
 	);
 });
+
 document.getElementById("editBookButton").addEventListener("click", e => {
 	const checkedBooks = getCheckedBooks();
+	console.log(checkedBooks);
 	if (checkedBooks.length === 1)
 		return document.getElementById("bookDialog").dispatchEvent(
 			new CustomEvent("show", {
